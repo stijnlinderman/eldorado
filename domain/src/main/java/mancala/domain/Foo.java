@@ -6,6 +6,6 @@ package mancala.domain;
 public class Foo {
 
     public int theAnswerToLifeTheUniverseAndEverything() {
-        return 41;
+        return 42;
     }
 }
