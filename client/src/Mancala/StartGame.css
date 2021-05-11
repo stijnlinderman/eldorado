@@ -1,0 +1,10 @@
+.startGameButton {
+    font-size: 2em;
+    background-color: lightgreen;
+    border: 2px solid black;
+}
+
+.errorMessage {
+    height: 1em;
+    color: red;
+}
