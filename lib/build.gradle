@@ -7,8 +7,9 @@
  */
 
 plugins {
-    // Apply the java-library plugin for API and implementation separation.
+	id 'java'
     id 'java-library'
+	id 'application'
 }
 
 repositories {
@@ -17,12 +18,43 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit test framework.
-    testImplementation 'junit:junit:4.13'
+  
+    // Use the Jersey framework to make writing and testing servlets easier.
+    implementation 'org.glassfish.jersey.containers:jersey-container-servlet-core:+'
+    implementation 'org.glassfish.jersey.containers:jersey-container-jetty-http:+'
+    implementation 'org.glassfish.jersey.core:jersey-server:+'
+    implementation 'org.glassfish.jersey.inject:jersey-hk2:+'
+    implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:+'
+    // Use Jakarta (Java EE) for the servlet primitives.
+    implementation 'jakarta.servlet:jakarta.servlet-api:+'
+    // Use the Jetty server.
+    implementation 'org.eclipse.jetty:jetty-server:+'
+    implementation 'org.eclipse.jetty:jetty-servlet:+'
+    implementation 'org.eclipse.jetty:jetty-webapp:+'
+    // We want to have some logging output if things go wrong, so use the simple console logger from SLF4J.
+    // In our simple use case, the logger gets automatically configured by simply existing.
+    implementation 'org.slf4j:slf4j-simple:+'
+    
+    // Reference the domain subproject.
+    //implementation project(':lib') - unused
 
-    // This dependency is exported to consumers, that is to say found on their compile classpath.
-    api 'org.apache.commons:commons-math3:3.6.1'
+    // Use JUnit Jupiter API for testing.
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    // Also use the Mockito mocking framework to mock simple server functionality.
+    testImplementation "org.mockito:mockito-core:2.+"
 
-    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
-    implementation 'com.google.guava:guava:29.0-jre'
+    // Use JUnit Jupiter Engine for testing.
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+
+}
+
+application {
+    // Define the main class for the application.
+	//mainClassName = 'el_dorado.App' -- removed, The JavaApplication.setMainClassName(String) method has been deprecated. This is scheduled to be removed in Gradle 8.0. Use #getMainClass().set(...) instead. See https://docs.gradle.org/6.8/dsl/org.gradle.api.plugins.JavaApplication.html#org.gradle.api.plugins.JavaApplication:mainClass for more details. at build_eg3nrj77pznjd57q9ddttu2gf$_run_closure3.doCall(C:\Users\slind\code\el-dorado\slinderman_el_dorado\lib\build.gradle:65)
+	mainClass = 'el_dorado.App'
+}
+
+test {
+    // Use junit platform for unit tests
+	useJUnitPlatform()
 }

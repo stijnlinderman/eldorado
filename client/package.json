@@ -1,7 +1,7 @@
 {
-  "name": "mancala-mvc",
+  "name": "el_dorado",
   "version": "1.0.0",
-  "description": "Front-end for the mancala mvc",
+  "description": "Front-end for El Dorado",
   "private": true,
   "scripts": {
     "start": "snowpack dev",

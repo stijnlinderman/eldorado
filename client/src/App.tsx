@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Header } from "./Header/Header";
 import { About } from "./About/About";
-import { Mancala } from "./Mancala/Mancala";
+import { El_Dorado } from "./El_Dorado/El_Dorado";
 import "./App.css";
 
 export function App() {
@@ -20,7 +20,7 @@ export function App() {
 
                     {/* If the user goes to any other url, show the play page */}
                     <Route path="/">
-                        <Mancala />
+                        <El_Dorado />
                     </Route>
                 </Switch>
             </div>

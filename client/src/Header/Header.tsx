@@ -10,7 +10,7 @@ export function Header() {
     return <header className="main-header">
         <div>
             <img src={urlLogo} /> 
-            Mancala
+            El_Dorado
         </div>
         <div className="main-navigation">
             <Link to="/">Play</Link>
