@@ -4,14 +4,12 @@ import "./Play.css";
 
 type PlayProps = {
     gameState: GameState;
-    setGameState(newGameState: GameState): void;
+	setGameState(newGameState: GameState): void;
 }
 
 export function Play({ gameState, setGameState }: PlayProps) {
+	console.log(gameState)
     return (
-        <div>
-            <p>{gameState.players[0].name} vs {gameState.players[1].name}</p>
-            To do...
-        </div>
+    	<div>{gameState.text}</div>
     )
 }

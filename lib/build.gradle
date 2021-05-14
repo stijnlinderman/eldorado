@@ -36,7 +36,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-simple:+'
     
     // Reference the domain subproject.
-    //implementation project(':lib') - unused
+//    implementation project(':lib')
 
     // Use JUnit Jupiter API for testing.
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
@@ -50,8 +50,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-	//mainClassName = 'el_dorado.App' -- removed, The JavaApplication.setMainClassName(String) method has been deprecated. This is scheduled to be removed in Gradle 8.0. Use #getMainClass().set(...) instead. See https://docs.gradle.org/6.8/dsl/org.gradle.api.plugins.JavaApplication.html#org.gradle.api.plugins.JavaApplication:mainClass for more details. at build_eg3nrj77pznjd57q9ddttu2gf$_run_closure3.doCall(C:\Users\slind\code\el-dorado\slinderman_el_dorado\lib\build.gradle:65)
-	mainClass = 'el_dorado.App'
+	mainClass = 'eldorado.App'
 }
 
 test {
