@@ -12,8 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FieldTest {
 	
     @Test 
-    public void testField() {
-        ElDorado elDorado = new ElDorado();
-        assertEquals("Hello world", elDorado.getText());
+    public void newFieldHasCenterPos() {
+        Field field = new Field();
+        assertNotNull(field);
+        assertNotNull(field.pos);
+        assertNotNull(field.pos.x);
+        assertEquals(0, field.pos.x);
+        assertEquals(0, field.pos.y);
+        assertEquals(0, field.pos.z);
     }
 }

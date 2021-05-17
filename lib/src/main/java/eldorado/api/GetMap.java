@@ -13,19 +13,19 @@ import jakarta.ws.rs.core.*;
 import eldorado.api.*;
 import eldorado.domain.*;
 
-@Path("/hello")
-public class Hello {
+@Path("/getmap")
+public class GetMap {
     @GET
-	@Consumes(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response initialize(
 			@Context HttpServletRequest request) {
     	
-    	ElDorado elDorado = new ElDorado();
+    	Field field = new Field();
 		
         HttpSession session = request.getSession(true);
-        session.setAttribute("elDorado", elDorado);
+        session.setAttribute("field", field);
 
-		return Response.status(200).entity(elDorado).build();
+		return Response.status(200).entity(field).build();
 	}
 }
