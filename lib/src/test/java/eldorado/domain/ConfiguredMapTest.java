@@ -9,16 +9,15 @@ package eldorado.domain;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FieldTest {
+public class ConfiguredMapTest {
+	
+	String[][] testConfigs = {
+			{"0,0,0"}
+	};
 	
     @Test 
     public void newFieldHasCenterPos() {
-        Field field = new Field();
-        assertNotNull(field);
-        assertNotNull(field.pos);
-        assertNotNull(field.pos.x);
-        assertEquals(0, field.pos.x);
-        assertEquals(0, field.pos.y);
-        assertEquals(0, field.pos.z);
+    	ConfiguredMap map = new ConfiguredMap(testConfigs[0]);
+        assertNotNull(map.getField(0, 0, 0));
     }
 }

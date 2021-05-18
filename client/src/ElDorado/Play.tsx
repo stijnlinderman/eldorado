@@ -2,19 +2,17 @@ import React from "react";
 import type { GameState } from "../gameState";
 import "./Play.css";
 
-let fieldButtonW: number = 30
-let fieldButtonH: number = 50
-
 type PlayProps = {
     gameState: GameState;
 	setGameState(newGameState: GameState): void;
 }
 
 export function Play({ gameState, setGameState }: PlayProps) {
-	let field = new Field(gameState.pos.x, gameState.pos.y, gameState.pos.z)
-	let fieldAsElement = field.getAsElement()
-    return fieldAsElement
+	return (<p>{gameState.fields[0]}</p>)
 }
+
+
+
 
 class Field {
 	x: number;

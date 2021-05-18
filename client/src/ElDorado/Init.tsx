@@ -14,9 +14,8 @@ export function Init({ setGameState }: InitProps) {
 	        const response = await fetch('eldorado/api/getmap')
 			
 	        if (response.ok) {
-	            const gameState = await response.json()
-	            setGameState(gameState)
-				console.log(gameState)
+	            const gameState_raw = await response.json()
+				setGameState(gameState_raw)
 	        } else {
 	            console.error(response.statusText)
 	        }

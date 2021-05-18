@@ -21,11 +21,13 @@ public class GetMap {
 	public Response initialize(
 			@Context HttpServletRequest request) {
     	
-    	Field field = new Field();
+    	String[] mapConfig = ConfiguredMap.mapConfigs[0];
+    	ConfiguredMap map = new ConfiguredMap(mapConfig);
 		
         HttpSession session = request.getSession(true);
-        session.setAttribute("field", field);
-
-		return Response.status(200).entity(field).build();
+        session.setAttribute("map", map);
+        
+        ConfiguredMap.ConfiguredMap_JSONed jsonedMap = map.getJSONed();
+		return Response.status(200).entity(jsonedMap).build();
 	}
 }

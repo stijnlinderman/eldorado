@@ -33,10 +33,10 @@ dependencies {
     implementation 'org.eclipse.jetty:jetty-webapp:+'
     // We want to have some logging output if things go wrong, so use the simple console logger from SLF4J.
     // In our simple use case, the logger gets automatically configured by simply existing.
-    implementation 'org.slf4j:slf4j-simple:+'
+    implementation 'org.slf4j:slf4j-simple:+'    
     
     // Reference the domain subproject.
-//    implementation project(':lib')
+	//    implementation project(':lib')
 
     // Use JUnit Jupiter API for testing.
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'

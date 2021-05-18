@@ -1,4 +1,4 @@
 
 export interface GameState {
-	text: string;
+	fields: string[];
 }
