@@ -51,13 +51,17 @@ public class ConfiguredMap {
 	}
 	
 	public class ConfiguredMap_JSONed {
-		public String[] fields;
+		public String[] fields_asArray;
 	
 		public ConfiguredMap_JSONed (Map<String, Field> fields) {
-			this.fields = new String[fields.size()];
+			this.addFieldsAsArray(fields);
+		}
+			
+		private void addFieldsAsArray (Map<String, Field> fields) {
+			this.fields_asArray = new String[fields.size()];
 			int i = 0;
 			for (Map.Entry<String, Field> posKey: fields.entrySet()) {
-				this.fields[i] = posKey.getKey();
+				this.fields_asArray[i] = posKey.getKey();
 				i++;
 			}
 		}
@@ -69,7 +73,10 @@ public class ConfiguredMap {
 	}
 	
 	public static String[][] mapConfigs = {
-		{"0,0,0"},
-		{"1,0,0"}
+		{
+			"0,0,0","0,1,1","0,3,3,","0,4,4",
+			"1,0,1","1,1,2","1,2,3","1,3,4",
+			"2,0,2","2,2,4","2,3,5",
+			"3,-1,2","3,0,3","3,2,5"}
 	};
 }

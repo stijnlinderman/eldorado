@@ -1,1 +1,50 @@
-/** Add some styles */
+
+:root {
+	--size: 3;
+}
+
+.mapTable {
+	border-spacing: 0px;
+	margin: auto;
+	margin-top: 10%
+}
+
+.fieldCell {
+	text-align: center;
+	vertical-align: middle;
+	padding: 0px;
+	border-left: calc(5px * var(--size)) solid black;
+	border-right: calc(5px * var(--size)) solid black;
+	height: calc(20px * var(--size));
+}
+.noLeftBorder {
+	border-left: none;
+}
+
+.fieldButton {
+	width: calc(40px * var(--size));
+	height: calc(40px * var(--size));
+	border: none;
+	background-color: rgb(0, 128, 0);
+	font-size: calc(8px * var(--size));
+	color: rgb(0,168,0);
+}
+.fieldButton:hover {
+	background-color: rgb(115, 221, 51);
+}
+
+.buttonCell {
+	width: calc(25px * var(--size));
+}
+
+.diagonalCell {
+	width: calc(20px * var(--size));
+	height: calc(0px * var(--size));
+	border-bottom: calc(5px * var(--size)) solid rgb(0, 0, 0);
+}
+.diagonalUp {
+        -webkit-transform: rotate(-30deg); 
+}
+.diagonalDown {
+        -webkit-transform: rotate(30deg); 
+}
