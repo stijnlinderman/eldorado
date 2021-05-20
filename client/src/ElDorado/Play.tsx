@@ -22,7 +22,7 @@ function getMapAsTable(gameState: GameState) {
 			let row = [];
 			let offsetRow = isOffsetRow(rowId);
 			if (offsetRow) {
-				row.push(<td key={"offsetCell row "+rowId} className="fieldCell noLeftBorder"></td>)
+				row.push(<td key={"offsetCell"+strSep+rowId} className="fieldCell"></td>)
 			}
 
 			for (let colId=gameState.mapSize.colMin; colId<=gameState.mapSize.colMax; colId++) {
@@ -31,13 +31,13 @@ function getMapAsTable(gameState: GameState) {
 					if (typeof gameState.rows[rowId][colId] !== 'undefined') {
 						const field = gameState.rows[rowId][colId];
 						const buttonText = <p>{"x "+field.x}<br/>{"y "+field.y}<br/>{"z "+field.z}</p>;
-						cellContent = <button key={"button "+field.getPosKey()} className="fieldButton">{buttonText}</button>;
+						cellContent = <button key={"button"+strSep+field.getPosKey()} className="fieldButton">{buttonText}</button>;
 					}
-					row.push(<td key={"row "+colId+" col "+colId} className="fieldCell buttonCell" colSpan="2">{cellContent}</td>);
-					//row.push(<td className="fieldCell">{cellContent}</td>)
+					const leftBorder = (colId == 0) ? " leftBorder" : "";
+					row.push(<td key={"cell"+strSep+rowId+strSep+colId} className={"fieldCell buttonCell"+leftBorder} colSpan="2">{cellContent}</td>);
 				}
 			}
-			table.push(<tr>{row}</tr>)
+			table.push(<tr key={"row"+strSep+rowId} className="tableRow">{row}</tr>)
 			table.push(<tr>{getTableRowContainingDiagonals(!offsetRow)}</tr>)
 		}
 	}

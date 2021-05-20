@@ -13,12 +13,29 @@
 	text-align: center;
 	vertical-align: middle;
 	padding: 0px;
-	border-left: calc(5px * var(--size)) solid black;
-	border-right: calc(5px * var(--size)) solid black;
 	height: calc(20px * var(--size));
 }
-.noLeftBorder {
-	border-left: none;
+.buttonCell {
+	width: calc(25px * var(--size));
+	border-right: calc(5px * var(--size)) solid black;
+}
+.leftBorder {
+	border-left: calc(5px * var(--size)) solid black;
+}
+.tableRow {
+	border-left: calc(5px * var(--size)) solid black;
+}
+
+.diagonalCell {
+	width: calc(20px * var(--size));
+	height: calc(2px * var(--size));
+	border-bottom: calc(5px * var(--size)) solid rgb(0, 0, 0);
+}
+.diagonalUp {
+        -webkit-transform: rotate(-30deg); 
+}
+.diagonalDown {
+        -webkit-transform: rotate(30deg); 
 }
 
 .fieldButton {
@@ -31,20 +48,4 @@
 }
 .fieldButton:hover {
 	background-color: rgb(115, 221, 51);
-}
-
-.buttonCell {
-	width: calc(25px * var(--size));
-}
-
-.diagonalCell {
-	width: calc(20px * var(--size));
-	height: calc(0px * var(--size));
-	border-bottom: calc(5px * var(--size)) solid rgb(0, 0, 0);
-}
-.diagonalUp {
-        -webkit-transform: rotate(-30deg); 
-}
-.diagonalDown {
-        -webkit-transform: rotate(30deg); 
 }
