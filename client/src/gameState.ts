@@ -2,99 +2,89 @@
 const strSep = ","
 
 export interface GameState {
-	fields_asArray: string[];
-	fields: {[index:string]:Field};
-	rows: {[index:number]:{[index:number]:Field}};
-	mapSize: {
-		rowMin: number,
-		rowMax: number,
-		colMin: number,
-		colMax: number
-	}
+	fieldStates: FieldState[];
+	fieldsByXYZ: {[index:string]:Field};
+	rowsToDisplay: {[index:number]:{[index:number]:Field}};
+	firstRowId: number;
+	lastRowId: number;
+	firstColId: number;
+	lastColId: number;
 }
 
-export function configureFields (gameState: GameState) {
-	gameState.fields = {};
-	gameState.rows = [];
-	gameState.mapSize = {};
-	const amountToConfigure = gameState.fields_asArray.length;
-	
-	for (let fieldIndex = 0; fieldIndex < amountToConfigure; fieldIndex++) {
-		const fieldString = gameState.fields_asArray[fieldIndex];
-		const field = createFieldFromFieldString(fieldString);
-		addFieldToGameStateFields_byXYZKey(field)
-		addFieldToGameStateRows_byColId (field)
-		
-		updateMapSize (field.rowId, field.colId)
-		
-		if (fieldIndex == 0) {
-			setMapSize(field.rowId, field.colId);
-		} else {
-			updateMapSize(field.rowId, field.colId)
-		}
-	}
-	
-	function createFieldFromFieldString (fieldString: string) {
-		const fieldStringValues = fieldString.split(strSep);
-		const x = parseInt(fieldStringValues[0]);
-		const y = parseInt(fieldStringValues[1]);
-		const z = parseInt(fieldStringValues[2]);
-		const field = new Field(x, y, z);
-		return field;
-	}
-	
-	function addFieldToGameStateFields_byXYZKey(field: Field) {
-		gameState.fields[composePosKey(field.x, field.y, field.z)] = field;
-	}
-	
-	function addFieldToGameStateRows_byColId (field: Field) {		
-		if (typeof gameState.rows[field.rowId] === 'undefined') {
-			gameState.rows[field.rowId] = [];
-		}
-		gameState.rows[field.rowId][field.colId] = field;		
-	}
-	
-	function setMapSize (rowId: number, colId: number) {
-		gameState.mapSize.rowMin = rowId;
-		gameState.mapSize.rowMax = rowId;
-		gameState.mapSize.colMin = colId;
-		gameState.mapSize.colMax = colId;
-	}
-	
-	function updateMapSize(rowId: number, colId: number) {
-		if (rowId < gameState.mapSize.rowMin) {
-			gameState.mapSize.rowMin = rowId;
-		} else if (rowId > gameState.mapSize.rowMax) {
-			gameState.mapSize.rowMax = rowId;
-		}
-		if (colId < gameState.mapSize.colMin) {
-			gameState.mapSize.colMin = colId;
-		} else if (colId > gameState.mapSize.colMax) {
-			gameState.mapSize.colMax = colId;
-		}
-	}
+export interface FieldState {
+	pos: Pos;
+	field: Field;
 }
 
-export class Field {
+export interface Field {
+	pawnId: number;
+	pos: Pos;
+}
+
+export interface Pos {
 	x: number;
 	y: number;
 	z: number;
+	key: string;
 	rowId: number;
 	colId: number;
-	
-	constructor (x:number, y:number, z:number) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.rowId = x;
-		this.colId = y + z;
-	}
-	
-	getPosKey () {
-		return composePosKey(this.x, this.y, this.z);
-	}
 }
+
+export function processGameState (gameState: GameState) {
+	gameState.fieldsByXYZ = {};
+	gameState.rowsToDisplay = [];
+		
+	for (let fieldStateIndex = 0; fieldStateIndex < gameState.fieldStates.length; fieldStateIndex++) {
+		const fieldState = gameState.fieldStates[fieldStateIndex];
+		const field = fieldState.field;
+		const pos = fieldState.pos;
+		processPosForField(field, pos)
+		
+		addFieldToGameXYZArray(field);
+		addFieldToGameRowColumnTable(field);
+				
+		if (fieldStateIndex == 0) {
+			setMapSize(field.pos.rowId, field.pos.colId);
+		} else {
+			updateMapSize(field.pos.rowId, field.pos.colId)
+		}
+	}
 	
-function composePosKey (x:number, y:number, z:number) {
-	return [x,y,z].join(strSep);
+	function processPosForField (field: Field, pos: Pos) {
+		pos.key = pos.x + strSep + pos.y + strSep + pos.z;
+		pos.rowId = pos.x;
+		pos.colId = pos.y + pos.z;
+		field.pos = pos;
+	}
+	
+	function addFieldToGameXYZArray (field: Field) {
+		gameState.fieldsByXYZ[field.pos.key] = field;
+	}
+	
+	function addFieldToGameRowColumnTable (field: Field) {
+		if (typeof gameState.rowsToDisplay[field.pos.rowId] === 'undefined') {
+			gameState.rowsToDisplay[field.pos.rowId] = [];
+		}
+		gameState.rowsToDisplay[field.pos.rowId][field.pos.colId] = field;	
+	}
+	
+	function setMapSize (rowId: number, colId: number) {
+		gameState.firstRowId = rowId;
+		gameState.lastRowId = rowId;
+		gameState.firstColId = colId;
+		gameState.lastColId = colId;
+	}
+	
+	function updateMapSize(rowId: number, colId: number) {
+		if (rowId < gameState.firstRowId) {
+			gameState.firstRowId = rowId;
+		} else if (rowId > gameState.lastRowId) {
+			gameState.lastRowId = rowId;
+		}
+		if (colId < gameState.firstColId) {
+			gameState.firstColId = colId;
+		} else if (colId > gameState.lastColId) {
+			gameState.lastColId = colId;
+		}
+	}
 }

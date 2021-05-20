@@ -28,7 +28,7 @@
 
 .diagonalCell {
 	width: calc(20px * var(--size));
-	height: calc(2px * var(--size));
+	height: calc(3px * var(--size));
 	border-bottom: calc(5px * var(--size)) solid rgb(0, 0, 0);
 }
 .diagonalUp {
@@ -39,12 +39,12 @@
 }
 
 .fieldButton {
-	width: calc(40px * var(--size));
+	width: calc(50px * var(--size));
 	height: calc(40px * var(--size));
 	border: none;
 	background-color: rgb(0, 128, 0);
-	font-size: calc(8px * var(--size));
-	color: rgb(0,168,0);
+	font-size: calc(20px * var(--size));
+	color: rgb(255, 255, 255);
 }
 .fieldButton:hover {
 	background-color: rgb(115, 221, 51);

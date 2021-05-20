@@ -9,6 +9,8 @@ package eldorado.api;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GetMapTest {
+import eldorado.domain.*;
+
+public class CreateGameTest {
 
 }

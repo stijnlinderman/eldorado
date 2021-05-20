@@ -10,42 +10,37 @@ type PlayProps = {
 }
 
 export function Play({ gameState, setGameState }: PlayProps) {
-	return getMapAsTable(gameState)
+	return getMapTableForDisplay(gameState)
 }
 
-function getMapAsTable(gameState: GameState) {
-	let table = [];
-	table.push(<tr>{getTableRowContainingDiagonals(false)}</tr>)
+function getMapTableForDisplay(gameState: GameState) {
+	let tableContent = [];
+	addRowOfDiagonals(tableContent, true)
 
-	for (let rowId=gameState.mapSize.rowMin; rowId<=gameState.mapSize.rowMax; rowId++) {
-		if (typeof gameState.rows[rowId] !== 'undefined') {
-			let row = [];
+	for (let rowId=gameState.firstRowId; rowId<=gameState.lastRowId; rowId++) {
+		if (typeof gameState.rowsToDisplay[rowId] !== 'undefined') {
+			let rowToDisplay = [];
 			let offsetRow = isOffsetRow(rowId);
 			if (offsetRow) {
-				row.push(<td key={"offsetCell"+strSep+rowId} className="fieldCell"></td>)
+				rowToDisplay.push(<td key={"offsetCell"+strSep+rowId} className="fieldCell"></td>)
 			}
 
-			for (let colId=gameState.mapSize.colMin; colId<=gameState.mapSize.colMax; colId++) {
-				if (shouldColBeDrawnInRow_basedOnOffset(colId, offsetRow)) {
-					let cellContent;
-					if (typeof gameState.rows[rowId][colId] !== 'undefined') {
-						const field = gameState.rows[rowId][colId];
-						const buttonText = <p>{"x "+field.x}<br/>{"y "+field.y}<br/>{"z "+field.z}</p>;
-						cellContent = <button key={"button"+strSep+field.getPosKey()} className="fieldButton">{buttonText}</button>;
-					}
-					const leftBorder = (colId == 0) ? " leftBorder" : "";
-					row.push(<td key={"cell"+strSep+rowId+strSep+colId} className={"fieldCell buttonCell"+leftBorder} colSpan="2">{cellContent}</td>);
+			for (let colId=gameState.firstColId; colId<=gameState.lastColId; colId++) {
+				if (shouldColBeDrawnInThisRow_basedOnOffset(colId, offsetRow)) {
+					const cellContent = getCellContent(rowId, colId)					
+					let leftBorderClassToAdd = ((colId == 0 ) || (colId == 1)) ? "leftBorder": "";
+					rowToDisplay.push(<td key={"cell"+strSep+rowId+strSep+colId} className={"fieldCell buttonCell"+leftBorderClassToAdd} colSpan="2">{cellContent}</td>);
 				}
 			}
-			table.push(<tr key={"row"+strSep+rowId} className="tableRow">{row}</tr>)
-			table.push(<tr>{getTableRowContainingDiagonals(!offsetRow)}</tr>)
+			tableContent.push(<tr key={"row"+strSep+rowId} className="tableRow">{rowToDisplay}</tr>)
+			addRowOfDiagonals(tableContent, offsetRow)
 		}
 	}
 	
-	let mapTable = <table className="mapTable"><tbody>{table}</tbody></table>;
-	return mapTable;
-	
-	function shouldColBeDrawnInRow_basedOnOffset (colId: number, offsetRow: boolean) {
+	let mapTableForDisplay = <table className="mapTable"><tbody>{tableContent}</tbody></table>;
+	return mapTableForDisplay;
+		
+	function shouldColBeDrawnInThisRow_basedOnOffset (colId: number, offsetRow: boolean) {
 		let offset = offsetRow ? 1 : 0;
 		return (colId % 2 == offset)
 	}
@@ -54,16 +49,32 @@ function getMapAsTable(gameState: GameState) {
 		return (rowId % 2 == 0) ? false : true
 	}
 	
-	function getTableRowContainingDiagonals (offsetRow: boolean) {
+	function doesCellContainAField (rowId: number, colId: number) {
+		return (gameState.rowsToDisplay[rowId][colId]);
+	}
+
+	function getCellContent (rowId: number, colId: number) {
+		let cellContent;
+		if (doesCellContainAField(rowId, colId)) {
+			const field = gameState.rowsToDisplay[rowId][colId];
+			let buttonContent = (field.pawnId > 0) ? field.pawnId : "";
+			cellContent = <button key={"button"+strSep+field.pos.key} className="fieldButton">{buttonContent}</button>;
+		}
+		return cellContent;		
+	}
+	
+
+	function addRowOfDiagonals (tableContent: any[], upwards: boolean) {
+		tableContent.push(<tr>{getTableRowContainingDiagonals(upwards)}</tr>)
+	}
+
+	function getTableRowContainingDiagonals (startUpwards: boolean) {
 		let diagonals = [];
-		const amountOfDiagonals = gameState.mapSize.colMax - gameState.mapSize.colMin + 1;
-		let upwards = !offsetRow;
+		let upwards = startUpwards;
+		const amountOfDiagonals = gameState.lastColId - gameState.firstColId + 1;
 		for (let i=0; i <= amountOfDiagonals; i++) {
-			if (upwards) {
-				diagonals.push(<td className="fieldCell diagonalCell diagonalUp"></td>);
-			} else {
-				diagonals.push(<td className="fieldCell diagonalCell diagonalDown"></td>);
-			}
+			const diagonalClass = (upwards) ? "diagonalUp" : "diagonalDown";
+			diagonals.push(<td className={"fieldCell diagonalCell "+diagonalClass}></td>);
 			upwards = !upwards;
 		}
 		return diagonals;

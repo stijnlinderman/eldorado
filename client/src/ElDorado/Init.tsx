@@ -1,6 +1,6 @@
 import React,{useEffect} from "react";
 import type { GameState } from "../gameState";
-import { configureFields } from "../gameState";
+import { processGameState } from "../gameState";
 import "./Init.css";
 
 type InitProps = {
@@ -11,11 +11,12 @@ export function Init({ setGameState }: InitProps) {
 	
 	async function tryInit() {
 		try {
-	        const response = await fetch('eldorado/api/getmap')
+	        const response = await fetch('eldorado/api/creategame')
 		
 	        if (response.ok) {
 	            const gameState = await response.json()
-				configureFields(gameState)
+				console.log(gameState)
+				processGameState(gameState)
 				setGameState(gameState)
 	        } else {
 	            console.error(response.statusText)
