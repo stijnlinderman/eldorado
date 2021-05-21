@@ -8,8 +8,6 @@ package eldorado.domain;
 
 import org.junit.jupiter.api.Test;
 
-import eldorado.domain.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Map;
@@ -19,14 +17,14 @@ public class GameTest {
     @Test 
     public void newFieldHasCenterPos() {
     	Game game = new Game(0);
-        assertNotNull(game.getField(0, 0, 0));
+        assertNotNull(game.getMap().getField(0, 0, 0));
     }
     
     @Test
     public void firstPawnHasAStartingPoint() {
     	Game game = new Game(0);
     	boolean foundFirstPawnStartingPoint = false;
-		for (Map.Entry<String, Field> fieldEntry: game.map.entrySet()) {
+		for (Map.Entry<String, Field> fieldEntry: game.getMap().fields.entrySet()) {
 			if (fieldEntry.getValue().getPawnId() == 1) {
 				foundFirstPawnStartingPoint = true;
 			}

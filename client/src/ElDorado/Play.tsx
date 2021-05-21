@@ -37,6 +37,19 @@ function getMapTableForDisplay(gameState: GameState) {
 		}
 	}
 	
+	function HexaGridRow({ row, rowId }: { row: unknown[]; rowId: string; }) {
+		return <>
+			{isOffsetRow(rowId) ? <OffsetCell key={`offsetCell,${rowId}`} /> : null}
+			{row.map((col, colId) => <Cell key={`cell,${rowId},${colId}`} />)}
+		</>;
+	}
+	
+	return (
+		<table>
+			{gameState.rowsToDisplay.map((row, rowIndex) => <HexaGridRow key={rowId} row={row} rowId={rowId}/>)}
+		</table>
+	)
+	
 	let mapTableForDisplay = <table className="mapTable"><tbody>{tableContent}</tbody></table>;
 	return mapTableForDisplay;
 		

@@ -1,6 +1,6 @@
 import React,{useEffect} from "react";
 import type { GameState } from "../gameState";
-import { processGameState } from "../gameState";
+import { processGameStateDTO } from "../gameState";
 import "./Init.css";
 
 type InitProps = {
@@ -14,9 +14,10 @@ export function Init({ setGameState }: InitProps) {
 	        const response = await fetch('eldorado/api/creategame')
 		
 	        if (response.ok) {
-	            const gameState = await response.json()
-				console.log(gameState)
-				processGameState(gameState)
+	            const gameStateDTO = await response.json();
+				console.log(gameStateDTO);
+				const gameState = processGameStateDTO(gameStateDTO);
+				console.log(gameState);
 				setGameState(gameState)
 	        } else {
 	            console.error(response.statusText)

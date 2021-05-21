@@ -3,14 +3,10 @@
  */
 package eldorado.api;
 
-import java.io.IOException;
-
 import jakarta.servlet.http.*;
-import jakarta.servlet.ServletException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 
-import eldorado.api.*;
 import eldorado.domain.*;
 
 @Path("/creategame")
@@ -22,10 +18,9 @@ public class CreateGame {
 			@Context HttpServletRequest request) {
     	
     	Game game = new Game(0);
-		
         HttpSession session = request.getSession(true);
         session.setAttribute("game", game);
         
-		return Response.status(200).entity(game.getState()).build();
+		return Response.status(200).entity(game.getCurrentStateDTO()).build();
 	}
 }

@@ -4,21 +4,21 @@
 package eldorado.domain;
 
 public class Field {
-	private int pawnId = 0;
+	private int occupiedByPawnId = 0;
 	
 	public Field (int pawnId) {
-		this.setPawnId(pawnId);
+		this.setOccupiedByPawnId(pawnId);
 	}		
 	
 	public boolean isOccupied () {
-		return (pawnId > 0);
+		return (this.occupiedByPawnId > 0);
 	}
 	
 	public int getPawnId () {
-		return pawnId;
+		return this.occupiedByPawnId;
 	}
 	
-	public void setPawnId (int pawnId) {
-		this.pawnId = pawnId;
+	public void setOccupiedByPawnId (int pawnId) {
+		this.occupiedByPawnId = pawnId;
 	}
 }

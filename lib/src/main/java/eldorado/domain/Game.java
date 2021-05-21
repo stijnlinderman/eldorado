@@ -3,96 +3,19 @@
  */
 package eldorado.domain;
 
-import java.util.Map;
-import java.util.HashMap;
-
 public class Game {
-	private static String strSep = ",";
 	
-	public Map<String, Field> map = new HashMap<String, Field>();
+	private MapConfiguration map;
 			
-	public Game (int mapId) {
-		// input format: {"x,y,z", "x,y,z", etc.}
-		for (String[] fieldConfig : Maps.config[mapId]) {
-			this.addFieldToConfig(fieldConfig);
-		}
+	public Game (int mapConfigurationId) {
+		this.map = new MapConfiguration(mapConfigurationId);
 	}
 	
-	private void addFieldToConfig(String[] fieldConfig) {
-		String[] xyz = fieldConfig[0].split(strSep);
-		int x = Integer.parseInt(xyz[0]);
-		int y = Integer.parseInt(xyz[1]);
-		int z = Integer.parseInt(xyz[2]);
-		if (!this.hasPosField(x,y,z)) {
-			int startingPawnId = Integer.parseInt(fieldConfig[1]);
-			Field newField = new Field(startingPawnId);
-			this.addField(x, y, z, newField);
-		}
-	}
-	
-	private boolean hasPosField (int x, int y, int z) {
-		String posKey = composePosKey (x,y,z);
-		return this.getFields().containsKey(posKey);
-	}
-	
-	public Field getField (int x, int y, int z) {
-		return this.getFields().get(composePosKey(x,y,z));
-	}
-	
-	private void addField (int x, int y, int z, Field field) {
-		this.getFields().put(composePosKey(x,y,z), field);
-	}
-	
-	private Map<String, Field> getFields () {
+	public MapConfiguration getMap () {
 		return this.map;
 	}
 	
-	private String composePosKey (Integer x, Integer y, Integer z) {
-		return String.join(strSep, x.toString(), y.toString(), z.toString());
-	} 
-	
-	public GameState getState () {
-		return new GameState(this.getFields());
-	}
-	
-	
-	class GameState {
-		public FieldState[] fieldStates;
-	
-		public GameState (Map<String, Field> fields) {
-			this.addFields(fields);
-		}
-			
-		private void addFields (Map<String, Field> map) {
-			this.fieldStates = new FieldState[map.size()];
-			int i = 0;
-			for (Map.Entry<String, Field> fieldEntry: map.entrySet()) {
-				this.fieldStates[i] = new FieldState(fieldEntry.getKey(), fieldEntry.getValue());
-				i++;
-			}
-		}
-		
-		class FieldState {
-			public Pos pos;
-			public Field field;
-			
-			public FieldState (String posKey, Field field) {
-				this.pos = new Pos(posKey);
-				this.field = field;
-			}
-			
-			class Pos {
-				public int x;
-				public int y;
-				public int z;
-				
-				public Pos (String posKey) {
-					String[] xyz = posKey.split(strSep);
-					this.x = Integer.parseInt(xyz[0]);
-					this.y = Integer.parseInt(xyz[1]);
-					this.z = Integer.parseInt(xyz[2]);
-				}
-			}
-		}
+	public GameStateDTO getCurrentStateDTO () {
+		return new GameStateDTO(this);
 	}
 }
