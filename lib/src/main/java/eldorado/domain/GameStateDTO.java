@@ -3,8 +3,6 @@
  */
 package eldorado.domain;
 
-import java.util.Map;
-
 public class GameStateDTO {
 	public final MapStateDTO mapStateDTO;
 

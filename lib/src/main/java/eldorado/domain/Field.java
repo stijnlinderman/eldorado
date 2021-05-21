@@ -4,7 +4,7 @@
 package eldorado.domain;
 
 public class Field {
-	private int occupiedByPawnId = 0;
+	public int occupiedByPawnId = 0;
 	
 	public Field (int pawnId) {
 		this.setOccupiedByPawnId(pawnId);

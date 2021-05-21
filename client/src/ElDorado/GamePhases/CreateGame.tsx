@@ -1,24 +1,22 @@
 import React,{useEffect} from "react";
-import type { GameState } from "../gameState";
-import { processGameStateDTO } from "../gameState";
-import "./Init.css";
+import { GameState } from "../GameState/GameState";
+import type { GameStateDTO } from "../GameState/GameStateDTO";
+import "./CreateGame.css";
 
-type InitProps = {
+type createGameProps = {
     setGameState(newGameState: GameState): void
 }
 
-export function Init({ setGameState }: InitProps) {
+export function CreateGame ({ setGameState }: createGameProps) {
 	
 	async function tryInit() {
 		try {
 	        const response = await fetch('eldorado/api/creategame')
 		
 	        if (response.ok) {
-	            const gameStateDTO = await response.json();
-				console.log(gameStateDTO);
-				const gameState = processGameStateDTO(gameStateDTO);
-				console.log(gameState);
-				setGameState(gameState)
+	            const gameStateDTO: GameStateDTO = await response.json();
+				const gameState = new GameState(gameStateDTO);
+				setGameState(gameState);
 	        } else {
 	            console.error(response.statusText)
 	        }

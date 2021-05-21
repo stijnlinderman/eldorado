@@ -1,6 +1,6 @@
 
 :root {
-	--size: 1.5;
+	--size: 3;
 }
 
 .mapTable {
@@ -32,10 +32,10 @@
 	border-bottom: calc(5px * var(--size)) solid rgb(0, 0, 0);
 }
 .diagonalUp {
-        -webkit-transform: rotate(-30deg); 
+	transform: rotate(-30deg); 
 }
 .diagonalDown {
-        -webkit-transform: rotate(30deg); 
+	transform: rotate(30deg); 
 }
 
 .fieldButton {
