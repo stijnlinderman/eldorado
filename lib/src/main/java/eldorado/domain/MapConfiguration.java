@@ -16,9 +16,9 @@ public class MapConfiguration {
 	private static Map<String, Field> createMapFromMapConfiguration (String[][] mapConfiguration) {
 		Map<String, Field> fields = new HashMap<String, Field>();
 		for (String[] fieldConfiguration : mapConfiguration) {
-			String coordinatesStringKey = fieldConfiguration[0];
+			String xyzStringKey = fieldConfiguration[0];
 			String fieldValuesString = fieldConfiguration[1];
-			fields.put(coordinatesStringKey, createFieldFromFieldValuesString(fieldValuesString));
+			fields.put(xyzStringKey, createFieldFromFieldValuesString(fieldValuesString));
 		}
 		return fields;
 	}

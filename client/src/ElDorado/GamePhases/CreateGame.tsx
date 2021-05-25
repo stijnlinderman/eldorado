@@ -11,12 +11,11 @@ export function CreateGame ({ setGameState }: createGameProps) {
 	
 	async function tryInit() {
 		try {
-	        const response = await fetch('eldorado/api/creategame')
+	        const response = await fetch("eldorado/api/creategame")
 		
 	        if (response.ok) {
 	            const gameStateDTO: GameStateDTO = await response.json();
-				const gameState = new GameState(gameStateDTO);
-				setGameState(gameState);
+				setGameState(new GameState(gameStateDTO));
 	        } else {
 	            console.error(response.statusText)
 	        }

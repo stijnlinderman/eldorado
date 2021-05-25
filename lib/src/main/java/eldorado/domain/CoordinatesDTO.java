@@ -8,8 +8,8 @@ public class CoordinatesDTO {
 	public int y;
 	public int z;
 	
-	public CoordinatesDTO (String coordinatesKeyString) {
-		String[] coordinates = coordinatesKeyString.split(MapConfiguration.seperator);
+	public CoordinatesDTO (String xyzStringKey) {
+		String[] coordinates = xyzStringKey.split(MapConfiguration.seperator);
 		this.x = Integer.parseInt(coordinates[0]);
 		this.y = Integer.parseInt(coordinates[1]);
 		this.z = Integer.parseInt(coordinates[2]);

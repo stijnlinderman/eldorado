@@ -7,8 +7,8 @@ public class FieldDTO {
 	public CoordinatesDTO coordinatesDTO;
 	public Field fieldStateDTO;
 	
-	public FieldDTO (String coordinatesKey, Field field) {
-		this.coordinatesDTO = new CoordinatesDTO(coordinatesKey);
+	public FieldDTO (String xyzStringKey, Field field) {
+		this.coordinatesDTO = new CoordinatesDTO(xyzStringKey);
 		this.fieldStateDTO = field;
 	}
 }

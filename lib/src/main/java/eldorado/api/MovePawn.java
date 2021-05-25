@@ -9,20 +9,20 @@ import jakarta.ws.rs.core.*;
 
 import eldorado.domain.*;
 
-@Path("/creategame")
-public class CreateGame {
-    @GET
-	//@Consumes(MediaType.APPLICATION_JSON)
+@Path("/movepawn")
+public class MovePawn {
+    @POST
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response initialize(
-			@Context HttpServletRequest request) {
+			@Context HttpServletRequest request,
+			String xyzStringKey) {
     	
     	try {
-	    	Game game = new Game(0);
-	        HttpSession session = request.getSession(true);
-	        session.setAttribute("game", game);
-	        
-			return Response.status(200).entity(game.getCurrentStateDTO()).build();
+    		HttpSession session = request.getSession(true);
+    		Game game = (Game) session.getAttribute("game");
+    		
+    		return Response.status(200).entity(game.getCurrentStateDTO()).build();
     	} catch (Exception e) {
     		return Response.status(500).build();
     	}

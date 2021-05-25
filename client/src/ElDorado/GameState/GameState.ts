@@ -6,7 +6,6 @@ export class GameState {
 	mapBoundaries: MapBoundaries;
 	
 	constructor (gameStateDTO: GameStateDTO) {
-		console.log(gameStateDTO)
 		this.mapState = new MapState (gameStateDTO.mapStateDTO);
 		this.mapBoundaries = new MapBoundaries(this.mapState.fields);
 	}
