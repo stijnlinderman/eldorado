@@ -8,6 +8,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 
 import eldorado.domain.*;
+import eldorado.api.dto.*;
 
 @Path("/movepawn")
 public class MovePawn {
@@ -16,15 +17,40 @@ public class MovePawn {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response initialize(
 			@Context HttpServletRequest request,
-			String xyzStringKey) {
+			MovePawnRequest movePawnRequest) {
     	
     	try {
     		HttpSession session = request.getSession(true);
     		Game game = (Game) session.getAttribute("game");
     		
-    		return Response.status(200).entity(game.getCurrentStateDTO()).build();
+    		int pawnId = movePawnRequest.pawnId;
+    		int newX = movePawnRequest.coordinatesToMoveTo.x;
+    		int newY = movePawnRequest.coordinatesToMoveTo.y;
+    		int newZ = movePawnRequest.coordinatesToMoveTo.z;
+    		
+    		Field fieldToMoveTo = game.getMap().getField(newX, newY, newZ);
+    		
+    		if (fieldToMoveTo == null) {
+        		GameStateDTO gameStateDTO = new GameStateDTO (game);
+        		return Response.status(400).entity(gameStateDTO).build();
+    		} else {
+        		Field originField = game.getMap().findNeighboringFieldThatCurrentlyContainsPawn(newX, newY, newZ, pawnId);
+        		if (originField == null) {
+            		GameStateDTO gameStateDTO = new GameStateDTO (game);
+            		return Response.status(400).entity(gameStateDTO).build();
+        		} else {
+        			fieldToMoveTo.receivePawn(originField);
+            		GameStateDTO gameStateDTO = new GameStateDTO (game);
+            		return Response.status(200).entity(gameStateDTO).build();
+        		}
+    		}
     	} catch (Exception e) {
     		return Response.status(500).build();
     	}
 	}
+}
+
+class MovePawnRequest {
+	int pawnId;
+	CoordinatesDTO coordinatesToMoveTo;
 }

@@ -56,4 +56,27 @@ public class MapConfiguration {
 			{"3,2,5", "0"}
 		}
 	};
-};
+	
+	private static final int[][] neighborCoordinatesOffsets = {
+			{1, 0, 0},
+			{0, 1, 0},
+			{0, 0, 1},
+			{-1, 0, 0},
+			{0, -1, 0},
+			{0, 0, -1}
+	};
+	
+	public Field findNeighboringFieldThatCurrentlyContainsPawn (int x, int y, int z, int pawnId) {
+		for (int i=0; i<neighborCoordinatesOffsets.length; i++) {
+			int[] coordinatesOffset = neighborCoordinatesOffsets[i];
+			int offsetX = coordinatesOffset[0];
+			int offsetY = coordinatesOffset[1];
+			int offsetZ = coordinatesOffset[2];
+			Field neighborField = this.getField(x + offsetX, y + offsetY, z + offsetZ);
+			if (neighborField != null && neighborField.occupiedByPawnId == pawnId) {
+				return neighborField;
+			};
+		};
+		return null;
+	};
+}

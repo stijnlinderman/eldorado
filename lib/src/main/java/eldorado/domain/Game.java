@@ -14,8 +14,4 @@ public class Game {
 	public MapConfiguration getMap () {
 		return this.map;
 	}
-	
-	public GameStateDTO getCurrentStateDTO () {
-		return new GameStateDTO(this);
-	}
 }

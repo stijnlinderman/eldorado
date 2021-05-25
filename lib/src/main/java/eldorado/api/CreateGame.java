@@ -8,6 +8,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 
 import eldorado.domain.*;
+import eldorado.api.dto.*;
+
 
 @Path("/creategame")
 public class CreateGame {
@@ -22,7 +24,8 @@ public class CreateGame {
 	        HttpSession session = request.getSession(true);
 	        session.setAttribute("game", game);
 	        
-			return Response.status(200).entity(game.getCurrentStateDTO()).build();
+    		GameStateDTO gameStateDTO = new GameStateDTO (game);
+			return Response.status(200).entity(gameStateDTO).build();
     	} catch (Exception e) {
     		return Response.status(500).build();
     	}

@@ -120,7 +120,7 @@ export function ShowGame({ gameState, setGameState }: GameProps) {
 			const pawnId = 1;
 			const requestBody = {
 				pawnId: pawnId,
-				xyzToMoveTo: field.coordinates.key
+				coordinatesToMoveTo: field.coordinates
 			}
 			const request = {
 				method: "POST",

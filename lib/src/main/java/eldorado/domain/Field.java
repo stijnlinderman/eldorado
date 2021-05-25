@@ -21,4 +21,14 @@ public class Field {
 	public void setOccupiedByPawnId (int pawnId) {
 		this.occupiedByPawnId = pawnId;
 	}
+	
+	public void receivePawn (Field originField) {
+		this.occupiedByPawnId = originField.obtainPawn();
+	}
+	
+	public int obtainPawn () {
+		int pawnId = this.occupiedByPawnId;
+		this.occupiedByPawnId = 0;
+		return pawnId;
+	}
 }
