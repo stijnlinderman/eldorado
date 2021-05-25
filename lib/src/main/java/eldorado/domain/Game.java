@@ -11,6 +11,10 @@ public class Game {
 		this.map = new MapConfiguration(mapConfigurationId);
 	}
 	
+	public Game (String[][] mapConfiguration) {
+	this.map = new MapConfiguration(mapConfiguration);
+	}
+	
 	public MapConfiguration getMap () {
 		return this.map;
 	}

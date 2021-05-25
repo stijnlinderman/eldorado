@@ -13,7 +13,11 @@ public class MapConfiguration {
 		this.fields = createMapFromMapConfiguration(mapConfigurations[mapConfigurationId]);
 	}
 	
-	private static Map<String, Field> createMapFromMapConfiguration (String[][] mapConfiguration) {
+	public MapConfiguration (String[][] mapConfiguration) {
+		this.fields = createMapFromMapConfiguration(mapConfiguration);
+	}
+	
+	public static Map<String, Field> createMapFromMapConfiguration (String[][] mapConfiguration) {
 		Map<String, Field> fields = new HashMap<String, Field>();
 		for (String[] fieldConfiguration : mapConfiguration) {
 			String xyzStringKey = fieldConfiguration[0];
@@ -73,7 +77,7 @@ public class MapConfiguration {
 			int offsetY = coordinatesOffset[1];
 			int offsetZ = coordinatesOffset[2];
 			Field neighborField = this.getField(x + offsetX, y + offsetY, z + offsetZ);
-			if (neighborField != null && neighborField.occupiedByPawnId == pawnId) {
+			if (neighborField != null && neighborField.getPawnId() == pawnId) {
 				return neighborField;
 			};
 		};
