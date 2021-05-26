@@ -39,12 +39,17 @@
 }
 
 .fieldButton {
-	width: calc(50px * var(--size));
+	width: calc(40px * var(--size));
 	height: calc(40px * var(--size));
 	border: none;
 	background-color: rgb(0, 128, 0);
 	font-size: calc(20px * var(--size));
 	color: rgb(255, 255, 255);
+	border-radius: calc(20px * var(--size));
+	margin-top: calc(0px * var(--size));
+	margin-left: calc(5px * var(--size));
+	margin-right: calc(5px * var(--size));
+	margin-bottom: calc(0px * var(--size));
 }
 .fieldButton:hover {
 	background-color: rgb(115, 221, 51);

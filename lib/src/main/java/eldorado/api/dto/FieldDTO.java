@@ -4,12 +4,16 @@
 package eldorado.api.dto;
 import eldorado.domain.*;
 
-public class FieldDTO {
-	public CoordinatesDTO coordinatesDTO;
-	public Field fieldStateDTO;
+public class FieldDTO extends Field {
+	public final int x;
+	public final int y;
+	public final int z;
 	
-	public FieldDTO (String xyzStringKey, Field field) {
-		this.coordinatesDTO = new CoordinatesDTO(xyzStringKey);
-		this.fieldStateDTO = field;
+	public FieldDTO (Field field, String xyzStringKey) {
+		super (field.occupiedByPawnId, field.isFinishField);
+		String[] coordinates = xyzStringKey.split(MapConfiguration.seperator);
+		this.x = Integer.parseInt(coordinates[0]);
+		this.y = Integer.parseInt(coordinates[1]);
+		this.z = Integer.parseInt(coordinates[2]);
 	}
 }

@@ -1,5 +1,5 @@
 
-import type { GameStateDTO, MapStateDTO, FieldDTO, FieldStateDTO, CoordinatesDTO } from "../GameState/GameStateDTO";
+import type { GameStateDTO, MapStateDTO, FieldDTO } from "../GameState/GameStateDTO";
 
 export class GameState {
 	mapState: MapState;
@@ -42,8 +42,8 @@ export class MapState {
 		const fieldsArray: {[index:string]:Field} = {};
 		for (let i=0; i < fieldDTOs.length; i++) {
 			const fieldDTO = fieldDTOs[i];
-			const coordinates = new Coordinates(fieldDTO.coordinatesDTO, seperator)
-			fieldsArray[coordinates.key] = new Field(coordinates, fieldDTO.fieldStateDTO);
+			const coordinates = new Coordinates(fieldDTO.x, fieldDTO.y, fieldDTO.z, seperator)
+			fieldsArray[coordinates.key] = new Field(coordinates, fieldDTO.occupiedByPawnId, fieldDTO.isWinningField);
 		}
 		return fieldsArray;
 	}
@@ -79,10 +79,12 @@ export class MapBoundaries {
 export class Field {
 	occupiedByPawnId: number;
 	coordinates: Coordinates;
+	isWinningField: boolean;
 	
-	constructor (coordinates: Coordinates, fieldStateDTO: FieldStateDTO) {
-		this.occupiedByPawnId = fieldStateDTO.occupiedByPawnId;
+	constructor (coordinates: Coordinates, occupiedByPawnId: number, isWinningField: boolean) {
+		this.occupiedByPawnId = occupiedByPawnId;
 		this.coordinates = coordinates;
+		this.isWinningField = isWinningField;
 	}
 	
 	get buttonContent () {
@@ -96,10 +98,10 @@ export class Coordinates {
 	z: number;
 	seperator: string;
 	
-	constructor (coordinatesDTO: CoordinatesDTO, seperator: string) {
-		this.x = coordinatesDTO.x;
-		this.y = coordinatesDTO.y;
-		this.z = coordinatesDTO.z;
+	constructor (x: number, y: number, z: number, seperator: string) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
 		this.seperator = seperator;
 	}
 	

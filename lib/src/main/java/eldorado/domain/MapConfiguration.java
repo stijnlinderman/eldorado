@@ -21,15 +21,11 @@ public class MapConfiguration {
 		Map<String, Field> fields = new HashMap<String, Field>();
 		for (String[] fieldConfiguration : mapConfiguration) {
 			String xyzStringKey = fieldConfiguration[0];
-			String fieldValuesString = fieldConfiguration[1];
-			fields.put(xyzStringKey, createFieldFromFieldValuesString(fieldValuesString));
+			int startPosForPawnId = Integer.parseInt(fieldConfiguration[1]);
+			boolean isFinishField = (fieldConfiguration[2] == "yes");
+			fields.put(xyzStringKey, new Field(startPosForPawnId, isFinishField));
 		}
 		return fields;
-	}
-	
-	private static Field createFieldFromFieldValuesString (String fieldValuesString) {
-		int startingPointForPawnId = Integer.parseInt(fieldValuesString);
-		return new Field(startingPointForPawnId);
 	}
 	
 	public boolean isField (int x, int y, int z) {
@@ -48,20 +44,20 @@ public class MapConfiguration {
 
 	private static final String[][][] mapConfigurations = {
 		{
-			{"0,0,0", "0"},
-			{"0,1,1", "1"},
-			{"0,3,3", "0"},
-			{"0,4,4", "0"},
-			{"1,0,1", "0"},
-			{"1,1,2", "0"},
-			{"1,2,3", "0"},
-			{"1,3,4", "0"},
-			{"2,0,2", "0"},
-			{"2,2,4", "0"},
-			{"2,3,5", "0"},
-			{"3,-1,2", "0"},
-			{"3,0,3", "0"},
-			{"3,2,5", "0"}
+			{"0,0,0", "0", "no"},
+			{"0,1,1", "1", "no"},
+			{"0,3,3", "0", "no"},
+			{"0,4,4", "0", "no"},
+			{"1,0,1", "0", "no"},
+			{"1,1,2", "0", "no"},
+			{"1,2,3", "0", "no"},
+			{"1,3,4", "0", "no"},
+			{"2,0,2", "0", "no"},
+			{"2,2,4", "0", "no"},
+			{"2,3,5", "0", "no"},
+			{"3,-1,2", "0", "no"},
+			{"3,0,3", "0", "no"},
+			{"3,2,5", "0", "yes"}
 		}
 	};
 	

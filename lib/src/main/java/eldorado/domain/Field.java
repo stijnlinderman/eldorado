@@ -5,9 +5,11 @@ package eldorado.domain;
 
 public class Field {
 	public int occupiedByPawnId = 0;
+	public final boolean isFinishField;
 	
-	public Field (int pawnId) {
-		this.setOccupiedByPawnId(pawnId);
+	public Field (int startPosForPawnId, boolean isFinishField) {
+		this.setOccupiedByPawnId(startPosForPawnId);
+		this.isFinishField = isFinishField;
 	}		
 	
 	public boolean isOccupied () {

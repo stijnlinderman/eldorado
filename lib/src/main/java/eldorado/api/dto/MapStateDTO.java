@@ -18,7 +18,7 @@ public class MapStateDTO {
 		FieldDTO[] fieldsArray = new FieldDTO[fieldsMap.size()];
 		int i = 0;
 		for (Map.Entry<String, Field> fieldEntry: fieldsMap.entrySet()) {
-			fieldsArray[i] = new FieldDTO(fieldEntry.getKey(), fieldEntry.getValue());
+			fieldsArray[i] = new FieldDTO(fieldEntry.getValue(), fieldEntry.getKey());
 			i++;
 		}
 		return fieldsArray;
