@@ -32,11 +32,15 @@ public class MapConfiguration {
 		return new Field(startingPointForPawnId);
 	}
 	
-	public Field getField (int x, int y, int z) {
-		return this.fields.get(xyzToKeyString(x, y, z));
+	public boolean isField (int x, int y, int z) {
+		return this.fields.containsKey(xyzToStringKey(x, y ,z));
 	}
 	
-	private static String xyzToKeyString (Integer x, Integer y, Integer z) {
+	public Field getField (int x, int y, int z) {
+		return this.fields.get(xyzToStringKey(x, y, z));
+	}
+	
+	private static String xyzToStringKey (Integer x, Integer y, Integer z) {
 		return String.join(MapConfiguration.seperator, x.toString(), y.toString(), z.toString());
 	}
 	
@@ -62,21 +66,25 @@ public class MapConfiguration {
 	};
 	
 	private static final int[][] neighborCoordinatesOffsets = {
-			{1, 0, 0},
-			{0, 1, 0},
-			{0, 0, 1},
-			{-1, 0, 0},
-			{0, -1, 0},
-			{0, 0, -1}
+			{0, 1, 1},
+			{1, 0, 1},
+			{1, -1, 0},
+			{0, -1, -1},
+			{-1, 0, -1},
+			{-1, 1, 0}
 	};
+	
+	public int[][] getNeighborCoordinatesOffsets () {
+		return neighborCoordinatesOffsets;
+	}
 	
 	public Field findNeighboringFieldThatCurrentlyContainsPawn (int x, int y, int z, int pawnId) {
 		for (int i=0; i<neighborCoordinatesOffsets.length; i++) {
 			int[] coordinatesOffset = neighborCoordinatesOffsets[i];
-			int offsetX = coordinatesOffset[0];
-			int offsetY = coordinatesOffset[1];
-			int offsetZ = coordinatesOffset[2];
-			Field neighborField = this.getField(x + offsetX, y + offsetY, z + offsetZ);
+			int neighborX = x + coordinatesOffset[0];
+			int neighborY = y + coordinatesOffset[1];
+			int neighborZ = z + coordinatesOffset[2];
+			Field neighborField = this.getField(neighborX, neighborY, neighborZ);
 			if (neighborField != null && neighborField.getPawnId() == pawnId) {
 				return neighborField;
 			};

@@ -62,7 +62,7 @@ public class GameTest {
     	Game game = new Game(mapTestConfigurations[0]);
     	assertNull (game.getMap().getField(-1, -1, -1));
     }
-    
+ 
     @Test
     public void fieldHasNeighborThatContainsThePawn () {
 		Game game = new Game(mapTestConfigurations[0]);
@@ -72,6 +72,6 @@ public class GameTest {
     @Test
     public void fieldHasNeighborThatDoesNotContainThePawn () {
 		Game game = new Game(mapTestConfigurations[0]);
-		assertNotNull(game.getMap().findNeighboringFieldThatCurrentlyContainsPawn(3, 2, 5, 1));
+		assertNull(game.getMap().findNeighboringFieldThatCurrentlyContainsPawn(3, 2, 5, 1));
     }
 }

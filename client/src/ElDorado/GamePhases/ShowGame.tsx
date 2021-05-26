@@ -116,33 +116,56 @@ export function ShowGame({ gameState, setGameState }: GameProps) {
 	}
 	
 	async function movePawnToField (field: Field) {
+		const pawnId = 1;
+		const requestDTO: MovePawnRequestDTO = new MovePawnRequestDTO (pawnId, field.coordinates.x, field.coordinates.y, field.coordinates.z);
+
 		try {
-			const pawnId = 1;
-			const requestBody = {
-				pawnId: pawnId,
-				coordinatesToMoveTo: field.coordinates
-			}
 			const request = {
 				method: "POST",
 				headers: {
 					"Accept": "application/json",
 					"Content-Type": "application/json"
 				},
-				body: JSON.stringify(requestBody)
+				body: JSON.stringify(requestDTO)
 			}
 	
 			const response = await fetch("eldorado/api/movepawn", request);
 			
-	        if (response.ok) {
+	        if (response.status == 200) {
 	            const gameStateDTO: GameStateDTO = await response.json();
 				const gameState = new GameState(gameStateDTO);
 				setGameState(gameState);
+	        } else if (response.status == 202) {
+				const deniedRequestDTO: DeniedRequestDTO = await response.json();
+				alert(deniedRequestDTO.message);
 	        } else {
-	            console.error(response.statusText)
-	        }
+				console.error(response.statusText)
+			}
 	
 	    } catch (error) {
 	        console.error(error.toString())
 	    }
+	}
+}
+
+class MovePawnRequestDTO {
+	pawnId: number;
+	x: number;
+	y: number;
+	z: number;
+	
+	constructor (pawnId: number, x: number, y: number, z: number) {
+		this.pawnId = pawnId;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+}
+
+class DeniedRequestDTO {
+	message: string;
+	
+	constructor (message: string) {
+		this.message = message;
 	}
 }
