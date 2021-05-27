@@ -29,7 +29,7 @@ public class Game {
 	}
 	
 	public void processPossibleWin (Field newlyOccupiedField) {
-		if (newlyOccupiedField.isOccupied() && newlyOccupiedField.isFinishField) {
+		if (newlyOccupiedField.isOccupied() && newlyOccupiedField.type == "finish") {
 			this.setWinningPawnId(newlyOccupiedField.getPawnId());
 		}
 	}

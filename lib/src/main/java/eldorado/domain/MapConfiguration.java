@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 public class MapConfiguration {
 	public final Map<String, Field> fields;
+	public static final String[] fieldTypes = {"finish", "jungle", "water", "gold"};
 	
 	public MapConfiguration (int mapConfigurationId) {
 		this.fields = createMapFromMapConfiguration(mapConfigurations[mapConfigurationId]);
@@ -22,8 +23,8 @@ public class MapConfiguration {
 		for (String[] fieldConfiguration : mapConfiguration) {
 			String xyzStringKey = fieldConfiguration[0];
 			int startPosForPawnId = Integer.parseInt(fieldConfiguration[1]);
-			boolean isFinishField = (fieldConfiguration[2] == "yes");
-			fields.put(xyzStringKey, new Field(startPosForPawnId, isFinishField));
+			String type = fieldConfiguration[2];
+			fields.put(xyzStringKey, new Field(startPosForPawnId, type));
 		}
 		return fields;
 	}
@@ -44,44 +45,71 @@ public class MapConfiguration {
 
 	private static final String[][][] mapConfigurations = {
 		{
-			{"0,0,0", "0", "no"},
-			{"0,1,1", "1", "no"},
-			{"0,3,3", "0", "no"},
-			{"0,4,4", "0", "no"},
-			{"1,0,1", "0", "no"},
-			{"1,1,2", "0", "no"},
-			{"1,2,3", "0", "no"},
-			{"1,3,4", "0", "no"},
-			{"2,0,2", "0", "no"},
-			{"2,2,4", "0", "no"},
-			{"2,3,5", "0", "no"},
-			{"3,-1,2", "0", "no"},
-			{"3,0,3", "0", "no"},
-			{"3,2,5", "0", "yes"}
+			{"0,0,0", "0", "jungle"},
+			{"0,1,1", "1", "jungle"},
+			{"0,3,3", "0", "jungle"},
+			{"0,4,4", "0", "jungle"},
+			{"1,0,1", "0", "jungle"},
+			{"1,1,2", "0", "jungle"},
+			{"1,2,3", "0", "jungle"},
+			{"1,3,4", "0", "jungle"},
+			{"2,0,2", "0", "jungle"},
+			{"2,2,4", "0", "jungle"},
+			{"2,3,5", "0", "jungle"},
+			{"3,-1,2", "0", "jungle"},
+			{"3,0,3", "0", "jungle"},
+			{"3,2,5", "0", "finish"}
 		},
 		{
-			{"0,0,0", "0", "no"},
+			{"0,0,0", "0", "jungle"},
 			
-			{"0,1,1", "0", "no"},
-			{"0,2,2", "0", "no"},
-			{"0,3,3", "1", "no"},
+			{"0,1,1", "0", "jungle"},
+			{"0,2,2", "0", "water"},
+			{"0,3,3", "1", "water"},
+
+			{"1,1,2", "0", "jungle"},
+			{"2,1,3", "0", "gold"},
+			{"1,2,3", "0", "jungle"},
 			
-			{"1,0,1", "0", "no"},
-			{"2,0,2", "0", "no"},
-			{"3,0,3", "0", "no"},
+			{"1,0,1", "0", "jungle"},
+			{"2,0,2", "0", "water"},
+			{"3,0,3", "0", "gold"},
 			
-			{"1,-1,0", "0", "no"}/*,
-			{"2,-2,0", "0", "no"},
-			{"3,-3,0", "0", "no"},
-			{"0,-1,-1", "0", "no"},
-			{"0,-2,-2", "0", "no"},
-			{"0,-3,-3", "0", "no"},
-			{"-1,0,-1", "0", "no"},
-			{"-2,0,-2", "0", "no"},
-			{"-3,0,-3", "0", "no"},
-			{"-1,1,0", "0", "no"},
-			{"-2,2,0", "0", "no"},
-			{"-3,3,0", "0", "yes"}*/
+			{"2,-1,1", "0", "jungle"},
+			{"3,-2,1", "0", "jungle"},
+			{"3,-1,2", "0", "jungle"},
+		
+			{"1,-1,0", "0", "jungle"},
+			{"2,-2,0", "0", "gold"},
+			{"3,-3,0", "0", "water"},
+			
+			{"1,-2,-1", "0", "jungle"},
+			{"1,-3,-2", "0", "jungle"},
+			{"2,-3,-1", "0", "jungle"},
+		
+			{"0,-1,-1", "0", "jungle"},
+			{"0,-2,-2", "0", "gold"},
+			{"0,-3,-3", "0", "gold"},
+	
+			{"-1,-1,-2", "0", "jungle"},
+			{"-2,-1,-3", "0", "jungle"},
+			{"-1,-2,-3", "0", "water"},
+
+			{"-1,0,-1", "0", "jungle"},
+			{"-2,0,-2", "0", "gold"},
+			{"-3,0,-3", "0", "jungle"},
+
+			{"-2,1,-1", "0", "jungle"},
+			{"-3,2,-1", "0", "jungle"},
+			{"-3,1,-2", "0", "jungle"},
+
+			{"-1,1,0", "0", "jungle"},
+			{"-2,2,0", "0", "water"},
+			{"-3,3,0", "0", "finish"},
+			
+			{"-1,2,1", "0", "gold"},
+			{"-2,3,1", "0", "gold"},
+			{"-1,3,2", "0", "jungle"}		
 		}		
 	};
 	

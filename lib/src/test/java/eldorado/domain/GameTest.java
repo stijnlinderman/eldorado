@@ -32,12 +32,6 @@ public class GameTest {
 				{"3,2,5", "0", "yes"}
 			}
 		};
-	
-    @Test 
-    public void newFieldHasCenterPos() {
-    	Game game = new Game(mapTestConfigurations[0]);
-        assertNotNull(game.getMap().getField(0, 0, 0));
-    }
     
     @Test
     public void firstPawnHasAStartingPoint() {
@@ -74,4 +68,5 @@ public class GameTest {
 		Game game = new Game(mapTestConfigurations[0]);
 		assertNull(game.getMap().findNeighboringFieldThatCurrentlyContainsPawn(3, 2, 5, 1));
     }
+
 }

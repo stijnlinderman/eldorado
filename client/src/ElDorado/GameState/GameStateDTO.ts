@@ -7,6 +7,7 @@ export interface GameStateDTO {
 export interface MapStateDTO {
 	fieldDTOs: FieldDTO[];
 	separator: string;
+	fieldTypes: [];
 }
 
 export interface FieldDTO {
@@ -14,5 +15,5 @@ export interface FieldDTO {
 	y: number;
 	z: number;
 	occupiedByPawnId: number;
-	isFinishField: boolean;
+	type: string;
 }

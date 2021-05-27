@@ -1,12 +1,15 @@
 /** Add some styles */
 :root {
 	--titleColor: rgb(245, 198, 99);
-	--size: 3;
+	--size: 2;
 }
 
 body {
 	background-color: rgb(73, 33, 33);
-	background-image: url(background.jpg)
+	background-image: url(background.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
 }
 
 footer {

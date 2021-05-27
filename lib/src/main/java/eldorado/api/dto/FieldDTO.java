@@ -10,7 +10,7 @@ public class FieldDTO extends Field {
 	public final int z;
 	
 	public FieldDTO (Field field, String xyzStringKey) {
-		super (field.occupiedByPawnId, field.isFinishField);
+		super (field.occupiedByPawnId, field.type);
 		String[] coordinates = xyzStringKey.split(MapConfiguration.separator);
 		this.x = Integer.parseInt(coordinates[0]);
 		this.y = Integer.parseInt(coordinates[1]);

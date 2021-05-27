@@ -19,7 +19,7 @@
 	height: calc(20px * var(--size));
 }
 .buttonCell {
-	width: calc(25px * var(--size));
+	width: calc(20px * var(--size));
 	border-right: calc(var(--fieldBorderThickness) * var(--size)) var(--fieldBorderStyle) var(--fieldBorderColor);
 }
 .leftBorder {
@@ -46,10 +46,6 @@
 	width: calc(40px * var(--size));
 	height: calc(40px * var(--size));
 	border: none;
-	background-color: rgb(170, 221, 100);
-	background: url(forest.jpg) no-repeat right bottom;
-	background-size: calc(50px * var(--size));
-	font-size: calc(30px * var(--size));
 	vertical-align: middle;
 	color: rgb(255, 255, 255);
 	border-radius: calc(20px * var(--size));
@@ -65,15 +61,33 @@
 	filter: brightness(150%);
 }
 
-.fieldButtonFinish {
-	/*border: calc(2px * var(--size));
-	border-style: dotted;
-	border-color: rgb(255, 204, 0);*/
+.finish {
 	background: url(finish.jpg) no-repeat center center;
 	background-size: calc(50px * var(--size));
+}
+
+.jungle {
+	background: url(forest.jpg) no-repeat right bottom;
+	background-size: calc(50px * var(--size));
+}
+
+.water {
+	background: url(water.jpg) no-repeat center center;
+	background-size: calc(50px * var(--size));
+}
+
+.gold {
+	background: url(gold.jpg) no-repeat center center;
+	background-size: calc(50px * var(--size));
+}
+
+.unoccupiedField {
+	font-size: calc(8px * var(--size));
 }
 
 .pawnOne {
 	color: rgb(255, 255, 255);
 	text-shadow: calc(1px * var(--size)) calc(2px * var(--size)) calc(2px * var(--size)) rgb(0,0,0);
+	font-size: calc(30px * var(--size));
+
 }

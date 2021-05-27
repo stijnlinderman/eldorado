@@ -9,12 +9,6 @@ export class GameState {
 		this.mapState = new MapState (gameStateDTO.mapStateDTO);
 		this.winningPawnId = gameStateDTO.winningPawnId;
 	}
-	
-	getFieldByRowAndColumnIdsStringKey(rowId: number, columnId: number) {
-		const rowAndColumnIdsStringKey = `${rowId}${this.mapState.separator}${columnId}`;
-		console.log("looking for field with key "+rowAndColumnIdsStringKey)
-		return this.mapState.fields[rowAndColumnIdsStringKey];
-	}
 		
 	get winner () {
 		return this.winningPawnId > 0 ? this.winningPawnId : null;
@@ -24,18 +18,20 @@ export class GameState {
 export class MapState {
 	fields: {[index:string]:Field};
 	separator: string;
+	fieldTypes: [];
 	
 	constructor (mapStateDTO: MapStateDTO) {
 		this.separator = mapStateDTO.separator;
 		this.fields = this.createFieldsArray (mapStateDTO.fieldDTOs);
+		this.fieldTypes = mapStateDTO.fieldTypes;
 	}
 	
 	createFieldsArray (fieldDTOs: FieldDTO[]) {
 		const fieldsArray: {[index:string]:Field} = {};
 		for (let i=0; i < fieldDTOs.length; i++) {
 			const fieldDTO = fieldDTOs[i];
-			const field = new Field(fieldDTO.x, fieldDTO.y, fieldDTO.z, this.separator, fieldDTO.occupiedByPawnId, fieldDTO.isFinishField);
-			fieldsArray[field.coordinates.key] = field;
+			const field = new Field(fieldDTO.x, fieldDTO.y, fieldDTO.z, this.separator, fieldDTO.occupiedByPawnId, fieldDTO.type);
+			fieldsArray[field.coordinates.xyzStringKey] = field;
 		}
 		return fieldsArray;
 	}
@@ -44,12 +40,12 @@ export class MapState {
 export class Field {
 	occupiedByPawnId: number;
 	coordinates: Coordinates;
-	isFinishField: boolean;
+	type: string;
 	
-	constructor (x: number, y: number, z: number, separator: string, occupiedByPawnId: number, isFinishField: boolean) {
+	constructor (x: number, y: number, z: number, separator: string, occupiedByPawnId: number, type: string) {
 		this.occupiedByPawnId = occupiedByPawnId;
 		this.coordinates = new Coordinates (x, y, z, separator);
-		this.isFinishField = isFinishField;
+		this.type = type;
 	}
 }
 
@@ -66,7 +62,11 @@ export class Coordinates {
 		this.separator = separator;
 	}
 	
-	get key () {
+	get rowColumnStringKey () {
+		return `${this.rowId}${this.separator}${this.columnId}`;
+	}
+	
+	get xyzStringKey () {
 		return `${this.x}${this.separator}${this.y}${this.separator}${this.z}`;
 	}
 	
