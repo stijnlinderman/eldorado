@@ -32,6 +32,7 @@ public class MovePawn {
     		    		
     		if (originField != null && fieldToMoveTo != null) {
     			fieldToMoveTo.receivePawn(originField);
+    			game.processPossibleWin(fieldToMoveTo);
         		GameStateDTO gameStateDTO = new GameStateDTO (game);
         		return Response.status(200).entity(gameStateDTO).build();
     		} else {

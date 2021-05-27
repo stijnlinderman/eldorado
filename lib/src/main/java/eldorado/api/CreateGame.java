@@ -20,7 +20,7 @@ public class CreateGame {
 			@Context HttpServletRequest request) {
     	
     	try {
-	    	Game game = new Game(0);
+	    	Game game = new Game(1);
 	        HttpSession session = request.getSession(true);
 	        session.setAttribute("game", game);
 	        

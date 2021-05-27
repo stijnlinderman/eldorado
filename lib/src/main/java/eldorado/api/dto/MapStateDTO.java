@@ -8,7 +8,7 @@ import eldorado.domain.*;
 
 public class MapStateDTO {
 	public final FieldDTO[] fieldDTOs;
-	public final String seperator = MapConfiguration.seperator;
+	public final String separator = MapConfiguration.separator;
 	
 	public MapStateDTO (MapConfiguration map) {
 		this.fieldDTOs = convertMapToJSONableArrayDTO(map.fields);

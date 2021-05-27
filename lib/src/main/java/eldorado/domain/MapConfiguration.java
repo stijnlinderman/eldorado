@@ -37,10 +37,10 @@ public class MapConfiguration {
 	}
 	
 	private static String xyzToStringKey (Integer x, Integer y, Integer z) {
-		return String.join(MapConfiguration.seperator, x.toString(), y.toString(), z.toString());
+		return String.join(MapConfiguration.separator, x.toString(), y.toString(), z.toString());
 	}
 	
-	public static final String seperator = ",";
+	public static final String separator = ",";
 
 	private static final String[][][] mapConfigurations = {
 		{
@@ -58,7 +58,31 @@ public class MapConfiguration {
 			{"3,-1,2", "0", "no"},
 			{"3,0,3", "0", "no"},
 			{"3,2,5", "0", "yes"}
-		}
+		},
+		{
+			{"0,0,0", "0", "no"},
+			
+			{"0,1,1", "0", "no"},
+			{"0,2,2", "0", "no"},
+			{"0,3,3", "1", "no"},
+			
+			{"1,0,1", "0", "no"},
+			{"2,0,2", "0", "no"},
+			{"3,0,3", "0", "no"},
+			
+			{"1,-1,0", "0", "no"}/*,
+			{"2,-2,0", "0", "no"},
+			{"3,-3,0", "0", "no"},
+			{"0,-1,-1", "0", "no"},
+			{"0,-2,-2", "0", "no"},
+			{"0,-3,-3", "0", "no"},
+			{"-1,0,-1", "0", "no"},
+			{"-2,0,-2", "0", "no"},
+			{"-3,0,-3", "0", "no"},
+			{"-1,1,0", "0", "no"},
+			{"-2,2,0", "0", "no"},
+			{"-3,3,0", "0", "yes"}*/
+		}		
 	};
 	
 	private static final int[][] neighborCoordinatesOffsets = {

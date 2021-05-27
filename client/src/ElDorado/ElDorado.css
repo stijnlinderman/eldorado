@@ -1,1 +1,47 @@
 /** Add some styles */
+:root {
+	--titleColor: rgb(245, 198, 99);
+	--size: 3;
+}
+
+body {
+	background-color: rgb(73, 33, 33);
+	background-image: url(background.jpg)
+}
+
+footer {
+	margin-top: calc(20px * var(--size));
+}
+
+p {
+	text-align: center;	
+	font-size: calc(8px * var(--size));
+	font-family: 'Fredericka the Great', sans-serif;
+	color: rgb(255,255,255);
+	text-shadow: calc(1px * var(--size)) calc(2px * var(--size)) calc(2px * var(--size)) rgb(0,0,0);
+}
+
+h1 {
+	text-align: center;	
+	font-size: calc(20px * var(--size));
+	line-height: calc(5px * var(--size));
+	font-family: 'Fredericka the Great', sans-serif;
+	color: var(--titleColor);	
+	text-shadow: calc(1px * var(--size)) calc(2px * var(--size)) calc(2px * var(--size)) rgb(0,0,0);
+}
+
+h2 {
+	text-align: center;	
+	font-size: calc(12px * var(--size));
+	font-family: 'Fredericka the Great', sans-serif;
+	color: var(--titleColor);
+	text-shadow: calc(1px * var(--size)) calc(2px * var(--size)) calc(2px * var(--size)) rgb(0,0,0);
+}
+
+h3 {
+	text-align: center;	
+	font-size: calc(8px * var(--size));
+	font-family: 'Fredericka the Great', sans-serif;
+	color: var(--titleColor);
+	text-shadow: calc(1px * var(--size)) calc(2px * var(--size)) calc(2px * var(--size)) rgb(0,0,0);
+}

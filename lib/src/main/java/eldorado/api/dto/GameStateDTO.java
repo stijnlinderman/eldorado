@@ -7,8 +7,10 @@ import eldorado.domain.*;
 
 public class GameStateDTO {
 	public final MapStateDTO mapStateDTO;
-
+	public final int winningPawnId;
+	
 	public GameStateDTO (Game game) {
 		this.mapStateDTO = new MapStateDTO(game.getMap());
+		this.winningPawnId = game.getWinningPawnId();
 	}
 }

@@ -11,7 +11,7 @@ public class FieldDTO extends Field {
 	
 	public FieldDTO (Field field, String xyzStringKey) {
 		super (field.occupiedByPawnId, field.isFinishField);
-		String[] coordinates = xyzStringKey.split(MapConfiguration.seperator);
+		String[] coordinates = xyzStringKey.split(MapConfiguration.separator);
 		this.x = Integer.parseInt(coordinates[0]);
 		this.y = Integer.parseInt(coordinates[1]);
 		this.z = Integer.parseInt(coordinates[2]);

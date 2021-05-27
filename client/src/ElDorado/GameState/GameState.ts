@@ -3,92 +3,53 @@ import type { GameStateDTO, MapStateDTO, FieldDTO } from "../GameState/GameState
 
 export class GameState {
 	mapState: MapState;
-	mapBoundaries: MapBoundaries;
+	winningPawnId: number;
 	
 	constructor (gameStateDTO: GameStateDTO) {
 		this.mapState = new MapState (gameStateDTO.mapStateDTO);
-		this.mapBoundaries = new MapBoundaries(this.mapState.fields);
+		this.winningPawnId = gameStateDTO.winningPawnId;
 	}
 	
-	getFieldByRowAndColumnIds(rowId: number, columnId: number) {
-		const xyzStringKey = this.getXYZStringKeyFromRowAndFieldIds(rowId, columnId);
-		return this.getFieldByXYZStringKey(xyzStringKey);
+	getFieldByRowAndColumnIdsStringKey(rowId: number, columnId: number) {
+		const rowAndColumnIdsStringKey = `${rowId}${this.mapState.separator}${columnId}`;
+		console.log("looking for field with key "+rowAndColumnIdsStringKey)
+		return this.mapState.fields[rowAndColumnIdsStringKey];
 	}
-	
-	getFieldByXYZStringKey(xyzStringKey: string) {
-		return this.mapState.fields[xyzStringKey];
-	}
-	
-	getXYZStringKeyFromRowAndFieldIds (rowId: number, columnId: number) {
-		const rowId_accomodatedForBoundaries = rowId + this.mapBoundaries.firstRowId;
-		const columnId_accomodatedForBoundaries = columnId + this.mapBoundaries.firstColumnId;
-		const x = rowId_accomodatedForBoundaries;
-		const z = (columnId_accomodatedForBoundaries + x) / 2;
-		const y = z - x;
-		return `${x}${this.mapState.seperator}${y}${this.mapState.seperator}${z}`;
+		
+	get winner () {
+		return this.winningPawnId > 0 ? this.winningPawnId : null;
 	}
 }
 
 export class MapState {
 	fields: {[index:string]:Field};
-	seperator: String;
+	separator: string;
 	
 	constructor (mapStateDTO: MapStateDTO) {
-		this.seperator = mapStateDTO.seperator;
-		this.fields = this.createFieldsArrayXYZStringMapped (mapStateDTO.fieldDTOs, mapStateDTO.seperator);
+		this.separator = mapStateDTO.separator;
+		this.fields = this.createFieldsArray (mapStateDTO.fieldDTOs);
 	}
 	
-	createFieldsArrayXYZStringMapped (fieldDTOs: FieldDTO[], seperator: string) {
+	createFieldsArray (fieldDTOs: FieldDTO[]) {
 		const fieldsArray: {[index:string]:Field} = {};
 		for (let i=0; i < fieldDTOs.length; i++) {
 			const fieldDTO = fieldDTOs[i];
-			const coordinates = new Coordinates(fieldDTO.x, fieldDTO.y, fieldDTO.z, seperator)
-			fieldsArray[coordinates.key] = new Field(coordinates, fieldDTO.occupiedByPawnId, fieldDTO.isWinningField);
+			const field = new Field(fieldDTO.x, fieldDTO.y, fieldDTO.z, this.separator, fieldDTO.occupiedByPawnId, fieldDTO.isFinishField);
+			fieldsArray[field.coordinates.key] = field;
 		}
 		return fieldsArray;
-	}
-}
-
-export class MapBoundaries {
-	firstRowId: number = 0;
-	lastRowId: number = 0;
-	firstColumnId: number = 0;
-	lastColumnId: number = 0;
-	
-	constructor (fields: {[index:string]:Field}) {
-		let initiated = false;
-		Object.values(fields).map((field) => {
-			const rowId = field.coordinates.rowId;
-			const columnId = field.coordinates.columnId;
-			if (!initiated) {
-				this.firstRowId = rowId;
-				this.lastRowId = rowId;
-				this.firstColumnId = columnId;
-				this.lastColumnId = columnId;
-				initiated = true;
-			} else {
-				this.firstRowId = (rowId < this.firstRowId) ? rowId : this.firstRowId;
-				this.lastRowId = (rowId > this.lastRowId) ? rowId : this.lastRowId;
-				this.firstColumnId = (columnId < this.firstColumnId) ? columnId : this.firstColumnId;
-				this.lastColumnId = (columnId > this.lastColumnId) ? columnId : this.lastColumnId;
-			}
-		});
 	}
 }
 
 export class Field {
 	occupiedByPawnId: number;
 	coordinates: Coordinates;
-	isWinningField: boolean;
+	isFinishField: boolean;
 	
-	constructor (coordinates: Coordinates, occupiedByPawnId: number, isWinningField: boolean) {
+	constructor (x: number, y: number, z: number, separator: string, occupiedByPawnId: number, isFinishField: boolean) {
 		this.occupiedByPawnId = occupiedByPawnId;
-		this.coordinates = coordinates;
-		this.isWinningField = isWinningField;
-	}
-	
-	get buttonContent () {
-		return (this.occupiedByPawnId > 0) ? this.occupiedByPawnId : "";
+		this.coordinates = new Coordinates (x, y, z, separator);
+		this.isFinishField = isFinishField;
 	}
 }
 
@@ -96,17 +57,17 @@ export class Coordinates {
 	x: number;
 	y: number;
 	z: number;
-	seperator: string;
+	separator: string;
 	
-	constructor (x: number, y: number, z: number, seperator: string) {
+	constructor (x: number, y: number, z: number, separator: string) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.seperator = seperator;
+		this.separator = separator;
 	}
 	
 	get key () {
-		return this.x + this.seperator + this.y + this.seperator + this.z;
+		return `${this.x}${this.separator}${this.y}${this.separator}${this.z}`;
 	}
 	
 	get rowId () {

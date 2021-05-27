@@ -1,0 +1,15 @@
+/** Add some styles */
+
+.winnerAnouncement {
+	margin-top: calc(40px * var(--size));
+	margin-bottom: calc(40px * var(--size));
+}
+
+.winnerAnouncementTitle {
+	font-size: calc(25px * var(--size));
+}
+
+.winnerAnouncementText {
+	font-size: calc(12px * var(--size));
+	margin-top: calc(-10px * var(--size));
+}

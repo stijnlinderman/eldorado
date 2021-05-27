@@ -1,11 +1,12 @@
 
 export interface GameStateDTO {
 	mapStateDTO: MapStateDTO;
+	winningPawnId: number; 
 }
 
 export interface MapStateDTO {
 	fieldDTOs: FieldDTO[];
-	seperator: string;
+	separator: string;
 }
 
 export interface FieldDTO {
@@ -13,5 +14,5 @@ export interface FieldDTO {
 	y: number;
 	z: number;
 	occupiedByPawnId: number;
-	isWinningField: boolean;
+	isFinishField: boolean;
 }

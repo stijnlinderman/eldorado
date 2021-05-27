@@ -6,6 +6,7 @@ package eldorado.domain;
 public class Game {
 	
 	private MapConfiguration map;
+	private int winningPawnId = 0;
 			
 	public Game (int mapConfigurationId) {
 		this.map = new MapConfiguration(mapConfigurationId);
@@ -17,5 +18,19 @@ public class Game {
 	
 	public MapConfiguration getMap () {
 		return this.map;
+	}
+	
+	public void setWinningPawnId (int winningPawnId) {
+		this.winningPawnId = winningPawnId;
+	}
+	
+	public int getWinningPawnId () {
+		return this.winningPawnId;
+	}
+	
+	public void processPossibleWin (Field newlyOccupiedField) {
+		if (newlyOccupiedField.isOccupied() && newlyOccupiedField.isFinishField) {
+			this.setWinningPawnId(newlyOccupiedField.getPawnId());
+		}
 	}
 }
