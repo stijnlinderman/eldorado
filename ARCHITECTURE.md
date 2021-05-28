@@ -56,9 +56,9 @@ classDiagram
 	FieldDTO : int y
 	FieldDTO : int z
 	FieldDTO <|-- Field
-	DeniedRequestDTO
+	class DeniedRequestDTO
 	DeniedRequestDTO : String message
-	MovePawnRequestDTO
+	class MovePawnRequestDTO
 	MovePawnRequestDTO : int pawnId
 	MovePawnRequestDTO : int x
 	MovePawnRequestDTO : int y
