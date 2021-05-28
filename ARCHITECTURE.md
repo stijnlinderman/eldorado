@@ -90,6 +90,23 @@ classDiagram
 	Coordinates : string xyzStringKey
 	Coordinates : number rowId
 	Coordinates : number columnId
+	DisplayableMap <--> MapBoundaries : created and temporarily used during construction
+	DisplayableMap : number[] rowIds
+	DisplayableMap : number[] columnIds
+	DisplayableMap : Field[][] fields
+	DisplayableMap : boolean firstRowStartsOffset
+	DisplayableMap : string separator
+	DisplayableMap <--> GameState : calls setGameState()
+	DisplayableMap <--> MapState : receives
+	DisplayableMap : getMapForDisplay()
+	DisplayableMap : fieldButtonClicked()
+	DisplayableMap : movePawnToField()
+	MapBoundaries : update()
+	MapBoundaries : number firstRowId
+	MapBoundaries : number lastRowId
+	MapBoundaries : number firstColumnId
+	MapBoundaries : number lastColumnId
+	DisplayableMap <--> MovePawnRequestDTO : Called as a result of movePawnToField()	
 ```
 ## Class diagram API
 ##### eldorado.api
