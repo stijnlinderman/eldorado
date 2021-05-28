@@ -12,7 +12,7 @@ sequenceDiagram
 
 ```mermaid
 classDiagram
-	Game <|-- MapConfiguration : 1
+	Game <|-- MapConfiguration : One
 	Game : MapConfiguration map
 	Game : int winningPawnId
 	Game : getMap()
@@ -30,4 +30,12 @@ classDiagram
 	MapConfiguration : getNeighborCoordinatesOffsets()
 	MapConfiguration : findNeighboringFieldThatCurrentlyContainsPawn()
 	MapConfiguration : xyzToStringKey()
+	MapConfiguration <|-- Field : Many
+	Field : int occupiedByPawnId
+	Field : String type
+	Field : setOccupiedByPawnId()
+	Field : isOccupied()
+	Field : getPawnId()
+	Field : obtainPawn()
+	Field : receivePawn()
 ```

@@ -12,6 +12,10 @@ public class Field {
 		this.type = type;
 	}		
 	
+	public void setOccupiedByPawnId (int pawnId) {
+		this.occupiedByPawnId = pawnId;
+	}
+	
 	public boolean isOccupied () {
 		return (this.occupiedByPawnId > 0);
 	}
@@ -20,17 +24,13 @@ public class Field {
 		return this.occupiedByPawnId;
 	}
 	
-	public void setOccupiedByPawnId (int pawnId) {
-		this.occupiedByPawnId = pawnId;
-	}
-	
-	public void receivePawn (Field originField) {
-		this.occupiedByPawnId = originField.obtainPawn();
-	}
-	
 	public int obtainPawn () {
 		int pawnId = this.occupiedByPawnId;
 		this.occupiedByPawnId = 0;
 		return pawnId;
+	}
+	
+	public void receivePawn (Field originField) {
+		this.occupiedByPawnId = originField.obtainPawn();
 	}
 }
