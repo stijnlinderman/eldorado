@@ -71,7 +71,7 @@ classDiagram
 	MovePawn <|-- MovePawnRequestDTO
 	MovePawn <|--|> Game: (eldorado.domain)
 	MovePawn <|--|> GameStateDTO: (eldorado.domain)
-	MovePawn <|--|> DeniedRequestDTO (eldorado.api.dto)
+	MovePawn <|--|> DeniedRequestDTO: (eldorado.api.dto)
 	MovePawn : initialize()
 	MovePawn : getErrorMessageForMovePawnRequestSituation()
 ```
