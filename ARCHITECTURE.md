@@ -5,10 +5,16 @@
 ##### Client
 ```mermaid
 graph TD;
+	Browser-->index;
 	index-->App;
 	App-->ElDorado;
 	ElDorado-->CreateGame;
 	CreateGame-->ElDorado;	
+	ElDorado-->ShowGame;
+	ShowGame-->ElDorado
+	ElDorado-->App;
+	App-->index;
+	index-->Browser;
 ```
 
 ```mermaid
