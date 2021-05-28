@@ -16,7 +16,7 @@ graph TD;
 	App-->index;
 	index-->Browser;
 ```
-
+##### 
 ```mermaid
 sequenceDiagram
     participant Client
@@ -24,7 +24,7 @@ sequenceDiagram
     participant Domain
     activate Client
     Note over Client: Browser requests<br>http://localhost:3000
-    Note over Client: Redirected to /CreateGame
+    Note over Client: No instance of GameState, so /CreateGame is rendered
     Client->>API: Request new GameState eldorado/api/creategame
     activate API
     Note over API: Create new session
@@ -39,8 +39,10 @@ sequenceDiagram
     deactivate Domain
     API->>Client: Response containing GameStateDTO
     deactivate API
-    Note over Client: Create GameState instance based on received GameStateDTO
-    Note over Client: Create GameState instance based on received GameStateDTO
+    Note over Client: /CreateGame creates GameState instance based on received GameStateDTO
+    Note over Client: Instance of GameState exists, so /ShowGame is rendered
+    Note over Client: /ShowGame creates DisplayableMap instance based on the GameState instance
+    Note over Client: /ShowGame renders HTML table based on DisplayableMap
     deactivate Client
 ```
 
