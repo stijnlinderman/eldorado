@@ -13,7 +13,7 @@ sequenceDiagram
     activate Domain
     Domain->>API: Game instance
     deactivate Domain
-    Note on Client: Set Game as session attribute
+    Note over Client: Set Game as session attribute
     API->>Domain: Create GameStateDTO instance based on Game
     activate Domain
     Domain->>API: GameStateDTO instance
