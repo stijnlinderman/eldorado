@@ -58,11 +58,11 @@ sequenceDiagram
 ## Class diagram client
 ```mermaid
 classDiagram
-	GameStateDTO <|-- MapStateDTO
+	GameStateDTO *-- MapStateDTO : One
 	GameStateDTO : <interface>
 	GameStateDTO : number winningPawnId
 	GameStateDTO : MapStateDTO mapStateDTO
-	MapStateDTO <|-- FieldDTO
+	MapStateDTO *-- FieldDTO : Many
 	MapStateDTO : FieldDTO[] fieldDTOs
 	MapStateDTO : string separator
 	MapStateDTO : [] fieldTypes
@@ -83,8 +83,8 @@ classDiagram
 ```
 ```mermaid
 classDiagram
-	HttpServletRequest --> MovePawn
-	MovePawnRequestDTO --> MovePawn
+	HttpServletRequest --> MovePawn : receives
+	MovePawnRequestDTO --> MovePawn : receives
 	Game <--> MovePawn
 	GameState <--> MovePawn
 	MovePawn <--> DeniedRequestDTO
@@ -105,7 +105,7 @@ classDiagram
 	FieldDTO : int x
 	FieldDTO : int y
 	FieldDTO : int z
-	FieldDTO <|-- Field
+	FieldDTO <|-- Field : extends
 	Field : int occupiedByPawnId
 	Field : String type
 	class DeniedRequestDTO
