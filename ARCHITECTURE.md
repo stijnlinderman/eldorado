@@ -10,9 +10,12 @@ sequenceDiagram
 
 ## Class diagrams
 
+
+##### Package eldorado.domain
 ```mermaid
 classDiagram
 	Game <|-- MapConfiguration : One
+	MapConfiguration <|-- Field : Many
 	Game : MapConfiguration map
 	Game : int winningPawnId
 	Game : getMap()
@@ -30,7 +33,6 @@ classDiagram
 	MapConfiguration : getNeighborCoordinatesOffsets()
 	MapConfiguration : findNeighboringFieldThatCurrentlyContainsPawn()
 	MapConfiguration : xyzToStringKey()
-	MapConfiguration <|-- Field : Many
 	Field : int occupiedByPawnId
 	Field : String type
 	Field : setOccupiedByPawnId()
@@ -38,4 +40,11 @@ classDiagram
 	Field : getPawnId()
 	Field : obtainPawn()
 	Field : receivePawn()
+```
+##### Package eldorado.domain.dto
+```mermaid
+classDiagram
+	GameStateDTO <|-- MapStateDTO : One
+	GameStateDTO : MapStateDTO mapStateDTO
+	GameStateDTO : int winningPawnId
 ```
