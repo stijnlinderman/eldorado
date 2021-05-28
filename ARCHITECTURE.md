@@ -23,4 +23,11 @@ classDiagram
 	MapConfiguration : String[] fieldTypes
 	MapConfiguration : String separator
 	MapConfiguration : String[][][] mapConfigurations
+	MapConfiguration : int[][] neighborCoordinatesOffsets
+	MapConfiguration : createMapFromMapConfiguration()
+	MapConfiguration : isField()
+	MapConfiguration : getField()
+	MapConfiguration : getNeighborCoordinatesOffsets()
+	MapConfiguration : findNeighboringFieldThatCurrentlyContainsPawn()
+	MapConfiguration : xyzToStringKey()
 ```
