@@ -20,17 +20,17 @@ public class Game {
 		return this.map;
 	}
 	
+	public void processPossibleWin (Field newlyOccupiedField) {
+		if (newlyOccupiedField.isOccupied() && newlyOccupiedField.type == "finish") {
+			this.setWinningPawnId(newlyOccupiedField.getPawnId());
+		}
+	}
+	
 	public void setWinningPawnId (int winningPawnId) {
 		this.winningPawnId = winningPawnId;
 	}
 	
 	public int getWinningPawnId () {
 		return this.winningPawnId;
-	}
-	
-	public void processPossibleWin (Field newlyOccupiedField) {
-		if (newlyOccupiedField.isOccupied() && newlyOccupiedField.type == "finish") {
-			this.setWinningPawnId(newlyOccupiedField.getPawnId());
-		}
 	}
 }

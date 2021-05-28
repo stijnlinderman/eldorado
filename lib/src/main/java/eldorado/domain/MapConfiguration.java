@@ -9,38 +9,6 @@ import java.util.HashMap;
 public class MapConfiguration {
 	public final Map<String, Field> fields;
 	public static final String[] fieldTypes = {"eldorado", "jungle", "sea", "treasure"};
-	
-	public MapConfiguration (int mapConfigurationId) {
-		this.fields = createMapFromMapConfiguration(mapConfigurations[mapConfigurationId]);
-	}
-	
-	public MapConfiguration (String[][] mapConfiguration) {
-		this.fields = createMapFromMapConfiguration(mapConfiguration);
-	}
-	
-	public static Map<String, Field> createMapFromMapConfiguration (String[][] mapConfiguration) {
-		Map<String, Field> fields = new HashMap<String, Field>();
-		for (String[] fieldConfiguration : mapConfiguration) {
-			String xyzStringKey = fieldConfiguration[0];
-			int startPosForPawnId = Integer.parseInt(fieldConfiguration[1]);
-			String type = fieldConfiguration[2];
-			fields.put(xyzStringKey, new Field(startPosForPawnId, type));
-		}
-		return fields;
-	}
-	
-	public boolean isField (int x, int y, int z) {
-		return this.fields.containsKey(xyzToStringKey(x, y ,z));
-	}
-	
-	public Field getField (int x, int y, int z) {
-		return this.fields.get(xyzToStringKey(x, y, z));
-	}
-	
-	private static String xyzToStringKey (Integer x, Integer y, Integer z) {
-		return String.join(MapConfiguration.separator, x.toString(), y.toString(), z.toString());
-	}
-	
 	public static final String separator = ",";
 
 	private static final String[][][] mapConfigurations = {
@@ -122,6 +90,33 @@ public class MapConfiguration {
 			{-1, 1, 0}
 	};
 	
+	public MapConfiguration (int mapConfigurationId) {
+		this.fields = createMapFromMapConfiguration(mapConfigurations[mapConfigurationId]);
+	}
+	
+	public MapConfiguration (String[][] mapConfiguration) {
+		this.fields = createMapFromMapConfiguration(mapConfiguration);
+	}
+	
+	public static Map<String, Field> createMapFromMapConfiguration (String[][] mapConfiguration) {
+		Map<String, Field> fields = new HashMap<String, Field>();
+		for (String[] fieldConfiguration : mapConfiguration) {
+			String xyzStringKey = fieldConfiguration[0];
+			int startPosForPawnId = Integer.parseInt(fieldConfiguration[1]);
+			String type = fieldConfiguration[2];
+			fields.put(xyzStringKey, new Field(startPosForPawnId, type));
+		}
+		return fields;
+	}
+	
+	public boolean isField (int x, int y, int z) {
+		return this.fields.containsKey(xyzToStringKey(x, y ,z));
+	}
+	
+	public Field getField (int x, int y, int z) {
+		return this.fields.get(xyzToStringKey(x, y, z));
+	}
+	
 	public int[][] getNeighborCoordinatesOffsets () {
 		return neighborCoordinatesOffsets;
 	}
@@ -139,4 +134,8 @@ public class MapConfiguration {
 		};
 		return null;
 	};
+	
+	private static String xyzToStringKey (Integer x, Integer y, Integer z) {
+		return String.join(MapConfiguration.separator, x.toString(), y.toString(), z.toString());
+	}
 }
