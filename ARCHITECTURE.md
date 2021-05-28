@@ -63,7 +63,11 @@ classDiagram
 ##### eldorado.api
 ```mermaid
 classDiagram
-	CreateGame --- Hgehpaio
+	class CreateGame
+	CreateGame : initialize()
+	class MovePawn
+	MovePawn : initialize()
+	MovePawn : getErrorMessageForMovePawnRequestSituation()
 ```
 ##### eldorado.api.dto
 ```mermaid
