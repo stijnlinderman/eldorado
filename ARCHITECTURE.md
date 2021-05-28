@@ -58,22 +58,19 @@ sequenceDiagram
 ## Class diagram client
 ```mermaid
 classDiagram
+	class GameState
 ```
 ## Class diagram API
 ##### eldorado.api
 ```mermaid
 classDiagram
 	CreateGame <|-- HttpServletRequest
-	CreateGame <|--|> Game: (eldorado.domain)
-	CreateGame <|--|> GameStateDTO: (eldorado.domain)
 	CreateGame : initialize()
 ```
 ```mermaid
 classDiagram
 	MovePawn <|-- HttpServletRequest
 	MovePawn <|-- MovePawnRequestDTO
-	MovePawn <|--|> Game: (eldorado.domain)
-	MovePawn <|--|> GameStateDTO: (eldorado.domain)
 	MovePawn <|--|> DeniedRequestDTO: (eldorado.api.dto)
 	MovePawn : initialize()
 	MovePawn : getErrorMessageForMovePawnRequestSituation()
