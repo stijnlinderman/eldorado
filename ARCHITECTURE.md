@@ -63,8 +63,8 @@ classDiagram
 ##### eldorado.api
 ```mermaid
 classDiagram
-	CreateGame <|--|> Game: eldorado.domain<br>new Game()
-	CreateGame <|--|> GameStateDTO: new GameStateDTO()
+	CreateGame <|--|> Game: (eldorado.domain) new Game()
+	CreateGame <|--|> GameStateDTO: (eldorado.domain) new GameStateDTO()
 	CreateGame : initialize()
 	class MovePawn
 	MovePawn : initialize()
