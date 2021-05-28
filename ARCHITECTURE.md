@@ -60,6 +60,7 @@ sequenceDiagram
 classDiagram
 	GameStateDTO *-- MapStateDTO : One
 	GameStateDTO : <interface>
+	GameStateDTO :  
 	GameStateDTO : number winningPawnId
 	GameStateDTO : MapStateDTO mapStateDTO
 	MapStateDTO *-- FieldDTO : Many
