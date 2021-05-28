@@ -96,8 +96,8 @@ classDiagram
 	DisplayableMap : Field[][] fields
 	DisplayableMap : boolean firstRowStartsOffset
 	DisplayableMap : string separator
-	DisplayableMap <--> GameState : calls setGameState()
-	DisplayableMap <--> MapState : receives
+	DisplayableMap --> GameState : calls setGameState()
+	DisplayableMap <-- MapState : receives
 	DisplayableMap : getMapForDisplay()
 	DisplayableMap : fieldButtonClicked()
 	DisplayableMap : movePawnToField()
