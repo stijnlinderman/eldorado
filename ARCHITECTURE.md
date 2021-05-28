@@ -33,12 +33,7 @@ sequenceDiagram
 ##### Client clicks field button sequence diagram
 ```mermaid
 sequenceDiagram
-    participant Client
-    participant API
-    participant Domain
-    activate Client
-    Note over Client: Client clicks on a button
-    deactivate Client
+    participant TO-DO
 ```
 
 ##### Client pages flow
