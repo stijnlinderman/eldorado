@@ -1,25 +1,41 @@
 # Software architecture
 
 ## Main code flow
+
+##### Client
+```mermaid
+graph TD;
+	index-->App;
+	App-->ElDorado;
+	ElDorado-->CreateGame;
+	CreateGame-->ElDorado;	
+```
+
 ```mermaid
 sequenceDiagram
     participant Client
     participant API
     participant Domain
-    Note left of Client: Browser requests<br>http://localhost:3000
+    activate Client
+    Note over Client: Browser requests<br>http://localhost:3000
+    Note over Client: Redirected to /CreateGame
     Client->>API: Request new GameState eldorado/api/creategame
     activate API
+    Note over API: Create new session
     API->>Domain: Create new Game instance
     activate Domain
     Domain->>API: Game instance
     deactivate Domain
-    Note over Client: Set Game as session attribute
+    Note over API: Set Game as session attribute
     API->>Domain: Create GameStateDTO instance based on Game
     activate Domain
     Domain->>API: GameStateDTO instance
     deactivate Domain
     API->>Client: Response containing GameStateDTO
     deactivate API
+    Note over Client: Create GameState instance based on received GameStateDTO
+    Note over Client: Create GameState instance based on received GameStateDTO
+    deactivate Client
 ```
 
 ## Class diagrams per package
