@@ -72,10 +72,10 @@ classDiagram
 ```mermaid
 classDiagram
 	HttpServletRequest --> MovePawn
-	MovePawn <|-- MovePawnRequestDTO
-	Game <|--|> MovePawn
-	GameState <|--|> MovePawn
-	MovePawn <|--|> DeniedRequestDTO
+	MovePawnRequestDTO --> MovePawn
+	Game <--> MovePawn
+	GameState <--> MovePawn
+	MovePawn <--> DeniedRequestDTO
 	MovePawn : initialize()
 	MovePawn : getErrorMessageForMovePawnRequestSituation()
 ```
