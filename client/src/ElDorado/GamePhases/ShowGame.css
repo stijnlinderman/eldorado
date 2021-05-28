@@ -58,26 +58,26 @@
 
 .fieldButton:hover {
 	background-color: rgb(115, 221, 51);
-	filter: brightness(150%);
+	filter: brightness(150%) drop-shadow(calc(3px * var(--size)) calc(3px * var(--size)) calc(5px * var(--size)) rgb(0,0,0))
 }
 
-.finish {
-	background: url(finish.jpg) no-repeat center center;
+.eldorado {
+	background: url(eldorado.jpg) no-repeat center center;
 	background-size: calc(50px * var(--size));
 }
 
 .jungle {
-	background: url(forest.jpg) no-repeat right bottom;
+	background: url(jungle.jpg) no-repeat right bottom;
 	background-size: calc(50px * var(--size));
 }
 
-.water {
-	background: url(water.jpg) no-repeat center center;
+.sea {
+	background: url(sea.jpg) no-repeat center center;
 	background-size: calc(50px * var(--size));
 }
 
-.gold {
-	background: url(gold.jpg) no-repeat center center;
+.treasure {
+	background: url(treasure.jpg) no-repeat center center;
 	background-size: calc(50px * var(--size));
 }
 

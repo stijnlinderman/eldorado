@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class MapConfiguration {
 	public final Map<String, Field> fields;
-	public static final String[] fieldTypes = {"finish", "jungle", "water", "gold"};
+	public static final String[] fieldTypes = {"eldorado", "jungle", "sea", "treasure"};
 	
 	public MapConfiguration (int mapConfigurationId) {
 		this.fields = createMapFromMapConfiguration(mapConfigurations[mapConfigurationId]);
@@ -58,45 +58,45 @@ public class MapConfiguration {
 			{"2,3,5", "0", "jungle"},
 			{"3,-1,2", "0", "jungle"},
 			{"3,0,3", "0", "jungle"},
-			{"3,2,5", "0", "finish"}
+			{"3,2,5", "0", "eldorado"}
 		},
 		{
 			{"0,0,0", "0", "jungle"},
 			
 			{"0,1,1", "0", "jungle"},
-			{"0,2,2", "0", "water"},
-			{"0,3,3", "1", "water"},
+			{"0,2,2", "0", "sea"},
+			{"0,3,3", "1", "sea"},
 
 			{"1,1,2", "0", "jungle"},
-			{"2,1,3", "0", "gold"},
+			{"2,1,3", "0", "treasure"},
 			{"1,2,3", "0", "jungle"},
 			
 			{"1,0,1", "0", "jungle"},
-			{"2,0,2", "0", "water"},
-			{"3,0,3", "0", "gold"},
+			{"2,0,2", "0", "sea"},
+			{"3,0,3", "0", "treasure"},
 			
 			{"2,-1,1", "0", "jungle"},
 			{"3,-2,1", "0", "jungle"},
 			{"3,-1,2", "0", "jungle"},
 		
 			{"1,-1,0", "0", "jungle"},
-			{"2,-2,0", "0", "gold"},
-			{"3,-3,0", "0", "water"},
+			{"2,-2,0", "0", "treasure"},
+			{"3,-3,0", "0", "sea"},
 			
 			{"1,-2,-1", "0", "jungle"},
 			{"1,-3,-2", "0", "jungle"},
 			{"2,-3,-1", "0", "jungle"},
 		
 			{"0,-1,-1", "0", "jungle"},
-			{"0,-2,-2", "0", "gold"},
-			{"0,-3,-3", "0", "gold"},
+			{"0,-2,-2", "0", "treasure"},
+			{"0,-3,-3", "0", "treasure"},
 	
 			{"-1,-1,-2", "0", "jungle"},
 			{"-2,-1,-3", "0", "jungle"},
-			{"-1,-2,-3", "0", "water"},
+			{"-1,-2,-3", "0", "sea"},
 
 			{"-1,0,-1", "0", "jungle"},
-			{"-2,0,-2", "0", "gold"},
+			{"-2,0,-2", "0", "treasure"},
 			{"-3,0,-3", "0", "jungle"},
 
 			{"-2,1,-1", "0", "jungle"},
@@ -104,11 +104,11 @@ public class MapConfiguration {
 			{"-3,1,-2", "0", "jungle"},
 
 			{"-1,1,0", "0", "jungle"},
-			{"-2,2,0", "0", "water"},
-			{"-3,3,0", "0", "finish"},
+			{"-2,2,0", "0", "sea"},
+			{"-3,3,0", "0", "eldorado"},
 			
-			{"-1,2,1", "0", "gold"},
-			{"-2,3,1", "0", "gold"},
+			{"-1,2,1", "0", "treasure"},
+			{"-2,3,1", "0", "treasure"},
 			{"-1,3,2", "0", "jungle"}		
 		}		
 	};
