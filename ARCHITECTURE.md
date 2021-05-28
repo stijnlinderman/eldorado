@@ -73,7 +73,8 @@ classDiagram
 	GameState *-- MapState : One
 	GameState : MapState mapState
 	GameState : number winningPawnId
-	GameState : int get winner
+	GameState : int winner
+	MapState : {[index:string]:Field} fields
 ```
 ## Class diagram API
 ##### eldorado.api
