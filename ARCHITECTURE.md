@@ -33,7 +33,7 @@ sequenceDiagram
 ##### Client clicks field button sequence diagram
 ```mermaid
 sequenceDiagram
-    participant TO-DO
+    participant TODO
 ```
 
 ##### Client pages flow
