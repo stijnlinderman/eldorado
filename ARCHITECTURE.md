@@ -12,18 +12,15 @@ sequenceDiagram
 
 
 ##### eldorado.domain
-* import java.util.Map
-* import java.util.HashMap
 ```mermaid
 classDiagram
-	Game <|-- MapConfiguration : One
-	MapConfiguration <|-- Field : Many
 	Game : MapConfiguration map
 	Game : int winningPawnId
 	Game : getMap()
 	Game : processPossibleWin()
 	Game : setWinningPawnId()
 	Game : getWinningPawnId()
+	Game <|-- MapConfiguration : One
 	MapConfiguration : Map<String,Field> fields
 	MapConfiguration : String[] fieldTypes
 	MapConfiguration : String separator
@@ -35,6 +32,7 @@ classDiagram
 	MapConfiguration : getNeighborCoordinatesOffsets()
 	MapConfiguration : findNeighboringFieldThatCurrentlyContainsPawn()
 	MapConfiguration : xyzToStringKey()
+	MapConfiguration <|-- Field : Many
 	Field : int occupiedByPawnId
 	Field : String type
 	Field : setOccupiedByPawnId()
@@ -44,11 +42,18 @@ classDiagram
 	Field : receivePawn()
 ```
 ##### eldorado.domain.dto
-* import eldorado.domain.*
 ```mermaid
 classDiagram
-	GameStateDTO <|-- MapStateDTO : One
 	GameStateDTO : MapStateDTO mapStateDTO
 	GameStateDTO : int winningPawnId
-	
+	GameStateDTO <|-- MapStateDTO : One
+	MapStateDTO : FieldDTO[] fieldDTOs
+	MapStateDTO : String separator
+	MapStateDTO : String[] fieldTypes
+	MapStateDTO : convertMapToJSONableArrayDTO()
+	MapStateDTO <|-- FieldDTO : Many
+	FieldDTO : int x
+	FieldDTO : int y
+	FieldDTO : int z
+	FieldDTO o- Field
 ```
