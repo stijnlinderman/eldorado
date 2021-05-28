@@ -74,7 +74,10 @@ classDiagram
 	GameState : MapState mapState
 	GameState : number winningPawnId
 	GameState : int winner
-	MapState : {[index:string]:Field} fields
+	MapState : {} fields
+	MapState : string separator
+	MapState : [] fieldTypes
+	MapState : createFieldsArray()
 ```
 ## Class diagram API
 ##### eldorado.api
