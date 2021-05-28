@@ -6,6 +6,7 @@ sequenceDiagram
     participant Client
     participant API
     participant Domain
+    Note left of Client: http://localhost:3000
 ```
 
 ## Class diagrams per package
