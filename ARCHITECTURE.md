@@ -16,7 +16,7 @@ graph TD;
 	App-->index;
 	index-->Browser;
 ```
-##### 
+##### Flow for a connecting client
 ```mermaid
 sequenceDiagram
     participant Client
@@ -42,13 +42,19 @@ sequenceDiagram
     Note over Client: /CreateGame creates GameState instance based on received GameStateDTO
     Note over Client: Instance of GameState exists, so /ShowGame is rendered
     Note over Client: /ShowGame creates DisplayableMap instance based on the GameState instance
-    Note over Client: /ShowGame renders HTML table based on DisplayableMap
+    Note over Client: /ShowGame renders HTML table based on DisplayableMap containing a button on each field
     deactivate Client
 ```
-
+##### Flow when client clicks on a button of a field
+```mermaid
+sequenceDiagram
+    participant Client
+    participant API
+    participant Domain
+    activate Client
+    deactivate Client
+```
 ## Class diagrams per package
-
-
 ##### eldorado.domain
 ```mermaid
 classDiagram
