@@ -59,8 +59,6 @@ sequenceDiagram
 ```mermaid
 classDiagram
 	GameStateDTO *-- MapStateDTO : One
-	GameStateDTO : <interface>
-	GameStateDTO :  
 	GameStateDTO : number winningPawnId
 	GameStateDTO : MapStateDTO mapStateDTO
 	MapStateDTO *-- FieldDTO : Many
@@ -72,6 +70,14 @@ classDiagram
 	FieldDTO : number z
 	FieldDTO : number occupiedByPawnId
 	FieldDTO : string type
+	GameState *-- MapState: One
+	GameState : MapState mapState
+	GameState : number winningPawnId
+	GameState : get winner()
+	MapState : {[index:string]:Field} fields
+	MapState : string separator
+	MapState : [] fieldTypes
+	MapState : createFieldsArray()
 ```
 ## Class diagram API
 ##### eldorado.api
