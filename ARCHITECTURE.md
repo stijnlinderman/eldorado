@@ -7,6 +7,7 @@ sequenceDiagram
     participant API
     participant Domain
     Note left of Client: Browser requests<br>http://localhost:3000
+    Client ->>API: GET eldorado/api/creategame
 ```
 
 ## Class diagrams per package
