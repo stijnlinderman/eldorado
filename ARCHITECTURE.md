@@ -14,14 +14,14 @@ sequenceDiagram
 ##### eldorado.domain
 ```mermaid
 classDiagram
-	Game <|-- MapConfiguration : One
+	Game *-- MapConfiguration : One
 	Game : MapConfiguration map
 	Game : int winningPawnId
 	Game : getMap()
 	Game : processPossibleWin()
 	Game : setWinningPawnId()
 	Game : getWinningPawnId()
-	MapConfiguration <|-- Field : Many
+	MapConfiguration *-- Field : Many
 	MapConfiguration : Map<String,Field> fields
 	MapConfiguration : String[] fieldTypes
 	MapConfiguration : String separator
@@ -44,10 +44,10 @@ classDiagram
 ##### eldorado.domain.dto
 ```mermaid
 classDiagram
-	GameStateDTO <|-- MapStateDTO : One
+	GameStateDTO *-- MapStateDTO : One
 	GameStateDTO : MapStateDTO mapStateDTO
 	GameStateDTO : int winningPawnId
-	MapStateDTO <|-- FieldDTO : Many
+	MapStateDTO *-- FieldDTO : Many
 	MapStateDTO : FieldDTO[] fieldDTOs
 	MapStateDTO : String separator
 	MapStateDTO : String[] fieldTypes
@@ -55,5 +55,10 @@ classDiagram
 	FieldDTO : int x
 	FieldDTO : int y
 	FieldDTO : int z
-	FieldDTO -o Field
+	FieldDTO <|-- Field
+	DeniedRequestDTO : String message
+	MovePawnRequestDTO : int pawnId
+	MovePawnRequestDTO : int x
+	MovePawnRequestDTO : int y
+	MovePawnRequestDTO : int z
 ```
