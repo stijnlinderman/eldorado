@@ -19,4 +19,5 @@ classDiagram
 	Game : processPossibleWin()
 	Game : setWinningPawnId()
 	Game : getWinningPawnId()
+	MapConfiguration : Map<String,Field> fields
 ```
