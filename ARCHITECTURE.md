@@ -2,7 +2,7 @@
 
 ## Main code flow
 
-##### Client
+##### Clientside flow
 ```mermaid
 graph TD;
 	Browser-->index;
@@ -16,7 +16,7 @@ graph TD;
 	App-->index;
 	index-->Browser;
 ```
-##### Flow for a connecting client
+##### Sequence diagram for a connecting client
 ```mermaid
 sequenceDiagram
     participant Client
@@ -45,16 +45,52 @@ sequenceDiagram
     Note over Client: /ShowGame renders HTML table based on DisplayableMap containing a button on each field
     deactivate Client
 ```
-##### Flow when client clicks on a button of a field
+##### Sequence diagram for a client that clicks on a field (button)
 ```mermaid
 sequenceDiagram
     participant Client
     participant API
     participant Domain
     activate Client
+    Note over Client: Client clicks on a button
     deactivate Client
 ```
-## Class diagrams per package
+## Class diagram client
+```mermaid
+classDiagram
+```
+## Class diagram API
+##### eldorado.api
+```mermaid
+classDiagram
+	CreateGame --v HttpServletRequest	
+```
+##### eldorado.api.dto
+```mermaid
+classDiagram
+	GameStateDTO *-- MapStateDTO : One
+	GameStateDTO : MapStateDTO mapStateDTO
+	GameStateDTO : int winningPawnId
+	MapStateDTO *-- FieldDTO : Many
+	MapStateDTO : FieldDTO[] fieldDTOs
+	MapStateDTO : String separator
+	MapStateDTO : String[] fieldTypes
+	MapStateDTO : convertMapToJSONableArrayDTO()
+	FieldDTO : int x
+	FieldDTO : int y
+	FieldDTO : int z
+	FieldDTO <|-- Field
+	Field : int occupiedByPawnId
+	Field : String type
+	class DeniedRequestDTO
+	DeniedRequestDTO : String message
+	class MovePawnRequestDTO
+	MovePawnRequestDTO : int pawnId
+	MovePawnRequestDTO : int x
+	MovePawnRequestDTO : int y
+	MovePawnRequestDTO : int z
+```
+## Class diagrams domain per package
 ##### eldorado.domain
 ```mermaid
 classDiagram
@@ -84,27 +120,4 @@ classDiagram
 	Field : getPawnId()
 	Field : obtainPawn()
 	Field : receivePawn()
-```
-##### eldorado.domain.dto
-```mermaid
-classDiagram
-	GameStateDTO *-- MapStateDTO : One
-	GameStateDTO : MapStateDTO mapStateDTO
-	GameStateDTO : int winningPawnId
-	MapStateDTO *-- FieldDTO : Many
-	MapStateDTO : FieldDTO[] fieldDTOs
-	MapStateDTO : String separator
-	MapStateDTO : String[] fieldTypes
-	MapStateDTO : convertMapToJSONableArrayDTO()
-	FieldDTO : int x
-	FieldDTO : int y
-	FieldDTO : int z
-	FieldDTO <|-- Field
-	class DeniedRequestDTO
-	DeniedRequestDTO : String message
-	class MovePawnRequestDTO
-	MovePawnRequestDTO : int pawnId
-	MovePawnRequestDTO : int x
-	MovePawnRequestDTO : int y
-	MovePawnRequestDTO : int z
 ```
