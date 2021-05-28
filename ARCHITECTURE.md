@@ -64,9 +64,9 @@ classDiagram
 ##### eldorado.api
 ```mermaid
 classDiagram
-	CreateGame <|-- HttpServletRequest
-	Game <|--|> CreateGame
-	GameState <|--|> CreateGame
+	CreateGame <-- HttpServletRequest
+	Game <--> CreateGame
+	GameState <--> CreateGame
 	CreateGame : initialize()
 ```
 ```mermaid
