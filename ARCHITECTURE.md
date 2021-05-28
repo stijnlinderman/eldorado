@@ -20,4 +20,7 @@ classDiagram
 	Game : setWinningPawnId()
 	Game : getWinningPawnId()
 	MapConfiguration : Map<String,Field> fields
+	MapConfiguration : String[] fieldTypes
+	MapConfiguration : String separator
+	MapConfiguration : String[][][] mapConfigurations
 ```
