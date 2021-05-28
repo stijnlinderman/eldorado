@@ -7,7 +7,18 @@ sequenceDiagram
     participant API
     participant Domain
     Note left of Client: Browser requests<br>http://localhost:3000
-    Client ->>API: GET eldorado/api/creategame
+    Client->>API: GET eldorado/api/creategame
+    activate API
+    API->>Domain: Create new Game instance
+    activate Domain
+    Domain->>API: New Game instance
+    deactivate Domain
+    API->>Domain: Create GameStateDTO instance based on Game
+    activate Domain
+    Domain->>API: GameStateDTO instance based on Game
+    deactivate Domain
+    API->>Client: Response containing GameStateDTO
+    deactivate API
 ```
 
 ## Class diagrams per package
