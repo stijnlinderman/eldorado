@@ -58,7 +58,7 @@ sequenceDiagram
 ## Class diagram client
 ```mermaid
 classDiagram
-	interface GameStateDTO <|-- MapStateDTO
+	<interface>GameStateDTO <|-- MapStateDTO
 	GameStateDTO : number winningPawnId
 	GameStateDTO : MapStateDTO mapStateDTO
 	MapStateDTO <|-- FieldDTO
