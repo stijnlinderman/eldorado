@@ -74,10 +74,22 @@ classDiagram
 	GameState : MapState mapState
 	GameState : number winningPawnId
 	GameState : int winner
+	MapState *-- Field : Many
 	MapState : {} fields
 	MapState : string separator
 	MapState : [] fieldTypes
 	MapState : createFieldsArray()
+	Field *-- Coordinates
+	Field : number occupiedByPawnId
+	Field : Coordinates coordinates
+	Field : string type
+	Coordinates : number x
+	Coordinates : number y
+	Coordinates : number z
+	Coordinates : string rowColumnStringKey
+	Coordinates : string xyzStringKey
+	Coordinates : number rowId
+	Coordinates : number columnId
 ```
 ## Class diagram API
 ##### eldorado.api
