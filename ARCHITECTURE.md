@@ -14,13 +14,14 @@ sequenceDiagram
 ##### eldorado.domain
 ```mermaid
 classDiagram
+	Game <|-- MapConfiguration : One
 	Game : MapConfiguration map
 	Game : int winningPawnId
 	Game : getMap()
 	Game : processPossibleWin()
 	Game : setWinningPawnId()
 	Game : getWinningPawnId()
-	Game <|-- MapConfiguration : One
+	MapConfiguration <|-- Field : Many
 	MapConfiguration : Map<String,Field> fields
 	MapConfiguration : String[] fieldTypes
 	MapConfiguration : String separator
@@ -32,7 +33,6 @@ classDiagram
 	MapConfiguration : getNeighborCoordinatesOffsets()
 	MapConfiguration : findNeighboringFieldThatCurrentlyContainsPawn()
 	MapConfiguration : xyzToStringKey()
-	MapConfiguration <|-- Field : Many
 	Field : int occupiedByPawnId
 	Field : String type
 	Field : setOccupiedByPawnId()
@@ -44,14 +44,14 @@ classDiagram
 ##### eldorado.domain.dto
 ```mermaid
 classDiagram
+	GameStateDTO <|-- MapStateDTO : One
 	GameStateDTO : MapStateDTO mapStateDTO
 	GameStateDTO : int winningPawnId
-	GameStateDTO <|-- MapStateDTO : One
+	MapStateDTO <|-- FieldDTO : Many
 	MapStateDTO : FieldDTO[] fieldDTOs
 	MapStateDTO : String separator
 	MapStateDTO : String[] fieldTypes
 	MapStateDTO : convertMapToJSONableArrayDTO()
-	MapStateDTO <|-- FieldDTO : Many
 	FieldDTO : int x
 	FieldDTO : int y
 	FieldDTO : int z
