@@ -1,22 +1,7 @@
 # Software architecture
 
 ## Main code flow
-
-##### Clientside flow
-```mermaid
-graph TD;
-	Browser-->index;
-	index-->App;
-	App-->ElDorado;
-	ElDorado-->CreateGame;
-	CreateGame-->ElDorado;	
-	ElDorado-->ShowGame;
-	ShowGame-->ElDorado
-	ElDorado-->App;
-	App-->index;
-	index-->Browser;
-```
-##### Sequence diagram for a connecting client
+##### Client connection sequence diagram
 ```mermaid
 sequenceDiagram
     participant Client
@@ -45,7 +30,7 @@ sequenceDiagram
     Note over Client: /ShowGame renders HTML table based on DisplayableMap containing a button on each field
     deactivate Client
 ```
-##### Sequence diagram for a client that clicks on a field (button)
+##### Client clicks field button sequence diagram
 ```mermaid
 sequenceDiagram
     participant Client
@@ -55,7 +40,22 @@ sequenceDiagram
     Note over Client: Client clicks on a button
     deactivate Client
 ```
-## Class diagram client
+
+##### Client pages flow
+```mermaid
+graph TD;
+	Browser-->index;
+	index-->App;
+	App-->ElDorado;
+	ElDorado-->CreateGame;
+	CreateGame-->ElDorado;	
+	ElDorado-->ShowGame;
+	ShowGame-->ElDorado
+	ElDorado-->App;
+	App-->index;
+	index-->Browser;
+```
+## Client class diagram
 ```mermaid
 classDiagram
 	GameStateDTO *-- MapStateDTO : One
@@ -117,7 +117,7 @@ classDiagram
 	MovePawnRequestDTO : number y
 	MovePawnRequestDTO : number z
 ```
-## Class diagram API
+## API class diagram
 ##### eldorado.api
 ```mermaid
 classDiagram
@@ -161,7 +161,7 @@ classDiagram
 	MovePawnRequestDTO : int y
 	MovePawnRequestDTO : int z
 ```
-## Class diagrams domain per package
+## Domain class diagrams
 ##### eldorado.domain
 ```mermaid
 classDiagram
