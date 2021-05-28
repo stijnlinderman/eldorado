@@ -64,17 +64,17 @@ classDiagram
 ##### eldorado.api
 ```mermaid
 classDiagram
+	CreateGame <|-- HttpServletRequest
 	Game <|-- CreateGame
 	GameState <|-- CreateGame
-	CreateGame <|-- HttpServletRequest
 	CreateGame : initialize()
 ```
 ```mermaid
 classDiagram
-	Game <|-- MovePawn
-	GameState <|-- MovePawn
 	MovePawn <|-- HttpServletRequest
 	MovePawn <|-- MovePawnRequestDTO
+	Game <|-- MovePawn
+	GameState <|-- MovePawn
 	MovePawn <|--|> DeniedRequestDTO
 	MovePawn : initialize()
 	MovePawn : getErrorMessageForMovePawnRequestSituation()
