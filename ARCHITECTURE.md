@@ -55,5 +55,5 @@ classDiagram
 	FieldDTO : int x
 	FieldDTO : int y
 	FieldDTO : int z
-	FieldDTO o-- Field
+	FieldDTO -o Field
 ```
