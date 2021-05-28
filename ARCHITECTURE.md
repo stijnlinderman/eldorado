@@ -63,7 +63,7 @@ classDiagram
 ##### eldorado.api
 ```mermaid
 classDiagram
-	CreateGame -->> HttpServletRequest
+	CreateGame <-- HttpServletRequest
 ```
 ##### eldorado.api.dto
 ```mermaid
