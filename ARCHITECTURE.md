@@ -79,7 +79,7 @@ classDiagram
 	MapState : string separator
 	MapState : [] fieldTypes
 	MapState : createFieldsArray()
-	Field *-- Coordinates
+	Field *-- Coordinates : One
 	Field : number occupiedByPawnId
 	Field : Coordinates coordinates
 	Field : string type
@@ -106,7 +106,16 @@ classDiagram
 	MapBoundaries : number lastRowId
 	MapBoundaries : number firstColumnId
 	MapBoundaries : number lastColumnId
-	DisplayableMap <--> MovePawnRequestDTO : Called as a result of movePawnToField()	
+	DisplayableMap <--> MovePawnRequestDTO : Called as a result of movePawnToField() and used in API request
+	MovePawnRequestDTO : number pawnId
+	MovePawnRequestDTO : number x
+	MovePawnRequestDTO : number y
+	MovePawnRequestDTO : number z
+	DisplayableMap <--> DeniedRequestDTO : Received through API request if the move was not valid
+	MovePawnRequestDTO : number pawnId
+	MovePawnRequestDTO : number x
+	MovePawnRequestDTO : number y
+	MovePawnRequestDTO : number z
 ```
 ## Class diagram API
 ##### eldorado.api
