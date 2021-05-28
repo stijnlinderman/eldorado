@@ -58,7 +58,18 @@ sequenceDiagram
 ## Class diagram client
 ```mermaid
 classDiagram
-	class GameState
+	interface GameStateDTO <|-- MapStateDTO
+	GameStateDTO : number winningPawnId
+	GameStateDTO : MapStateDTO mapStateDTO
+	MapStateDTO <|-- FieldDTO
+	MapStateDTO : FieldDTO[] fieldDTOs
+	MapStateDTO : string separator
+	MapStateDTO : [] fieldTypes
+	FieldDTO : number x
+	FieldDTO : number y
+	FieldDTO : number z
+	FieldDTO : number occupiedByPawnId
+	FieldDTO : string type
 ```
 ## Class diagram API
 ##### eldorado.api
@@ -68,13 +79,6 @@ classDiagram
 	Game <--> CreateGame
 	GameState <--> CreateGame
 	CreateGame : initialize()
-	HttpServletRequest --> MovePawn
-	MovePawnRequestDTO --> MovePawn
-	Game <--> MovePawn
-	GameState <--> MovePawn
-	MovePawn <--> DeniedRequestDTO
-	MovePawn : initialize()
-	MovePawn : getErrorMessageForMovePawnRequestSituation()
 ```
 ```mermaid
 classDiagram
