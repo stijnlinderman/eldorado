@@ -63,12 +63,12 @@ classDiagram
 ##### eldorado.api
 ```mermaid
 classDiagram
-	HttpServletRequest --|> CreateGame
+	CreateGame <|-- HttpServletRequest
 	CreateGame <|--|> Game: (eldorado.domain)
 	CreateGame <|--|> GameStateDTO: (eldorado.domain)
 	CreateGame : initialize()
-	HttpServletRequest --|> MovePawn
-	MovePawnRequestDTO --|> MovePawn
+	MovePawn <|-- HttpServletRequest
+	MovePawn <|-- MovePawnRequestDTO
 	MovePawn <|--|> Game: (eldorado.domain)
 	MovePawn <|--|> GameStateDTO: (eldorado.domain)
 	MovePawn <|--|> DeniedRequestDTO (eldorado.api.dto)
