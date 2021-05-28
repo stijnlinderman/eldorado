@@ -8,10 +8,12 @@ sequenceDiagram
     participant Domain
 ```
 
-## Class diagrams
+## Class diagrams per package
 
 
-##### Package eldorado.domain
+##### eldorado.domain
+* import java.util.Map
+* import java.util.HashMap
 ```mermaid
 classDiagram
 	Game <|-- MapConfiguration : One
@@ -41,10 +43,12 @@ classDiagram
 	Field : obtainPawn()
 	Field : receivePawn()
 ```
-##### Package eldorado.domain.dto
+##### eldorado.domain.dto
+* import eldorado.domain.*
 ```mermaid
 classDiagram
 	GameStateDTO <|-- MapStateDTO : One
 	GameStateDTO : MapStateDTO mapStateDTO
 	GameStateDTO : int winningPawnId
+	
 ```
