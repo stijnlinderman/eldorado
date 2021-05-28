@@ -70,14 +70,10 @@ classDiagram
 	FieldDTO : number z
 	FieldDTO : number occupiedByPawnId
 	FieldDTO : string type
-	GameState *-- MapState: One
+	GameState *-- MapState : One
 	GameState : MapState mapState
 	GameState : number winningPawnId
-	GameState : get winner()
-	MapState : {[index:string]:Field} fields
-	MapState : string separator
-	MapState : [] fieldTypes
-	MapState : createFieldsArray()
+	GameState : int get winner
 ```
 ## Class diagram API
 ##### eldorado.api
