@@ -12,7 +12,7 @@ sequenceDiagram
 
 ```mermaid
 classDiagram
-	Game o-- MapConfiguration
+	Game <|-- MapConfiguration : 1
 	Game : MapConfiguration map
 	Game : int winningPawnId
 	Game : getMap()
