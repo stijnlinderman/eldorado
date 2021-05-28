@@ -68,6 +68,13 @@ classDiagram
 	Game <--> CreateGame
 	GameState <--> CreateGame
 	CreateGame : initialize()
+	HttpServletRequest --> MovePawn
+	MovePawnRequestDTO --> MovePawn
+	Game <--> MovePawn
+	GameState <--> MovePawn
+	MovePawn <--> DeniedRequestDTO
+	MovePawn : initialize()
+	MovePawn : getErrorMessageForMovePawnRequestSituation()
 ```
 ```mermaid
 classDiagram
