@@ -45,6 +45,14 @@ export class Field {
 		this.coordinates = new Coordinates (x, y, z, separator);
 		this.type = type;
 	}
+	
+	get isEnabled () {
+		if (this.type != "mountain" && this.occupiedByPawnId == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 export class Coordinates {

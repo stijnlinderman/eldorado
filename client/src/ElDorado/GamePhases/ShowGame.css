@@ -62,7 +62,7 @@
 	filter: drop-shadow(calc(3px * var(--size)) calc(3px * var(--size)) calc(5px * var(--size)) rgb(0,0,0))
 }
 
-.fieldButton:hover {
+.enabledButton:hover {
 	background-color: rgb(115, 221, 51);
 	filter: brightness(150%) drop-shadow(calc(3px * var(--size)) calc(3px * var(--size)) calc(5px * var(--size)) rgb(0,0,0))
 }

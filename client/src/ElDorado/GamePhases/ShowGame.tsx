@@ -4,11 +4,6 @@ import type { GameStateDTO } from "../GameState/GameStateDTO";
 import React from "react";
 import "./ShowGame.css";
 
-type GameProps = {
-    gameState: GameState,
-	setGameState(newGameState: GameState): void
-}
-
 const prefix = {
 	row_diagonals: "row_diagonals",
 	row_fields: "row_fields",
@@ -20,56 +15,84 @@ const prefix = {
 
 const pawnIdClasses = [ "unoccupiedField", "pawnOne" ];
 
-const alerts = {
-	fieldNotFound: "Could not find the field you're looking for.'",
-}
-
 const showCoordinatesOnButtons_forDebug = false;
 
-export function ShowGame({ gameState, setGameState }: GameProps) {
-	const displayableMap = new DisplayableMap (gameState.mapState, setGameState);
-	return <div className="mapContainer">{displayableMap.getMapForDisplay()}</div>
+type ShowGameProps = {gameState: GameState, setGameState(newGameState: GameState): void}
+type DisplayableMapProps = {mapState: MapState, setGameState(newGameState: GameState): void}
+type FieldButtonProps = {rowId: number, columnId: number}
+type RowOfDiagonalsProps = {rowId: number}
+type DiagonalProps = {rowId: number, columnId: number}
+
+export function ShowGame({ gameState, setGameState }: ShowGameProps) {
+	return <div className="mapContainer"><DisplayableMap mapState={gameState.mapState} setGameState={setGameState}/></div>
 }
 
-class DisplayableMap {
-	rowIds: number[];
-	columnIds: number[];
-	fields: Field[][] = [[]];
-	firstRowStartsOffset: boolean;
-	separator: string;
-	setGameState: (newGameState: GameState) => void;
+function DisplayableMap ({mapState, setGameState}: DisplayableMapProps) {
+	const separator = mapState.separator;
+
+	const fields_as2dTable: Field[][] = [[]];
+	let mapBoundaries: MapBoundaries;
+	organizeFieldsIn2dArray_andUpdateMapBoundaries ()
 	
-	constructor (mapState: MapState, setGameState: (newGameState: GameState) => void) {
-		let mapBoundaries: MapBoundaries;
-		this.setGameState = setGameState;
-		
+	const rowIds = createSortedArrayOfIds(mapBoundaries!.firstRowId, mapBoundaries!.lastRowId);
+	const columnIds = createSortedArrayOfIds(mapBoundaries!.firstColumnId, mapBoundaries!.lastColumnId);
+	
+	return (
+		<table className="mapTable">
+			<tbody>
+				<RowOfDiagonals key={`${prefix.row_diagonals}${separator}${rowIds[0]-1}`} rowId={rowIds[0]-1}/>
+				{
+					rowIds.map((rowId: number) => {
+						return [
+							<tr key={`${prefix.row_fields}${separator}${rowId}`} className="tableRow">
+								{isOffsetRow(rowId) ? <td key={`${prefix.cell_offset}${separator}${rowId}`} colSpan={1}/> : null}
+								{columnIds.map((columnId: number) => {
+									if (shouldColumnBeDrawnInRow(columnId, rowId)) {
+										return (
+											<td 
+												key={`${prefix.cell_field}${separator}${rowId}${separator}${columnId}`} 
+												className={`cell fieldCell buttonCell ${(columnId <= columnIds[1]) ? "leftBorder" : ""}`} 
+												colSpan={2}>
+											<FieldButton rowId={rowId} columnId={columnId}/>
+											</td>
+										)
+									}
+								})}
+							</tr>,
+							<RowOfDiagonals key={`${prefix.row_diagonals}${separator}${rowId}`}  rowId={rowId}/>
+						]	
+					})
+				}
+			</tbody>
+		</table>
+	)
+	
+	function organizeFieldsIn2dArray_andUpdateMapBoundaries () {
 		Object.values(mapState.fields).map((field) => {
 			const rowId = field.coordinates.rowId;
 			const columnId = field.coordinates.columnId;
 			
-			this.addField(field, rowId, columnId);
-			
+			organizeFieldTo2dFieldsArray(field, rowId, columnId);
+			updateMapBoundaries (rowId, columnId);
+		})
+	
+		function organizeFieldTo2dFieldsArray (field: Field, rowId: number, columnId: number) {
+			if (fields_as2dTable[rowId] == null) {
+				fields_as2dTable[rowId] = [];
+			} 
+			fields_as2dTable[rowId][columnId] = field;
+		}
+	
+		function updateMapBoundaries (rowId: number, columnId: number) {
 			if (typeof mapBoundaries === 'undefined') {
 				mapBoundaries = new MapBoundaries(rowId, columnId);
 			} else {
 				mapBoundaries.update(rowId, columnId)
 			}
-		})
-		
-		this.rowIds = this.createSortedArrayOfIds(mapBoundaries!.firstRowId, mapBoundaries!.lastRowId);
-		this.columnIds = this.createSortedArrayOfIds(mapBoundaries!.firstColumnId, mapBoundaries!.lastColumnId);
-		this.firstRowStartsOffset = this.determineIfFirstRowShouldStartOffset();
-		this.separator = mapState.separator;
+		}
 	}
 	
-	addField (field: Field, rowId: number, columnId: number) {
-		if (this.fields[rowId] == null) {
-			this.fields[rowId] = [];
-		} 
-		this.fields[rowId][columnId] = field;
-	}
-	
-	createSortedArrayOfIds (firstId: number, lastId: number) {
+	function createSortedArrayOfIds (firstId: number, lastId: number) {
 		const array = [];
 		for (let id = firstId; id <= lastId; id ++) {
 			array.push(id);
@@ -78,110 +101,72 @@ class DisplayableMap {
 		return array;
 	}
 	
-	determineIfFirstRowShouldStartOffset () {
-		return false;
-	}
-	
-	getMapForDisplay () {
-		return (
-			<table className="mapTable"><tbody>
-				{this.getRowsForDisplay()}
-			</tbody></table>
-		)
-	}
-	
-	getRowsForDisplay() {
-		const rows: any = [];
-		rows.push(this.getRowOfDiagonals(this.rowIds[0]-1))	
-		this.rowIds.map((rowId: number) => {
-			rows.push(this.getRowOfFields(rowId))
-			rows.push(this.getRowOfDiagonals(rowId))			
-		})
-		return rows;
-	}
-
-	getRowOfFields (rowId: number) {
-		return <tr key={`${prefix.row_fields}${this.separator}${rowId}`} className="tableRow">
-			{this.isOffsetRow(rowId) ? <td key={`${prefix.cell_offset}${this.separator}${rowId}`} colSpan={1}/> : null}
-			{this.columnIds.map((columnId: number) => {
-				if (this.shouldColumnBeDrawnInRow(columnId, rowId)) {
-					const rowColumnStringKey_fieldCell = `${prefix.cell_field}${this.separator}${rowId}${this.separator}${columnId}`;
-					const classes_fieldCell = `cell fieldCell buttonCell ${(columnId <= this.columnIds[1]) ? "leftBorder" : ""}`;
-					const content_fieldCell = (this.fields[rowId][columnId]) ? this.getButton(rowId, columnId): null;
-					return <td key={rowColumnStringKey_fieldCell} className={classes_fieldCell} colSpan={2}>{content_fieldCell}</td>
-				}
-			})}
-		</tr>
-	}
-	
-	isOffsetRow (rowId: number) {
+	function isOffsetRow (rowId: number) {
 		return !(rowId % 2 == 0);
 	}
 	
-	shouldColumnBeDrawnInRow (columnId: number, rowId: number) {
-		if (this.isOffsetRow(rowId) && (columnId+1) % 2 == 0) {
+	function shouldColumnBeDrawnInRow (columnId: number, rowId: number) {
+		if (isOffsetRow(rowId) && (columnId+1) % 2 == 0) {
 			return true;
-		} else if (!this.isOffsetRow(rowId) && (columnId) % 2 == 0) {
+		} else if (!isOffsetRow(rowId) && (columnId) % 2 == 0) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	getButton (rowId: number, columnId: number) {
-		const field = this.fields[rowId][columnId];
-		const id_button = `${prefix.field_button}${this.separator}${field.coordinates.rowColumnStringKey}`;
-		const classes_button = `fieldButton ${pawnIdClasses[field.occupiedByPawnId]} ${field.type.replace("-","")}`
-		const content_button = this.getButtonContentForField(field);
-		return <button className={classes_button} id={id_button} onClick={(event) => this.fieldButtonClicked(event)}>{content_button}</button>;
-	}
-	
-	getButtonContentForField (field: Field) {
-		return field.occupiedByPawnId > 0 ? "\u2659" : showCoordinatesOnButtons_forDebug ? field.coordinates.xyzStringKey : "";
-	}
-	
-	getRowOfDiagonals(rowId: number) {
-		let upwards = this.isOffsetRow(rowId);
-		const diagonals: any = [];
-		this.columnIds.map((columnId: number) => {
-			diagonals.push(this.getDiagonal(rowId-1, columnId, upwards));
-			upwards = !upwards;
-			if (this.isEndOfRow(columnId)) {
-				diagonals.push(this.getDiagonal(rowId, columnId, upwards));
-			}
-		})
-		return (<tr key={`${prefix.row_diagonals}${this.separator}${rowId}`} className="tableRow">
-			{diagonals}
-		</tr>)
-	}
-	
-	getDiagonal (rowId: number, columnId: number, upwards: boolean) {
-		const rowKey = `${prefix.cell_diagonal}${this.separator}${rowId}${this.separator}${columnId}`;
-		const rowClasses = `cell fieldCell diagonalCell ${(upwards) ? "diagonalUp" : "diagonalDown"}`;
-		upwards = !upwards;			
-		return <td key={rowKey} className={rowClasses}></td>;		
-	}
-	
-	isEndOfRow (columnId: number) {
-		if (columnId == this.columnIds[this.columnIds.length-1]) {
-			return true
-		} else {
-			return false
-		}
-	}
-	
-	async fieldButtonClicked (event: any) {
-		const id_button = event.target.id;
-		const rowAndColumnIds = id_button.replace(`${prefix.field_button}${this.separator}`, "").split(this.separator);
-		const field = this.fields[rowAndColumnIds[0]][rowAndColumnIds[1]];		
+	function FieldButton ({rowId, columnId} : FieldButtonProps) {
+		const field = fields_as2dTable[rowId][columnId];
 		if (field) {
-			this.movePawnToField(field);
+			const id_button = `${prefix.field_button}${separator}${field.coordinates.rowColumnStringKey}`;
+			const classes_button = `fieldButton ${pawnIdClasses[field.occupiedByPawnId]} ${field.type.replace("-","")}`
+			const content_button = field.occupiedByPawnId > 0 ? "\u2659" : showCoordinatesOnButtons_forDebug ? field.coordinates.xyzStringKey : "";
+			if (field.isEnabled) {
+				return <button className={`${classes_button} enabledButton`} id={id_button} onClick={(event) => fieldButtonClicked(event)}>{content_button}</button>;
+			} else {
+				return <button className={classes_button} id={id_button} disabled>{content_button}</button>;
+			}
 		} else {
-			alert(alerts.fieldNotFound)
+			return null;
 		}
 	}
 	
-	async movePawnToField (field: Field) {
+	function RowOfDiagonals({rowId} : RowOfDiagonalsProps) {
+		const lastColumnId = columnIds[columnIds.length-1]+1;
+		return (
+			<tr className="tableRow">
+			{
+				columnIds.map((columnId: number) => {
+					return (
+						<Diagonal key={`${prefix.cell_diagonal}${separator}${rowId}${separator}${columnId}`} rowId={rowId} columnId={columnId}/>
+					)
+				})
+			}		
+			<Diagonal key={`${prefix.cell_diagonal}${separator}${rowId}${separator}${lastColumnId}`} rowId={rowId} columnId={lastColumnId}/>
+			</tr>
+		)
+	
+		function Diagonal ({rowId, columnId} : DiagonalProps) {
+			const rowClasses = `cell fieldCell diagonalCell ${getDiagonalDirectionClassName(rowId, columnId)}`;
+			return <td className={rowClasses}></td>;		
+		}
+		
+		function getDiagonalDirectionClassName(rowId: number, columnId: number) {
+			const rowId_abs = Math.abs(rowId);
+			const columnId_abs = Math.abs(columnId);
+			const upwards = (rowId_abs % 2 == 0 && columnId_abs % 2 == 1) || (rowId_abs % 2 == 1 && columnId_abs % 2 == 0)
+			return upwards ? "diagonalUp" : "diagonalDown";
+		}
+	}	
+	
+	async function fieldButtonClicked (event: any) {
+		const id_button = event.target.id;
+		const rowAndColumnIds = id_button.replace(`${prefix.field_button}${separator}`, "").split(separator);
+		const field = fields_as2dTable[rowAndColumnIds[0]][rowAndColumnIds[1]];		
+		movePawnToField(field);
+	}
+	
+	async function movePawnToField (field: Field) {
 		const pawnId = 1;
 		const requestDTO: MovePawnRequestDTO = new MovePawnRequestDTO (pawnId, field.coordinates.x, field.coordinates.y, field.coordinates.z);
 		try {
@@ -199,7 +184,7 @@ class DisplayableMap {
 	        if (response.status == 200) {
 	            const gameStateDTO: GameStateDTO = await response.json();
 				const gameState = new GameState(gameStateDTO);
-				this.setGameState(gameState);
+				setGameState(gameState);
 	        } else if (response.status == 202) {
 				const deniedRequestDTO: DeniedRequestDTO = await response.json();
 				alert(deniedRequestDTO.message);
