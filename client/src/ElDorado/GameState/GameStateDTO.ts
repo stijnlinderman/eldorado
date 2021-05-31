@@ -7,7 +7,6 @@ export interface GameStateDTO {
 export interface MapStateDTO {
 	fieldDTOs: FieldDTO[];
 	separator: string;
-	fieldTypes: [];
 }
 
 export interface FieldDTO {

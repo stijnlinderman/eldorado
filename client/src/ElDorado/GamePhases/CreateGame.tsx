@@ -15,7 +15,6 @@ export function CreateGame ({ setGameState }: createGameProps) {
 		
 	        if (response.ok) {
 	            const gameStateDTO: GameStateDTO = await response.json();
-				console.log(gameStateDTO);
 				setGameState(new GameState(gameStateDTO));
 	        } else {
 	            console.error(response.statusText)

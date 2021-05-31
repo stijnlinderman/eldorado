@@ -28,7 +28,7 @@ const showCoordinatesOnButtons_forDebug = false;
 
 export function ShowGame({ gameState, setGameState }: GameProps) {
 	const displayableMap = new DisplayableMap (gameState.mapState, setGameState);
-	return <div>{displayableMap.getMapForDisplay()}</div>
+	return <div className="mapContainer">{displayableMap.getMapForDisplay()}</div>
 }
 
 class DisplayableMap {
@@ -63,7 +63,6 @@ class DisplayableMap {
 	}
 	
 	addField (field: Field, rowId: number, columnId: number) {
-//		console.log("adding field "+field.coordinates.xyzStringKey+" on row "+rowId+" column "+columnId)
 		if (this.fields[rowId] == null) {
 			this.fields[rowId] = [];
 		} 
@@ -105,9 +104,7 @@ class DisplayableMap {
 		return <tr key={`${prefix.row_fields}${this.separator}${rowId}`} className="tableRow">
 			{this.isOffsetRow(rowId) ? <td key={`${prefix.cell_offset}${this.separator}${rowId}`} colSpan={1}/> : null}
 			{this.columnIds.map((columnId: number) => {
-//				console.log("checking if row "+rowId+" column "+columnId+" should be drawn")
 				if (this.shouldColumnBeDrawnInRow(columnId, rowId)) {
-//					console.log("drawing row "+rowId+" column "+columnId)
 					const rowColumnStringKey_fieldCell = `${prefix.cell_field}${this.separator}${rowId}${this.separator}${columnId}`;
 					const classes_fieldCell = `cell fieldCell buttonCell ${(columnId <= this.columnIds[1]) ? "leftBorder" : ""}`;
 					const content_fieldCell = (this.fields[rowId][columnId]) ? this.getButton(rowId, columnId): null;
@@ -122,7 +119,6 @@ class DisplayableMap {
 	}
 	
 	shouldColumnBeDrawnInRow (columnId: number, rowId: number) {
-		console.log("checking if row "+rowId+" column "+columnId+" should be drawn")
 		if (this.isOffsetRow(rowId) && (columnId+1) % 2 == 0) {
 			return true;
 		} else if (!this.isOffsetRow(rowId) && (columnId) % 2 == 0) {
@@ -135,7 +131,7 @@ class DisplayableMap {
 	getButton (rowId: number, columnId: number) {
 		const field = this.fields[rowId][columnId];
 		const id_button = `${prefix.field_button}${this.separator}${field.coordinates.rowColumnStringKey}`;
-		const classes_button = `fieldButton ${pawnIdClasses[field.occupiedByPawnId]} ${field.type}`
+		const classes_button = `fieldButton ${pawnIdClasses[field.occupiedByPawnId]} ${field.type.replace("-","")}`
 		const content_button = this.getButtonContentForField(field);
 		return <button className={classes_button} id={id_button} onClick={(event) => this.fieldButtonClicked(event)}>{content_button}</button>;
 	}

@@ -20,8 +20,16 @@ public class Game {
 		return this.map;
 	}
 	
+	public boolean canPawnMoveFromFieldToField (int pawnId, Field pawnCurrentField, Field pawnFieldToMoveTo) {
+		if (pawnCurrentField != null && pawnFieldToMoveTo != null && pawnFieldToMoveTo.type != FieldTypes.mountain) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public void processPossibleWin (Field newlyOccupiedField) {
-		if (newlyOccupiedField.isOccupied() && newlyOccupiedField.type == "finish") {
+		if (newlyOccupiedField.isOccupied() && newlyOccupiedField.type == "eldorado") {
 			this.setWinningPawnId(newlyOccupiedField.getPawnId());
 		}
 	}

@@ -27,16 +27,16 @@ public class MovePawn {
     		int newY = requestDTO.y;
     		int newZ = requestDTO.z;
     		
-    		Field originField = game.getMap().findNeighboringFieldThatCurrentlyContainsPawn(newX, newY, newZ, pawnId);
-    		Field fieldToMoveTo = game.getMap().getField(newX, newY, newZ);
-    		    		
-    		if (originField != null && fieldToMoveTo != null) {
-    			fieldToMoveTo.receivePawn(originField);
-    			game.processPossibleWin(fieldToMoveTo);
+    		Field pawnCurrentField = game.getMap().findNeighboringFieldThatCurrentlyContainsPawn(newX, newY, newZ, pawnId);
+    		Field pawnFieldToMoveTo = game.getMap().getField(newX, newY, newZ);
+    		
+    		if (game.canPawnMoveFromFieldToField (pawnId, pawnCurrentField, pawnFieldToMoveTo)) {
+    			pawnFieldToMoveTo.receivePawn(pawnCurrentField);
+    			game.processPossibleWin(pawnFieldToMoveTo);
         		GameStateDTO gameStateDTO = new GameStateDTO (game);
         		return Response.status(200).entity(gameStateDTO).build();
     		} else {
-    			String message = getErrorMessageForMovePawnRequestSituation (originField, fieldToMoveTo);
+    			String message = getErrorMessageForMovePawnRequestSituation (pawnCurrentField, pawnFieldToMoveTo);
     			DeniedRequestDTO deniedRequestDTO = new DeniedRequestDTO(message);
         		return Response.status(202).entity(deniedRequestDTO).build();
     		}
@@ -45,13 +45,17 @@ public class MovePawn {
     	}
 	}
     
-    private static String getErrorMessageForMovePawnRequestSituation (Field originField, Field fieldToMoveTo) {
+    private static String getErrorMessageForMovePawnRequestSituation (Field pawnCurrentField, Field pawnFieldToMoveTo) {
 		String message = "Something went wrong.";
-		if (fieldToMoveTo != null && originField == null) {
+		if (pawnFieldToMoveTo != null && pawnCurrentField == null) {
 			message = "It's not possible to move to that field. "
-					+ "Please choose a field that is 1 field away from the pawn.";
-		} else if (fieldToMoveTo == null && originField != null) {
-			message = "Could not find the field that the pawn should move to.";
+					+ "Pick a field that is 1 field away from the pawn.";
+		} else if (pawnFieldToMoveTo == null && pawnCurrentField != null) {
+			message = "Something went wrong. "
+					+ "Could not find the field that the pawn should move to.";
+		} else if (pawnFieldToMoveTo.type == FieldTypes.mountain) {
+			message = "It's not possible to travel over a mountain field. "
+					+ "Please pick another field to move to.";
 		}
 		return message;
     }

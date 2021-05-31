@@ -1,15 +1,21 @@
 @import url("https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap");
 
 :root {	
+	--size: 2;
 	--fieldBorderColor: rgb(117, 117, 117);
 	--fieldBorderThickness: 1px;
 	--fieldBorderStyle: dotted;	
 }
 
+.mapContainer {
+	padding: 0px;
+	margin: 0px;
+}
+
 .mapTable {
 	border-spacing: 0px;
 	margin: auto;
-	padding-top: calc(20px * var(--size));
+	padding-top: 40px;
 }
 
 .fieldCell {
@@ -62,7 +68,7 @@
 }
 
 .eldorado {
-	background: url(eldorado.jpg) no-repeat center center;
+	background: url(el-dorado.jpg) no-repeat center center;
 	background-size: calc(50px * var(--size));
 }
 
@@ -76,8 +82,13 @@
 	background-size: calc(50px * var(--size));
 }
 
-.treasure {
-	background: url(treasure.jpg) no-repeat center center;
+.village {
+	background: url(village.jpg) no-repeat center center;
+	background-size: calc(50px * var(--size));
+}
+
+.mountain {
+	background: url(mountain.jpg) no-repeat center center;
 	background-size: calc(50px * var(--size));
 }
 

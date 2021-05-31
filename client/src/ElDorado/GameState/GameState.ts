@@ -18,12 +18,10 @@ export class GameState {
 export class MapState {
 	fields: {[index:string]:Field};
 	separator: string;
-	fieldTypes: [];
 	
 	constructor (mapStateDTO: MapStateDTO) {
 		this.separator = mapStateDTO.separator;
 		this.fields = this.createFieldsArray (mapStateDTO.fieldDTOs);
-		this.fieldTypes = mapStateDTO.fieldTypes;
 	}
 	
 	createFieldsArray (fieldDTOs: FieldDTO[]) {

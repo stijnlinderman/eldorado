@@ -8,76 +8,75 @@ import java.util.HashMap;
 
 public class MapConfiguration {
 	public final Map<String, Field> fields;
-	public static final String[] fieldTypes = {"eldorado", "jungle", "sea", "treasure"};
 	public static final String separator = ",";
-
+	
 	private static final String[][][] mapConfigurations = {
 		{
-			{"0,0,0", "0", "jungle"},
-			{"0,1,1", "1", "jungle"},
-			{"0,3,3", "0", "jungle"},
-			{"0,4,4", "0", "jungle"},
-			{"1,0,1", "0", "jungle"},
-			{"1,1,2", "0", "jungle"},
-			{"1,2,3", "0", "jungle"},
-			{"1,3,4", "0", "jungle"},
-			{"2,0,2", "0", "jungle"},
-			{"2,2,4", "0", "jungle"},
-			{"2,3,5", "0", "jungle"},
-			{"3,-1,2", "0", "jungle"},
-			{"3,0,3", "0", "jungle"},
-			{"3,2,5", "0", "eldorado"}
+			{"0,0,0", "0", FieldTypes.jungle},
+			{"0,1,1", "1", FieldTypes.jungle},
+			{"0,3,3", "0", FieldTypes.jungle},
+			{"0,4,4", "0", FieldTypes.jungle},
+			{"1,0,1", "0", FieldTypes.jungle},
+			{"1,1,2", "0", FieldTypes.jungle},
+			{"1,2,3", "0", FieldTypes.jungle},
+			{"1,3,4", "0", FieldTypes.jungle},
+			{"2,0,2", "0", FieldTypes.jungle},
+			{"2,2,4", "0", FieldTypes.jungle},
+			{"2,3,5", "0", FieldTypes.jungle},
+			{"3,-1,2", "0", FieldTypes.jungle},
+			{"3,0,3", "0", FieldTypes.jungle},
+			{"3,2,5", "0", FieldTypes.eldorado}
 		},
 		{
-			{"0,0,0", "0", "jungle"},
+			{"0,0,0", "0", FieldTypes.mountain},
 			
-			{"0,1,1", "0", "jungle"},
-			{"0,2,2", "0", "sea"},
-			{"0,3,3", "1", "sea"},
+			{"0,1,1", "0", FieldTypes.jungle},
+			{"0,2,2", "0", FieldTypes.mountain},
+			{"0,3,3", "1", FieldTypes.sea},
 
-			{"1,1,2", "0", "jungle"},
-			{"2,1,3", "0", "treasure"},
-			{"1,2,3", "0", "jungle"},
+			{"1,1,2", "0", FieldTypes.mountain},
+			{"2,1,3", "0", FieldTypes.mountain},
+			{"1,2,3", "0", FieldTypes.jungle},
 			
-			{"1,0,1", "0", "jungle"},
-			{"2,0,2", "0", "sea"},
-			{"3,0,3", "0", "treasure"},
+			{"1,0,1", "0", FieldTypes.jungle},
+			{"2,0,2", "0", FieldTypes.sea},
+			{"3,0,3", "0", FieldTypes.village},
 			
-			{"2,-1,1", "0", "jungle"},
-			{"3,-2,1", "0", "jungle"},
-			{"3,-1,2", "0", "jungle"},
+			{"2,-1,1", "0", FieldTypes.jungle},
+			{"3,-2,1", "0", FieldTypes.jungle},
+			{"3,-1,2", "0", FieldTypes.jungle},
 		
-			{"1,-1,0", "0", "jungle"},
-			{"2,-2,0", "0", "treasure"},
-			{"3,-3,0", "0", "sea"},
+			{"1,-1,0", "0", FieldTypes.jungle},
+			{"2,-2,0", "0", FieldTypes.village},
+			{"3,-3,0", "0", FieldTypes.sea},
 			
-			{"1,-2,-1", "0", "jungle"},
-			{"1,-3,-2", "0", "jungle"},
-			{"2,-3,-1", "0", "jungle"},
+			{"1,-2,-1", "0", FieldTypes.jungle},
+			{"1,-3,-2", "0", FieldTypes.jungle},
+			{"2,-3,-1", "0", FieldTypes.jungle},
 		
-			{"0,-1,-1", "0", "jungle"},
-			{"0,-2,-2", "0", "treasure"},
-			{"0,-3,-3", "0", "treasure"},
+			{"0,-1,-1", "0", FieldTypes.jungle},
+			{"0,-2,-2", "0", FieldTypes.village},
+			{"0,-3,-3", "0", FieldTypes.eldorado},
 	
-			{"-1,-1,-2", "0", "jungle"},
-			{"-2,-1,-3", "0", "jungle"},
-			{"-1,-2,-3", "0", "sea"},
+			{"-1,-1,-2", "0", FieldTypes.jungle},
+			{"-2,-1,-3", "0", FieldTypes.jungle},
+			{"-1,-2,-3", "0", FieldTypes.sea},
 
-			{"-1,0,-1", "0", "jungle"},
-			{"-2,0,-2", "0", "treasure"},
-			{"-3,0,-3", "0", "jungle"},
+			{"-1,0,-1", "0", FieldTypes.jungle},
+			{"-2,0,-2", "0", FieldTypes.village},
+			{"-3,0,-3", "0", FieldTypes.jungle},
 
-			{"-2,1,-1", "0", "jungle"},
-			{"-3,2,-1", "0", "jungle"},
-			{"-3,1,-2", "0", "jungle"},
+			{"-2,1,-1", "0", FieldTypes.jungle},
+			{"-3,2,-1", "0", FieldTypes.jungle},
+			{"-3,1,-2", "0", FieldTypes.jungle},
 
-			{"-1,1,0", "0", "jungle"},
-			{"-2,2,0", "0", "sea"},
-			{"-3,3,0", "0", "eldorado"},
+			{"-1,1,0", "0", FieldTypes.jungle},
+			{"-2,2,0", "0", FieldTypes.sea},
+			{"-3,3,0", "0", FieldTypes.mountain},
 			
-			{"-1,2,1", "0", "treasure"},
-			{"-2,3,1", "0", "treasure"},
-			{"-1,3,2", "0", "jungle"}		
+			{"-1,2,1", "0", FieldTypes.village},
+			{"-2,3,1", "0", FieldTypes.village},
+			{"-1,3,2", "0", FieldTypes.jungle}		
 		}		
 	};
 	
