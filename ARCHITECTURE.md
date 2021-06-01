@@ -120,32 +120,19 @@ classDiagram
 	Coordinates : string xyzStringKey
 	Coordinates : number rowId
 	Coordinates : number columnId
-	DisplayableMap <--> MapBoundaries : created and temporarily used during construction
-	DisplayableMap : number[] rowIds
-	DisplayableMap : number[] columnIds
-	DisplayableMap : Field[][] fields
-	DisplayableMap : boolean firstRowStartsOffset
-	DisplayableMap : string separator
-	DisplayableMap --> GameState : calls setGameState()
-	DisplayableMap <-- MapState : receives
-	DisplayableMap : getMapForDisplay()
-	DisplayableMap : fieldButtonClicked()
-	DisplayableMap : movePawnToField()
+	class MapBoundaries: created and temporarily used during construction
 	MapBoundaries : update()
 	MapBoundaries : number firstRowId
 	MapBoundaries : number lastRowId
 	MapBoundaries : number firstColumnId
 	MapBoundaries : number lastColumnId
-	DisplayableMap <--> MovePawnRequestDTO : Called as a result of movePawnToField() and used in API request
+	class MovePawnRequestDTO : Called as a result of movePawnToField() and used in POST eldorado/api/movepawn
 	MovePawnRequestDTO : number pawnId
 	MovePawnRequestDTO : number x
 	MovePawnRequestDTO : number y
 	MovePawnRequestDTO : number z
-	DisplayableMap <--> DeniedRequestDTO : Received through API request if the move was not valid
-	MovePawnRequestDTO : number pawnId
-	MovePawnRequestDTO : number x
-	MovePawnRequestDTO : number y
-	MovePawnRequestDTO : number z
+	class DeniedRequestDTO : Received in eldorado/api/movepawn response if the move was not valid
+	DeniedRequestDTO : string message
 ```
 ## API class diagram
 ##### eldorado.api
