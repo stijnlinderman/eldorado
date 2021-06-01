@@ -21,7 +21,7 @@ public class Game {
 	}
 	
 	public boolean canPawnMoveFromFieldToField (int pawnId, Field pawnCurrentField, Field pawnFieldToMoveTo) {
-		if (pawnCurrentField != null && pawnFieldToMoveTo != null && pawnFieldToMoveTo.type != FieldTypes.mountain) {
+		if (pawnCurrentField != null && pawnFieldToMoveTo != null && pawnFieldToMoveTo.type != FieldType.mountain) {
 			return true;
 		} else {
 			return false;

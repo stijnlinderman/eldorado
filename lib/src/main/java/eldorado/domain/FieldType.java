@@ -3,7 +3,7 @@
  */
 package eldorado.domain;
 
-public class FieldTypes {
+public class FieldType {
 	public static final String jungle = "jungle";
 	public static final String sea = "sea";
 	public static final String village = "village";
