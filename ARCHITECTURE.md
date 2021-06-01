@@ -113,6 +113,26 @@ classDiagram
 	Field : number occupiedByPawnId
 	Field : Coordinates coordinates
 	Field : string type
+	Coordinates : number x
+	Coordinates : number y
+	Coordinates : number z
+	Coordinates : string rowColumnStringKey
+	Coordinates : string xyzStringKey
+	Coordinates : number rowId
+	Coordinates : number columnId
+	class MapBoundaries
+	MapBoundaries : update()
+	MapBoundaries : number firstRowId
+	MapBoundaries : number lastRowId
+	MapBoundaries : number firstColumnId
+	MapBoundaries : number lastColumnId
+	class MovePawnRequestDTO
+	MovePawnRequestDTO : number pawnId
+	MovePawnRequestDTO : number x
+	MovePawnRequestDTO : number y
+	MovePawnRequestDTO : number z
+	class DeniedRequestDTO
+	DeniedRequestDTO : string message
 ```
 ## API class diagram
 ##### eldorado.api
