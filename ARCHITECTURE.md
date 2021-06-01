@@ -126,13 +126,6 @@ classDiagram
 	MapBoundaries : number lastRowId
 	MapBoundaries : number firstColumnId
 	MapBoundaries : number lastColumnId
-	class MovePawnRequestDTO : Called as a result of movePawnToField() and used in POST eldorado/api/movepawn
-	MovePawnRequestDTO : number pawnId
-	MovePawnRequestDTO : number x
-	MovePawnRequestDTO : number y
-	MovePawnRequestDTO : number z
-	class DeniedRequestDTO : Received in eldorado/api/movepawn response if the move was not valid
-	DeniedRequestDTO : string message
 ```
 ## API class diagram
 ##### eldorado.api
