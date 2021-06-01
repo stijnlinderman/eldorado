@@ -18,10 +18,7 @@ sequenceDiagram
     Domain->>API: Game instance
     deactivate Domain
     Note over API: Set Game as session attribute
-    API->>Domain: Create GameStateDTO instance based on Game
-    activate Domain
-    Domain->>API: GameStateDTO instance
-    deactivate Domain
+    Note over API: Creates GameStateDTO instance based on Game
     API->>Client: Response containing GameStateDTO
     deactivate API
     Note over Client: /CreateGame creates GameState instance based on received GameStateDTO
@@ -36,7 +33,7 @@ sequenceDiagram
     participant API
     participant Domain
     activate Client
-    Note over Client: Client clicks on a button and fieldButtonClicked() is called
+    Note over Client: Client views /ShowGame, clicks on a button<br>and fieldButtonClicked() is called
     Note over Client: movePawnToField() is called
     Client->>API: Request move by POST eldorado/api/movepawn<br>containing the coordinates of the field that was clicked
     activate API
@@ -47,7 +44,10 @@ sequenceDiagram
     API->>Domain: Instructs the game to process the valid move
     activate Domain
     deactivate Domain
+    Note over API: Creates GameStateDTO instance based on Game
+    API->>Client: Responds status 200 and body containing new GameStateDTO
     deactivate API
+    Note over Client: /ShowGame updates the clientside GameState based on the received GameStateDTO
     deactivate Client
 ```
 
