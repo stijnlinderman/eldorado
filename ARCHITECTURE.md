@@ -1,7 +1,7 @@
 # Software architecture
 
 ## Main code flow
-##### Client connection sequence diagram
+##### Client connects and gets to see the game map - sequence diagram
 ```mermaid
 sequenceDiagram
     participant Client
@@ -10,7 +10,7 @@ sequenceDiagram
     activate Client
     Note over Client: Browser requests<br>http://localhost:3000
     Note over Client: No instance of GameState, so /CreateGame is rendered
-    Client->>API: Request new GameState eldorado/api/creategame
+    Client->>API: Request a new game by GET eldorado/api/creategame
     activate API
     Note over API: Create new session
     API->>Domain: Create new Game instance
@@ -26,14 +26,29 @@ sequenceDiagram
     deactivate API
     Note over Client: /CreateGame creates GameState instance based on received GameStateDTO
     Note over Client: Instance of GameState exists, so /ShowGame is rendered
-    Note over Client: /ShowGame creates DisplayableMap instance based on the GameState instance
-    Note over Client: /ShowGame renders HTML table based on DisplayableMap containing a button on each field
+    Note over Client: /ShowGame renders an HTML table of the map based on the MapState contained in the GameState,<br>containing a button for each field for which the onClick event is handled to fieldButtonClicked()
     deactivate Client
 ```
-##### Client clicks field button sequence diagram
+##### Client moves the pawn by performing a valid move - sequence diagram
 ```mermaid
 sequenceDiagram
-    participant TODO
+    participant Client
+    participant API
+    participant Domain
+    activate Client
+    Note over Client: Client clicks on a button and fieldButtonClicked() is called
+    Note over Client: movePawnToField() is called
+    Client->>API: Request move by POST eldorado/api/movepawn<br>containing the coordinates of the field that was clicked
+    activate API
+    API->>Domain: Asks if the requested move is a valid move
+    activate Domain
+    Domain->>API: Returns that the move is valid
+    deactivate Domain
+    API->>Domain: Instructs the game to process the valid move
+    activate Domain
+    deactivate Domain
+    deactivate API
+    deactivate Client
 ```
 
 ##### Client pages flow
