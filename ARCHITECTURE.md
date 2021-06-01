@@ -109,23 +109,6 @@ classDiagram
 	MapState : string separator
 	MapState : [] fieldTypes
 	MapState : createFieldsArray()
-	Field *-- Coordinates : One
-	Field : number occupiedByPawnId
-	Field : Coordinates coordinates
-	Field : string type
-	Coordinates : number x
-	Coordinates : number y
-	Coordinates : number z
-	Coordinates : string rowColumnStringKey
-	Coordinates : string xyzStringKey
-	Coordinates : number rowId
-	Coordinates : number columnId
-	class MapBoundaries: created and temporarily used during construction
-	MapBoundaries : update()
-	MapBoundaries : number firstRowId
-	MapBoundaries : number lastRowId
-	MapBoundaries : number firstColumnId
-	MapBoundaries : number lastColumnId
 ```
 ## API class diagram
 ##### eldorado.api
