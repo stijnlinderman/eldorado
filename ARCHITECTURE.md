@@ -186,6 +186,7 @@ classDiagram
 	Game : MapConfiguration map
 	Game : int winningPawnId
 	Game : getMap()
+	Game : canPawnMoveFromFieldToField()
 	Game : processPossibleWin()
 	Game : setWinningPawnId()
 	Game : getWinningPawnId()
