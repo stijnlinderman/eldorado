@@ -26,7 +26,7 @@ sequenceDiagram
     Note over Client: /ShowGame renders an HTML table of the map based on the MapState contained in the GameState,<br>containing a button for each field for which the onClick event is handled to fieldButtonClicked()
     deactivate Client
 ```
-##### Client moves the pawn by performing a valid move - sequence diagram
+##### Client moves the pawn by performing a VALID move - sequence diagram
 ```mermaid
 sequenceDiagram
     participant Client
@@ -39,7 +39,7 @@ sequenceDiagram
     activate API
     API->>Domain: Asks if the requested move is a valid move
     activate Domain
-    Domain->>API: Returns that the move is valid
+    Domain->>API: Returns that the move is VALID
     deactivate Domain
     API->>Domain: Instructs the game to process the valid move
     activate Domain
@@ -50,7 +50,27 @@ sequenceDiagram
     Note over Client: /ShowGame updates the clientside GameState based on the received GameStateDTO
     deactivate Client
 ```
-
+##### Client moves the pawn by performing an INVALID move - sequence diagram
+```mermaid
+sequenceDiagram
+    participant Client
+    participant API
+    participant Domain
+    activate Client
+    Note over Client: Client views /ShowGame, clicks on a button<br>and fieldButtonClicked() is called
+    Note over Client: movePawnToField() is called
+    Client->>API: Request move by POST eldorado/api/movepawn<br>containing the coordinates of the field that was clicked
+    activate API
+    API->>Domain: Asks if the requested move is a valid move
+    activate Domain
+    Domain->>API: Returns that the move is INVALID
+    deactivate Domain
+    Note over API: Creates DeniedRequestDTO instance<br>based on the reason why the move was invalid
+    API->>Client: Responds status 202 and body containing the DeniedRequestDTO
+    deactivate API
+    Note over Client: /ShowGame shows an alert containing the text from the DeniedRequestDTO
+    deactivate Client
+```
 ##### Client pages flow
 ```mermaid
 graph TD;
