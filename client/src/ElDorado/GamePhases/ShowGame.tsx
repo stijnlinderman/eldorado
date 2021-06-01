@@ -19,6 +19,8 @@ const showCoordinatesOnButtons_forDebug = false;
 
 type ShowGameProps = {gameState: GameState, setGameState(newGameState: GameState): void}
 type DisplayableMapProps = {mapState: MapState, setGameState(newGameState: GameState): void}
+type RowOfFieldsProps = {rowId: number}
+type FieldCellProps = {rowId: number, columnId: number}
 type FieldButtonProps = {rowId: number, columnId: number}
 type RowOfDiagonalsProps = {rowId: number}
 type DiagonalProps = {rowId: number, columnId: number}
@@ -32,40 +34,7 @@ function DisplayableMap ({mapState, setGameState}: DisplayableMapProps) {
 
 	const fields_as2dTable: Field[][] = [[]];
 	let mapBoundaries: MapBoundaries;
-	organizeFieldsIn2dArray_andUpdateMapBoundaries ()
-	
-	const rowIds = createSortedArrayOfIds(mapBoundaries!.firstRowId, mapBoundaries!.lastRowId);
-	const columnIds = createSortedArrayOfIds(mapBoundaries!.firstColumnId, mapBoundaries!.lastColumnId);
-	
-	return (
-		<table className="mapTable">
-			<tbody>
-				<RowOfDiagonals key={`${prefix.row_diagonals}${separator}${rowIds[0]-1}`} rowId={rowIds[0]-1}/>
-				{
-					rowIds.map((rowId: number) => {
-						return [
-							<tr key={`${prefix.row_fields}${separator}${rowId}`} className="tableRow">
-								{isOffsetRow(rowId) ? <td key={`${prefix.cell_offset}${separator}${rowId}`} colSpan={1}/> : null}
-								{columnIds.map((columnId: number) => {
-									if (shouldColumnBeDrawnInRow(columnId, rowId)) {
-										return (
-											<td 
-												key={`${prefix.cell_field}${separator}${rowId}${separator}${columnId}`} 
-												className={`cell fieldCell buttonCell ${(columnId <= columnIds[1]) ? "leftBorder" : ""}`} 
-												colSpan={2}>
-											<FieldButton rowId={rowId} columnId={columnId}/>
-											</td>
-										)
-									}
-								})}
-							</tr>,
-							<RowOfDiagonals key={`${prefix.row_diagonals}${separator}${rowId}`}  rowId={rowId}/>
-						]	
-					})
-				}
-			</tbody>
-		</table>
-	)
+	organizeFieldsIn2dArray_andUpdateMapBoundaries ()	
 	
 	function organizeFieldsIn2dArray_andUpdateMapBoundaries () {
 		Object.values(mapState.fields).map((field) => {
@@ -92,6 +61,9 @@ function DisplayableMap ({mapState, setGameState}: DisplayableMapProps) {
 		}
 	}
 	
+	const rowIds = createSortedArrayOfIds(mapBoundaries!.firstRowId, mapBoundaries!.lastRowId);
+	const columnIds = createSortedArrayOfIds(mapBoundaries!.firstColumnId, mapBoundaries!.lastColumnId);
+	
 	function createSortedArrayOfIds (firstId: number, lastId: number) {
 		const array = [];
 		for (let id = firstId; id <= lastId; id ++) {
@@ -101,35 +73,17 @@ function DisplayableMap ({mapState, setGameState}: DisplayableMapProps) {
 		return array;
 	}
 	
-	function isOffsetRow (rowId: number) {
-		return !(rowId % 2 == 0);
-	}
-	
-	function shouldColumnBeDrawnInRow (columnId: number, rowId: number) {
-		if (isOffsetRow(rowId) && (columnId+1) % 2 == 0) {
-			return true;
-		} else if (!isOffsetRow(rowId) && (columnId) % 2 == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	function FieldButton ({rowId, columnId} : FieldButtonProps) {
-		const field = fields_as2dTable[rowId][columnId];
-		if (field) {
-			const id_button = `${prefix.field_button}${separator}${field.coordinates.rowColumnStringKey}`;
-			const classes_button = `fieldButton ${pawnIdClasses[field.occupiedByPawnId]} ${field.type.replace("-","")}`
-			const content_button = field.occupiedByPawnId > 0 ? "\u2659" : showCoordinatesOnButtons_forDebug ? field.coordinates.xyzStringKey : "";
-			if (field.isEnabled) {
-				return <button className={`${classes_button} enabledButton`} id={id_button} onClick={(event) => fieldButtonClicked(event)}>{content_button}</button>;
-			} else {
-				return <button className={classes_button} id={id_button} disabled>{content_button}</button>;
-			}
-		} else {
-			return null;
-		}
-	}
+	return (
+		<table className="mapTable"><tbody>
+			<RowOfDiagonals key={`${prefix.row_diagonals}${separator}${rowIds[0]-1}`} rowId={rowIds[0]-1}/>
+			{rowIds.map((rowId: number) => {
+				return [
+					<RowOfFields key={`${prefix.row_fields}${separator}${rowId}`} rowId={rowId}/>,
+					<RowOfDiagonals key={`${prefix.row_diagonals}${separator}${rowId}`}  rowId={rowId}/>
+				]	
+			})}
+		</tbody></table>
+	)
 	
 	function RowOfDiagonals({rowId} : RowOfDiagonalsProps) {
 		const lastColumnId = columnIds[columnIds.length-1]+1;
@@ -157,7 +111,60 @@ function DisplayableMap ({mapState, setGameState}: DisplayableMapProps) {
 			const upwards = (rowId_abs % 2 == 0 && columnId_abs % 2 == 1) || (rowId_abs % 2 == 1 && columnId_abs % 2 == 0)
 			return upwards ? "diagonalUp" : "diagonalDown";
 		}
-	}	
+	}
+	
+	function RowOfFields ({rowId} : RowOfFieldsProps) {
+		return (
+			<tr className="tableRow">
+				{isOffsetRow(rowId) ? <td key={`${prefix.cell_offset}${separator}${rowId}`} colSpan={1}/> : null}
+				{columnIds.map((columnId: number) => {
+					if (shouldColumnBeDrawnInRow(columnId, rowId)) {
+						return <FieldCell key={`${prefix.cell_field}${separator}${rowId}${separator}${columnId}`} rowId={rowId} columnId={columnId}/>
+					}
+				})}
+			</tr>
+		)	
+	
+		function isOffsetRow (rowId: number) {
+			return !(rowId % 2 == 0);
+		}
+		
+		function shouldColumnBeDrawnInRow (columnId: number, rowId: number) {
+			if (isOffsetRow(rowId) && (columnId+1) % 2 == 0) {
+				return true;
+			} else if (!isOffsetRow(rowId) && (columnId) % 2 == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		function FieldCell ({rowId, columnId} : FieldCellProps) {
+			return (
+				<td 
+					className={`cell fieldCell buttonCell ${(columnId <= columnIds[1]) ? "leftBorder" : ""}`} 
+					colSpan={2}>
+				<FieldButton rowId={rowId} columnId={columnId}/>
+				</td>
+			)
+		
+			function FieldButton ({rowId, columnId} : FieldButtonProps) {
+				const field = fields_as2dTable[rowId][columnId];
+				if (field) {
+					const id_button = `${prefix.field_button}${separator}${field.coordinates.rowColumnStringKey}`;
+					const classes_button = `fieldButton ${pawnIdClasses[field.occupiedByPawnId]} ${field.type.replace("-","")}`
+					const content_button = field.occupiedByPawnId > 0 ? "\u2659" : showCoordinatesOnButtons_forDebug ? field.coordinates.xyzStringKey : "";
+					if (field.isEnabled) {
+						return <button className={`${classes_button} enabledButton`} id={id_button} onClick={(event) => fieldButtonClicked(event)}>{content_button}</button>;
+					} else {
+						return <button className={classes_button} id={id_button} disabled>{content_button}</button>;
+					}
+				} else {
+					return null;
+				}
+			}
+		}
+	}
 	
 	async function fieldButtonClicked (event: any) {
 		const id_button = event.target.id;
