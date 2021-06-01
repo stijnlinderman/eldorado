@@ -109,6 +109,10 @@ classDiagram
 	MapState : string separator
 	MapState : [] fieldTypes
 	MapState : createFieldsArray()
+	Field *-- Coordinates : One
+	Field : number occupiedByPawnId
+	Field : Coordinates coordinates
+	Field : string type
 ```
 ## API class diagram
 ##### eldorado.api
