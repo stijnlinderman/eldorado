@@ -1,0 +1,26 @@
+
+:root {	
+	--deckContainerWidth: 15%;
+	
+}
+
+.runningGameContainer {
+	margin: 20px;
+	margin-left: 40px;
+	margin-right: 40px;
+}
+
+.deckContainer {
+	display:inline-block;
+	width: var(--deckContainerWidth);
+	vertical-align: top;
+	align-content: center;
+}
+
+.mapContainer {
+	display:inline-block;
+	width: calc(100% - var(--deckContainerWidth));
+	/*height: 500px;*/
+	vertical-align: top;
+	overflow: auto;
+}

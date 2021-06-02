@@ -2,6 +2,7 @@
 export interface GameStateDTO {
 	mapStateDTO: MapStateDTO;
 	winningPawnId: number; 
+	deckStateDTO: DeckStateDTO;
 }
 
 export interface MapStateDTO {
@@ -15,4 +16,10 @@ export interface FieldDTO {
 	z: number;
 	occupiedByPawnId: number;
 	type: string;
+}
+
+export interface DeckStateDTO {
+	deckAmountLeft: number;
+	hand: string[];
+	discardedAmount: number;
 }

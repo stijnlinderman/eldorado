@@ -68,5 +68,11 @@ public class GameTest {
 		Game game = new Game(mapTestConfigurations[0]);
 		assertNull(game.getMap().findNeighboringFieldThatCurrentlyContainsPawn(3, 2, 5, 1));
     }
+    
+    @Test
+    public void gameStartsWithANewDeckThatHasFourCards () {
+    	Game game = new Game(mapTestConfigurations[0]);
+    	assertEquals(4, game.getDeck().getHand().size());
+    }
 
 }

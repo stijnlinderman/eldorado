@@ -1,0 +1,49 @@
+
+:root {	
+	--deckSize: 1;
+	--cardWidth: 80px;
+}
+
+.collectionOfCardsToShow {
+	text-align: center;
+}
+
+.cardButton {
+	width: calc(var(--cardWidth) * var(--deckSize));
+	height: calc(var(--cardWidth) * var(--deckSize) * 1.62);
+	margin: calc(10px * var(--deckSize));
+	text-align: center;	
+	font-size: 16px;
+	font-family: 'Fredericka the Great', sans-serif;
+	color: rgb(255,255,255);
+	text-shadow: 2px 2px 0px rgb(0,0,0);
+	text-transform: capitalize;
+	border-radius: calc(10px * var(--deckSize));
+	border: 0px;
+	filter: drop-shadow(calc(2px * var(--deckSize)) calc(2px * var(--deckSize)) calc(1px * var(--deckSize)) rgb(0,0,0));
+}
+
+.cardButton:hover {
+	filter: brightness(150%) drop-shadow(calc(2px * var(--deckSize)) calc(2px * var(--deckSize)) calc(1px * var(--deckSize)) rgb(0,0,0));
+	border: 2px dashed rgb(255,255,255);
+}
+
+.explorerCard {
+	background: url(explorer.jpg) no-repeat center center;
+	background-size: calc(100px * var(--deckSize));
+}
+
+.sailorCard {
+	background: url(sailor.jpg) no-repeat center center;
+	background-size: calc(100px * var(--deckSize));
+}
+
+.travelerCard {
+	background: url(traveler.jpg) no-repeat center center;
+	background-size: calc(100px * var(--deckSize));
+}
+
+.selectedCard {
+	filter: drop-shadow(calc(2px * var(--deckSize)) calc(2px * var(--deckSize)) calc(1px * var(--deckSize)) rgb(0,0,0));
+	border: 2px solid rgb(255,255,255);	
+}

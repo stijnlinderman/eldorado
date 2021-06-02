@@ -8,12 +8,14 @@ public class MovePawnRequestDTO {
 	public int x;
 	public int y;
 	public int z;
+	public String selectedCard_type;
 	
-	public MovePawnRequestDTO (int pawnId, int x, int y, int z) {
+	public MovePawnRequestDTO (int pawnId, int x, int y, int z, String selectedCard_type) {
 		this.pawnId = pawnId;
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.selectedCard_type = selectedCard_type;
 	}
 	
 	public MovePawnRequestDTO () {};

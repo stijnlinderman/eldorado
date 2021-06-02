@@ -1,0 +1,99 @@
+
+:root {	
+	--mapSize: 2;
+	--fieldBorderColor: rgb(117, 117, 117);
+	--fieldBorderThickness: 1px;
+	--fieldBorderStyle: dotted;	
+}
+
+.mapTable {
+	border-spacing: 0px;
+	padding-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.fieldCell {
+	text-align: center;
+	vertical-align: middle;
+	padding: 0px;
+	height: calc(20px * var(--mapSize));
+}
+.buttonCell {
+	width: calc(20px * var(--mapSize));
+	border-right: calc(var(--fieldBorderThickness) * var(--mapSize)) var(--fieldBorderStyle) var(--fieldBorderColor);
+}
+.leftBorder {
+	position: relative;
+	border-left: calc(var(--fieldBorderThickness) * var(--mapSize)) var(--fieldBorderStyle) var(--fieldBorderColor);
+}
+.tableRow {
+	border-left: calc(var(--fieldBorderThickness) * var(--mapSize)) var(--fieldBorderStyle) var(--fieldBorderColor);
+}
+
+.diagonalCell {
+	width: calc(20px * var(--mapSize));
+	height: calc(3px * var(--mapSize));
+	border-bottom: calc(var(--fieldBorderThickness) * var(--mapSize)) var(--fieldBorderStyle) var(--fieldBorderColor);
+}
+.diagonalUp {
+	transform: rotate(-30deg); 
+}
+.diagonalDown {
+	transform: rotate(30deg); 
+}
+
+.fieldButton {
+	width: calc(40px * var(--mapSize));
+	height: calc(40px * var(--mapSize));
+	border: none;
+	vertical-align: middle;
+	color: rgb(255, 255, 255);
+	border-radius: calc(20px * var(--mapSize));
+	margin-top: calc(0px * var(--mapSize));
+	margin-left: calc(5px * var(--mapSize));
+	margin-right: calc(5px * var(--mapSize));
+	margin-bottom: calc(0px * var(--mapSize));
+	filter: drop-shadow(calc(1px * var(--mapSize)) calc(1px * var(--mapSize)) calc(1px * var(--mapSize)) rgb(0,0,0))
+}
+
+.enabledButton:hover {
+	filter: brightness(150%) drop-shadow(calc(1px * var(--mapSize)) calc(1px * var(--mapSize)) calc(1px * var(--mapSize)) rgb(0,0,0));
+	border: 2px dashed rgb(255,255,255);
+}
+
+.eldorado {
+	background: url(el-dorado.jpg) no-repeat center center;
+	background-size: calc(50px * var(--mapSize));
+}
+
+.jungle {
+	background: url(jungle.jpg) no-repeat center center;
+	background-size: calc(50px * var(--mapSize));
+}
+
+.sea {
+	background: url(sea.jpg) no-repeat center center;
+	background-size: calc(50px * var(--mapSize));
+}
+
+.village {
+	background: url(village.jpg) no-repeat center center;
+	background-size: calc(50px * var(--mapSize));
+}
+
+.mountain {
+	background: url(mountain.jpg) no-repeat center center;
+	background-size: calc(50px * var(--mapSize));
+	border: 2px solid rgb(0,0,0);
+}
+
+.unoccupiedField {
+	font-size: calc(8px * var(--mapSize));
+}
+
+.pawnOne {
+	color: rgb(255, 255, 255);
+	text-shadow: calc(1px * var(--mapSize)) calc(2px * var(--mapSize)) calc(2px * var(--mapSize)) rgb(0,0,0);
+	font-size: calc(30px * var(--mapSize));
+}

@@ -1,9 +1,55 @@
-body {
-    margin: 0px;
-    padding: 0px;
-    background-color: #eeeeee;
+@import url("https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap");
+
+:root {
+	--titleColor: rgb(245, 198, 99);
 }
 
 .main-content {
-    padding: 8px;
+	height: 100%;
+	text-shadow: 2px 2px 2px rgb(0,0,0);
+}
+
+body {
+	background-color: rgb(73, 33, 33);
+	background-image: url(background.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+header {
+	margin-bottom: 50px;
+}
+
+footer {
+	margin-top: 40px;
+}
+
+p {
+	text-align: center;	
+	font-size: 16px;
+	font-family: 'Fredericka the Great', sans-serif;
+	color: rgb(255,255,255);
+}
+
+h1 {
+	text-align: center;	
+	font-size: 40px;
+	line-height: 10px;
+	font-family: 'Fredericka the Great', sans-serif;
+	color: var(--titleColor);	
+}
+
+h2 {
+	text-align: center;	
+	font-size: 24px;
+	font-family: 'Fredericka the Great', sans-serif;
+	color: var(--titleColor);
+}
+
+h3 {
+	text-align: center;	
+	font-size: 16px;
+	font-family: 'Fredericka the Great', sans-serif;
+	color: var(--titleColor);
 }

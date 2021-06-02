@@ -7,21 +7,32 @@ public class Game {
 	
 	private MapConfiguration map;
 	private int winningPawnId = 0;
+	private Deck deck;
 			
 	public Game (int mapConfigurationId) {
-		this.map = new MapConfiguration(mapConfigurationId);
+		this.initialize(new MapConfiguration(mapConfigurationId));
 	}
 	
 	public Game (String[][] mapConfiguration) {
-	this.map = new MapConfiguration(mapConfiguration);
+		this.initialize(new MapConfiguration(mapConfiguration));
+	}
+	
+	private void initialize (MapConfiguration mapConfiguration) {
+		this.map = mapConfiguration;
+		this.deck = new Deck();
+		deck.draw(4);		
 	}
 	
 	public MapConfiguration getMap () {
 		return this.map;
 	}
 	
-	public boolean canPawnMoveFromFieldToField (int pawnId, Field pawnCurrentField, Field pawnFieldToMoveTo) {
-		if (pawnCurrentField != null && pawnFieldToMoveTo != null && pawnFieldToMoveTo.type != FieldType.mountain) {
+	public boolean canPawnMoveFromFieldToFieldUsingCard_andIsThatCardPresentInHand (int pawnId, Field pawnCurrentField, Field pawnFieldToMoveTo, String selectedCard) {
+		if (pawnCurrentField != null 
+				&& pawnFieldToMoveTo != null 
+				&& pawnFieldToMoveTo.type != Field.Type.mountain 
+				&& pawnFieldToMoveTo.isValidCardForMove(selectedCard)
+				&& this.deck.handContainsCard(selectedCard)) {
 			return true;
 		} else {
 			return false;
@@ -40,5 +51,9 @@ public class Game {
 	
 	public int getWinningPawnId () {
 		return this.winningPawnId;
+	}
+	
+	public Deck getDeck () {
+		return this.deck;
 	}
 }

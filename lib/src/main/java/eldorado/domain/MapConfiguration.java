@@ -12,71 +12,71 @@ public class MapConfiguration {
 	
 	private static final String[][][] mapConfigurations = {
 		{
-			{"0,0,0", "0", FieldType.jungle},
-			{"0,1,1", "1", FieldType.jungle},
-			{"0,3,3", "0", FieldType.jungle},
-			{"0,4,4", "0", FieldType.jungle},
-			{"1,0,1", "0", FieldType.jungle},
-			{"1,1,2", "0", FieldType.jungle},
-			{"1,2,3", "0", FieldType.jungle},
-			{"1,3,4", "0", FieldType.jungle},
-			{"2,0,2", "0", FieldType.jungle},
-			{"2,2,4", "0", FieldType.jungle},
-			{"2,3,5", "0", FieldType.jungle},
-			{"3,-1,2", "0", FieldType.jungle},
-			{"3,0,3", "0", FieldType.jungle},
-			{"3,2,5", "0", FieldType.eldorado}
+			{"0,0,0", "0", Field.Type.jungle},
+			{"0,1,1", "1", Field.Type.jungle},
+			{"0,3,3", "0", Field.Type.jungle},
+			{"0,4,4", "0", Field.Type.jungle},
+			{"1,0,1", "0", Field.Type.jungle},
+			{"1,1,2", "0", Field.Type.jungle},
+			{"1,2,3", "0", Field.Type.jungle},
+			{"1,3,4", "0", Field.Type.jungle},
+			{"2,0,2", "0", Field.Type.jungle},
+			{"2,2,4", "0", Field.Type.jungle},
+			{"2,3,5", "0", Field.Type.jungle},
+			{"3,-1,2", "0", Field.Type.jungle},
+			{"3,0,3", "0", Field.Type.jungle},
+			{"3,2,5", "0", Field.Type.eldorado}
 		},
 		{
-			{"0,0,0", "0", FieldType.mountain},
+			{"0,0,0", "0", Field.Type.mountain},
 			
-			{"0,1,1", "0", FieldType.jungle},
-			{"0,2,2", "0", FieldType.mountain},
-			{"0,3,3", "1", FieldType.sea},
+			{"0,1,1", "0", Field.Type.jungle},
+			{"0,2,2", "0", Field.Type.mountain},
+			{"0,3,3", "1", Field.Type.sea},
 
-			{"1,1,2", "0", FieldType.mountain},
-			{"2,1,3", "0", FieldType.mountain},
-			{"1,2,3", "0", FieldType.jungle},
+			{"1,1,2", "0", Field.Type.mountain},
+			{"2,1,3", "0", Field.Type.mountain},
+			{"1,2,3", "0", Field.Type.jungle},
 			
-			{"1,0,1", "0", FieldType.jungle},
-			{"2,0,2", "0", FieldType.sea},
-			{"3,0,3", "0", FieldType.village},
+			{"1,0,1", "0", Field.Type.jungle},
+			{"2,0,2", "0", Field.Type.sea},
+			{"3,0,3", "0", Field.Type.village},
 			
-			{"2,-1,1", "0", FieldType.jungle},
-			{"3,-2,1", "0", FieldType.jungle},
-			{"3,-1,2", "0", FieldType.jungle},
+			{"2,-1,1", "0", Field.Type.jungle},
+			{"3,-2,1", "0", Field.Type.jungle},
+			{"3,-1,2", "0", Field.Type.jungle},
 		
-			{"1,-1,0", "0", FieldType.jungle},
-			{"2,-2,0", "0", FieldType.village},
-			{"3,-3,0", "0", FieldType.sea},
+			{"1,-1,0", "0", Field.Type.jungle},
+			{"2,-2,0", "0", Field.Type.village},
+			{"3,-3,0", "0", Field.Type.sea},
 			
-			{"1,-2,-1", "0", FieldType.jungle},
-			{"1,-3,-2", "0", FieldType.jungle},
-			{"2,-3,-1", "0", FieldType.jungle},
+			{"1,-2,-1", "0", Field.Type.jungle},
+			{"1,-3,-2", "0", Field.Type.jungle},
+			{"2,-3,-1", "0", Field.Type.jungle},
 		
-			{"0,-1,-1", "0", FieldType.jungle},
-			{"0,-2,-2", "0", FieldType.village},
-			{"0,-3,-3", "0", FieldType.eldorado},
+			{"0,-1,-1", "0", Field.Type.jungle},
+			{"0,-2,-2", "0", Field.Type.village},
+			{"0,-3,-3", "0", Field.Type.eldorado},
 	
-			{"-1,-1,-2", "0", FieldType.jungle},
-			{"-2,-1,-3", "0", FieldType.jungle},
-			{"-1,-2,-3", "0", FieldType.sea},
+			{"-1,-1,-2", "0", Field.Type.jungle},
+			{"-2,-1,-3", "0", Field.Type.jungle},
+			{"-1,-2,-3", "0", Field.Type.sea},
 
-			{"-1,0,-1", "0", FieldType.jungle},
-			{"-2,0,-2", "0", FieldType.village},
-			{"-3,0,-3", "0", FieldType.jungle},
+			{"-1,0,-1", "0", Field.Type.jungle},
+			{"-2,0,-2", "0", Field.Type.village},
+			{"-3,0,-3", "0", Field.Type.jungle},
 
-			{"-2,1,-1", "0", FieldType.jungle},
-			{"-3,2,-1", "0", FieldType.jungle},
-			{"-3,1,-2", "0", FieldType.jungle},
+			{"-2,1,-1", "0", Field.Type.jungle},
+			{"-3,2,-1", "0", Field.Type.jungle},
+			{"-3,1,-2", "0", Field.Type.jungle},
 
-			{"-1,1,0", "0", FieldType.jungle},
-			{"-2,2,0", "0", FieldType.sea},
-			{"-3,3,0", "0", FieldType.mountain},
+			{"-1,1,0", "0", Field.Type.jungle},
+			{"-2,2,0", "0", Field.Type.sea},
+			{"-3,3,0", "0", Field.Type.mountain},
 			
-			{"-1,2,1", "0", FieldType.village},
-			{"-2,3,1", "0", FieldType.village},
-			{"-1,3,2", "0", FieldType.jungle}		
+			{"-1,2,1", "0", Field.Type.village},
+			{"-2,3,1", "0", Field.Type.village},
+			{"-1,3,2", "0", Field.Type.jungle}		
 		}		
 	};
 	

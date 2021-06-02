@@ -7,49 +7,71 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Deck {
-	private ArrayList<Card> deck;
-	private ArrayList<Card> hand;
-	private ArrayList<Card> discarded;
+	private ArrayList<String> deck;
+	private ArrayList<String> hand;
+	private ArrayList<String> discarded;
 	
 	private static String[] defaultStarterDeck = {
-			FieldType.sea,
-			FieldType.jungle,
-			FieldType.jungle,
-			FieldType.jungle,
-			FieldType.village,
-			FieldType.village,
-			FieldType.village,
-			FieldType.village
+			CardType.sailor,
+			CardType.explorer,
+			CardType.explorer,
+			CardType.explorer,
+			CardType.traveler,
+			CardType.traveler,
+			CardType.traveler,
+			CardType.traveler
 	};
     private static Random random = new Random();
 	
 	public Deck () {
 		this.deck = createStarterDeck();
-		this.hand = new ArrayList<Card>();
-		this.discarded = new ArrayList<Card>();
-		this.drawCard(4);
+		this.hand = new ArrayList<String>();
+		this.discarded = new ArrayList<String>();
 	}
 	
-	public void drawCard (int amountToDraw) {
+	public void draw (int amountToDraw) {
 		int amountLeftToDraw = amountToDraw - 1;
-		Card randomCardFromDeck = this.deck.get(random.nextInt(this.deck.size()));
+		String randomCardFromDeck = this.deck.get(random.nextInt(this.deck.size()));
 		this.deck.remove(randomCardFromDeck);
 		this.hand.add(randomCardFromDeck);
 		
 		if (amountLeftToDraw > 0) {
-			this.drawCard(amountLeftToDraw);
+			this.draw(amountLeftToDraw);
 		}
 	}
 	
-	public ArrayList<Card> getHand () {
+	public ArrayList<String> getDeck () {
+		return this.deck;
+	}
+	
+	public ArrayList<String> getHand () {
 		return this.hand;
 	}
+	
+	public ArrayList<String> getDiscarded () {
+		return this.discarded;
+	}
+	
+	public boolean handContainsCard (String card) {
+		return (this.getHand().contains(card));
+	}
+	
+	public void discard (String discardedCard) {
+		this.getHand().remove(discardedCard);
+		this.getDiscarded().add(discardedCard);
+	}
 		
-	private static ArrayList<Card> createStarterDeck () {
-		ArrayList<Card> starterDeck = new ArrayList<Card>();
+	private static ArrayList<String> createStarterDeck () {
+		ArrayList<String> starterDeck = new ArrayList<String>();
 		for (int i=0; i<defaultStarterDeck.length; i++) {
-			starterDeck.add(new Card(defaultStarterDeck[i]));
+			starterDeck.add(defaultStarterDeck[i]);
 		}
 		return starterDeck;
+	}
+	
+	public class CardType {
+		public static final String explorer = "explorer";
+		public static final String sailor = "sailor";
+		public static final String traveler = "traveler";
 	}
 }

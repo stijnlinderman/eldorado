@@ -1,13 +1,15 @@
 
-import type { GameStateDTO, MapStateDTO, FieldDTO } from "../GameState/GameStateDTO";
+import type { GameStateDTO, MapStateDTO, FieldDTO, DeckStateDTO } from "../State/GameStateDTO";
 
 export class GameState {
 	mapState: MapState;
 	winningPawnId: number;
+	deckState: DeckState;
 	
 	constructor (gameStateDTO: GameStateDTO) {
 		this.mapState = new MapState (gameStateDTO.mapStateDTO);
 		this.winningPawnId = gameStateDTO.winningPawnId;
+		this.deckState = new DeckState (gameStateDTO.deckStateDTO);
 	}
 		
 	get winner () {
@@ -82,5 +84,33 @@ export class Coordinates {
 	
 	get columnId () {
 		return this.y + this.z;
+	}
+}
+
+export class DeckState {
+	deckAmountLeft: number;
+	hand: string[];
+	discardedAmount: number;
+	selectedCard_type: string;
+	
+	constructor (deckStateDTO: DeckStateDTO) {
+		this.deckAmountLeft = deckStateDTO.deckAmountLeft;
+		this.hand = deckStateDTO.hand;
+		this.hand.sort;
+		this.discardedAmount = deckStateDTO.discardedAmount;
+		this.selectedCard_type = "none";
+	}
+	
+	isACardSelected () {
+		if (this.selectedCard_type === "none") {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	setSelectedCard (type: string) {
+		this.selectedCard_type = type;
+		console.log(this.selectedCard_type);
 	}
 }

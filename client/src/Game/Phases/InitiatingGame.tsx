@@ -1,13 +1,13 @@
 import React,{useEffect} from "react";
-import { GameState } from "../GameState/GameState";
-import type { GameStateDTO } from "../GameState/GameStateDTO";
-import "./CreateGame.css";
+import { GameState } from "../State/GameState";
+import type { GameStateDTO } from "../State/GameStateDTO";
+import "./InitiatingGame.css";
 
 type createGameProps = {
     setGameState(newGameState: GameState): void
 }
 
-export function CreateGame ({ setGameState }: createGameProps) {
+export function InitiatingGame ({ setGameState }: createGameProps) {
 	
 	async function tryInit() {
 		try {

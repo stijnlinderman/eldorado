@@ -33,4 +33,23 @@ public class Field {
 	public void receivePawn (Field originField) {
 		this.occupiedByPawnId = originField.obtainPawn();
 	}
+	
+	public boolean isValidCardForMove (String selectedCard_type) {
+		if ((this.type.equals(Type.jungle) && selectedCard_type.equals(Deck.CardType.explorer))
+				|| (this.type.equals(Type.sea) && selectedCard_type.equals(Deck.CardType.sailor)) 
+				|| (this.type.equals(Type.village) && selectedCard_type.equals(Deck.CardType.traveler))
+				|| (this.type.equals(Type.eldorado))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public class Type {
+		public static final String jungle = "jungle";
+		public static final String sea = "sea";
+		public static final String village = "village";
+		public static final String eldorado = "eldorado";
+		public static final String mountain = "mountain";
+	}
 }

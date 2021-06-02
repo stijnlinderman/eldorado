@@ -1,8 +1,8 @@
-import type { Field } from "../GameState/GameState";
-import { GameState, MapState } from "../GameState/GameState";
-import type { GameStateDTO } from "../GameState/GameStateDTO";
+import type { Field } from "../../State/GameState";
+import { GameState } from "../../State/GameState";
+import type { GameStateDTO } from "../../State/GameStateDTO";
 import React from "react";
-import "./ShowGame.css";
+import "./MapDisplay.css";
 
 const prefix = {
 	row_diagonals: "row_diagonals",
@@ -17,19 +17,15 @@ const pawnIdClasses = [ "unoccupiedField", "pawnOne" ];
 
 const showCoordinatesOnButtons_forDebug = false;
 
-type ShowGameProps = {gameState: GameState, setGameState(newGameState: GameState): void}
-type DisplayableMapProps = {mapState: MapState, setGameState(newGameState: GameState): void}
+type MapDisplayProps = {gameState: GameState, setGameState(newGameState: GameState): void}
 type RowOfFieldsProps = {rowId: number}
 type FieldCellProps = {rowId: number, columnId: number}
 type FieldButtonProps = {rowId: number, columnId: number}
 type RowOfDiagonalsProps = {rowId: number}
 type DiagonalProps = {rowId: number, columnId: number}
 
-export function ShowGame({ gameState, setGameState }: ShowGameProps) {
-	return <div className="mapContainer"><DisplayableMap mapState={gameState.mapState} setGameState={setGameState}/></div>
-}
-
-function DisplayableMap ({mapState, setGameState}: DisplayableMapProps) {
+export function MapDisplay({ gameState, setGameState }: MapDisplayProps) {
+	const mapState = gameState.mapState;
 	const separator = mapState.separator;
 
 	const fields_as2dTable: Field[][] = [[]];
@@ -169,39 +165,46 @@ function DisplayableMap ({mapState, setGameState}: DisplayableMapProps) {
 	async function fieldButtonClicked (event: any) {
 		const id_button = event.target.id;
 		const rowAndColumnIds = id_button.replace(`${prefix.field_button}${separator}`, "").split(separator);
-		const field = fields_as2dTable[rowAndColumnIds[0]][rowAndColumnIds[1]];		
-		movePawnToField(field);
-	}
-	
-	async function movePawnToField (field: Field) {
-		const pawnId = 1;
-		const requestDTO: MovePawnRequestDTO = new MovePawnRequestDTO (pawnId, field.coordinates.x, field.coordinates.y, field.coordinates.z);
-		try {
-			const request = {
-				method: "POST",
-				headers: {
-					"Accept": "application/json",
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(requestDTO)
-			}
-	
-			const response = await fetch("eldorado/api/movepawn", request);
-			
-	        if (response.status == 200) {
-	            const gameStateDTO: GameStateDTO = await response.json();
-				const gameState = new GameState(gameStateDTO);
-				setGameState(gameState);
-	        } else if (response.status == 202) {
-				const deniedRequestDTO: DeniedRequestDTO = await response.json();
-				alert(deniedRequestDTO.message);
-	        } else {
-				console.error(response.statusText)
-			}
-	
-	    } catch (error) {
-	        console.error(error.toString())
-	    }
+		const field = fields_as2dTable[rowAndColumnIds[0]][rowAndColumnIds[1]];	
+		
+		const selectedCard_type = gameState.deckState.selectedCard_type;
+
+		if (!gameState.deckState.isACardSelected()) {
+			alert("Pick a card first to use in your move.");
+		} else {
+			tryMovePawnToField(field);
+		}
+		async function tryMovePawnToField (field: Field) {
+			const pawnId = 1;
+			const requestDTO: MovePawnRequestDTO = new MovePawnRequestDTO (pawnId, field.coordinates.x, field.coordinates.y, field.coordinates.z, selectedCard_type);
+			try {
+				const request = {
+					method: "POST",
+					headers: {
+						"Accept": "application/json",
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(requestDTO)
+				}
+				console.log(request);
+		
+				const response = await fetch("eldorado/api/movepawn", request);
+				
+		        if (response.status == 200) {
+		            const gameStateDTO: GameStateDTO = await response.json();
+					const gameState = new GameState(gameStateDTO);
+					setGameState(gameState);
+		        } else if (response.status == 202) {
+					const deniedRequestDTO: DeniedRequestDTO = await response.json();
+					alert(deniedRequestDTO.message);
+		        } else {
+					console.error(response.statusText)
+				}
+		
+		    } catch (error) {
+		        console.error(error.toString())
+		    }
+		}
 	}
 }
 
@@ -231,12 +234,14 @@ class MovePawnRequestDTO {
 	x: number;
 	y: number;
 	z: number;
+	selectedCard_type: string;
 	
-	constructor (pawnId: number, x: number, y: number, z: number) {
+	constructor (pawnId: number, x: number, y: number, z: number, selectedCard_type: string) {
 		this.pawnId = pawnId;
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.selectedCard_type = selectedCard_type;
 	}
 }
 

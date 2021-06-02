@@ -26,17 +26,19 @@ public class MovePawn {
     		int newX = requestDTO.x;
     		int newY = requestDTO.y;
     		int newZ = requestDTO.z;
+    		String selectedCard = requestDTO.selectedCard_type;
     		
     		Field pawnCurrentField = game.getMap().findNeighboringFieldThatCurrentlyContainsPawn(newX, newY, newZ, pawnId);
     		Field pawnFieldToMoveTo = game.getMap().getField(newX, newY, newZ);
     		
-    		if (game.canPawnMoveFromFieldToField (pawnId, pawnCurrentField, pawnFieldToMoveTo)) {
+    		if (game.canPawnMoveFromFieldToFieldUsingCard_andIsThatCardPresentInHand (pawnId, pawnCurrentField, pawnFieldToMoveTo, selectedCard)) {
+    			game.getDeck().discard(selectedCard);
     			pawnFieldToMoveTo.receivePawn(pawnCurrentField);
     			game.processPossibleWin(pawnFieldToMoveTo);
         		GameStateDTO gameStateDTO = new GameStateDTO (game);
         		return Response.status(200).entity(gameStateDTO).build();
     		} else {
-    			String message = getErrorMessageForMovePawnRequestSituation (pawnCurrentField, pawnFieldToMoveTo);
+    			String message = getErrorMessageForMovePawnRequestSituation (pawnCurrentField, pawnFieldToMoveTo, selectedCard, game.getDeck());
     			DeniedRequestDTO deniedRequestDTO = new DeniedRequestDTO(message);
         		return Response.status(202).entity(deniedRequestDTO).build();
     		}
@@ -45,17 +47,18 @@ public class MovePawn {
     	}
 	}
     
-    private static String getErrorMessageForMovePawnRequestSituation (Field pawnCurrentField, Field pawnFieldToMoveTo) {
+    private static String getErrorMessageForMovePawnRequestSituation (Field pawnCurrentField, Field pawnFieldToMoveTo, String selectedCard, Deck deck) {
 		String message = "Something went wrong.";
 		if (pawnFieldToMoveTo != null && pawnCurrentField == null) {
-			message = "It's not possible to move to that field. "
-					+ "Pick a field that is 1 field away from the pawn.";
+			message = "You can not take multiple steps at once.";
 		} else if (pawnFieldToMoveTo == null && pawnCurrentField != null) {
-			message = "Something went wrong. "
-					+ "Could not find the field that the pawn should move to.";
-		} else if (pawnFieldToMoveTo.type == FieldTypes.mountain) {
-			message = "It's not possible to travel over a mountain field. "
-					+ "Please pick another field to move to.";
+			message = "You picked a field that the system can't find.";
+		} else if (pawnFieldToMoveTo.type == Field.Type.mountain) {
+			message = "You can not move to a mountain field.";
+		} else if (!pawnFieldToMoveTo.isValidCardForMove(selectedCard)) {
+			message = "You can not use that card to move to that field.";
+		} else if (!deck.handContainsCard(selectedCard)) {
+			
 		}
 		return message;
     }
