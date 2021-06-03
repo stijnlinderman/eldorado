@@ -245,7 +245,7 @@ classDiagram
 	MapConfiguration : getNeighborCoordinatesOffsets()
 	MapConfiguration : findNeighboringFieldThatCurrentlyContainsPawn()
 	MapConfiguration : xyzToStringKey()
-	Field *-- Type
+	Field <-- Type
 	Field : int occupiedByPawnId
 	Field : String type
 	Field : setOccupiedByPawnId()
@@ -259,7 +259,7 @@ classDiagram
 	Type : String village
 	Type : String eldorado
 	Type : String mountain
-	Deck *-- CardType
+	Deck <-- CardType
 	Deck : ArrayList<String> deck
 	Deck : ArrayList<String> hand
 	Deck : ArrayList<String> discarded
