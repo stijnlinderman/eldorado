@@ -218,12 +218,14 @@ classDiagram
 	MovePawnRequestDTO : int x
 	MovePawnRequestDTO : int y
 	MovePawnRequestDTO : int z
+	MovePawnRequestDTO : String[] selectedCards
 ```
 ## Domain class diagrams
 ##### eldorado.domain
 ```mermaid
 classDiagram
 	Game *-- MapConfiguration : One
+	Game *-- Deck : One
 	Game : MapConfiguration map
 	Game : int winningPawnId
 	Game : getMap()
@@ -250,4 +252,8 @@ classDiagram
 	Field : getPawnId()
 	Field : obtainPawn()
 	Field : receivePawn()
+	Deck : ArrayList<String> deck
+	Deck : ArrayList<String> hand
+	Deck : ArrayList<String> discarded
+	Deck : int maxCardsInHand
 ```
