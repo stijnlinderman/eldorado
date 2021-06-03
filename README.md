@@ -11,9 +11,9 @@ Note: in this repository, the game is referred to as 'El Dorado'.
 In this digital version, the original game is mimicked. The current version features the following dynamics:
 * Create a custom map by hardcoding it in the backend;
 * View the game in the browser by going to http://localhost:3000;
-* Four kinds of fields: jungle, sea, treasure and El Dorado;
-* Play the game with 1 player;
-* Take steps, one field at a time, towards the finish;
+* Four kinds of fields: jungle, sea, treasure, mountain and El Dorado;
+* Play the game as single player;
+* Pick cards to take steps towards the Finish (the El Dorado tile)
 * Win the game by reaching the finish.
 
 ## Installation and usage
