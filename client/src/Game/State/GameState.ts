@@ -91,26 +91,37 @@ export class DeckState {
 	deckAmountLeft: number;
 	hand: string[];
 	discardedAmount: number;
-	selectedCard_type: string;
+	selectedCards: string[];
 	
 	constructor (deckStateDTO: DeckStateDTO) {
 		this.deckAmountLeft = deckStateDTO.deckAmountLeft;
 		this.hand = deckStateDTO.hand;
 		this.hand.sort;
 		this.discardedAmount = deckStateDTO.discardedAmount;
-		this.selectedCard_type = "none";
+		this.selectedCards = [];
 	}
 	
-	isACardSelected () {
-		if (this.selectedCard_type === "none") {
-			return false;
-		} else {
+	isOneCardSelected () {
+		if (this.selectedCards.length === 1) {
 			return true;
+		} else {
+			return false;
 		}
 	}
 	
-	setSelectedCard (type: string) {
-		this.selectedCard_type = type;
-		console.log(this.selectedCard_type);
+	areMultipleCardsSelected () {
+		if (this.selectedCards.length > 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	addCardToSelection (card: string) {
+		this.selectedCards.push(card);
+	}
+	
+	removeCardFromSelection (card: string) {
+		this.selectedCards.splice(this.selectedCards.indexOf(card), 1);
 	}
 }

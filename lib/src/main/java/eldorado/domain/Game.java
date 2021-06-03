@@ -27,12 +27,11 @@ public class Game {
 		return this.map;
 	}
 	
-	public boolean canPawnMoveFromFieldToFieldUsingCard_andIsThatCardPresentInHand (int pawnId, Field pawnCurrentField, Field pawnFieldToMoveTo, String selectedCard) {
+	public boolean canPawnMoveFromFieldToFieldUsingCard_andIsHandValid (int pawnId, Field pawnCurrentField, Field pawnFieldToMoveTo, String[] selectedCards) {
 		if (pawnCurrentField != null 
 				&& pawnFieldToMoveTo != null 
 				&& pawnFieldToMoveTo.type != Field.Type.mountain 
-				&& pawnFieldToMoveTo.isValidCardForMove(selectedCard)
-				&& this.deck.handContainsCard(selectedCard)) {
+				&& pawnFieldToMoveTo.doesSelectedCardsContainOnlyOneValidCard(selectedCards)) {
 			return true;
 		} else {
 			return false;

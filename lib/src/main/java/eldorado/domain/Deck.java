@@ -61,6 +61,12 @@ public class Deck {
 		this.getDiscarded().add(discardedCard);
 	}
 	
+	public void discardMultipleCards (String[] discardedCards) {
+		for (String card : discardedCards) {
+			this.discard(card);			
+		}
+	}
+	
 	public void refillHand () {
 		int cardsToDraw = maxCardsInHand - this.getHand().size();
 		this.draw(cardsToDraw);

@@ -13,13 +13,14 @@ type StackOfCardsProps = {title: string, amount: number};
 export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 	const deckState = gameState.deckState;
 	return <div className="deckDisplay">
-		<h3>1. Select a card</h3>
+		<div className="instructions"><h3>1. Select a card</h3></div>
 		<div className="collectionOfCardsToShow">{
 		deckState.hand.map((cardType: string) => {
 			return <CardOnDisplay type={cardType}/>
 		})}</div>
-		<h3>2. Pick a field to move to &#8594;</h3>
-		<div className="endTurnText"><h3>or</h3></div><EndTurnButton/>
+		<div className="instructions"><h3>2. Pick a field to move to &#8594;</h3></div>
+		<div className="endTurnText"><h3>or</h3></div>
+		<EndTurnButton/>
 		<DeckInformation/>
 	</div>
 
@@ -27,12 +28,8 @@ export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 		return <button className={`cardButton ${type}Card`} value={type} onClick={(event) => cardButtonClicked(event)}>{type}</button>
 	}
 	
-	function StackOfCards ({title, amount} : StackOfCardsProps) {
-		return <button className={"stackOfCards"} disabled>{title}:<br/><br/>{amount}</button>
-	}
-	
 	function EndTurnButton () {
-		return <button className="endTurnButton" onClick={() => endTurnButtonClicked()}>End turn</button>
+		return <button className="endTurnButton" onClick={() => endTurnButtonClicked()}>END TURN<br/>and keep selected cards</button>
 	}
 	
 	function DeckInformation () {
@@ -41,17 +38,20 @@ export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 			<StackOfCards title={"To draw"} amount={deckState.deckAmountLeft}/>
 			<StackOfCards title={"Discarded"} amount={deckState.discardedAmount}/>
 		</div>
+	
+		function StackOfCards ({title, amount} : StackOfCardsProps) {
+			return <button className={"stackOfCards"} disabled>{title}:<br/><br/>{amount}</button>
+		}
 	}
 
 	function cardButtonClicked (event: any) {
 		const cardButton = event.target;
+		const card = cardButton.value;
 		if (cardButton.classList.contains("selectedCard")) {
-			deckState.setSelectedCard("none");
+			deckState.removeCardFromSelection(card);
 			cardButton.classList.remove("selectedCard");
-		} else if (deckState.isACardSelected()) {
-			alert(`A card has already been selected. Pick a field to move or deselect the card to select another card.`);
 		} else {
-			deckState.setSelectedCard(event.target.value);
+			deckState.addCardToSelection(card);
 			cardButton.classList.add("selectedCard");
 		}
 	}
