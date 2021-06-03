@@ -186,7 +186,6 @@ export function MapDisplay({ gameState, setGameState }: MapDisplayProps) {
 					},
 					body: JSON.stringify(requestDTO)
 				}
-				console.log(request);
 		
 				const response = await fetch("eldorado/api/movepawn", request);
 				

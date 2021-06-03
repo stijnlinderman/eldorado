@@ -12,14 +12,14 @@ type StackOfCardsProps = {title: string, amount: number};
 
 export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 	const deckState = gameState.deckState;
-	return <div className="deckDisplay">
-		<div className="instructions"><h3>1. Select a card</h3></div>
-		<div className="collectionOfCardsToShow">{
-		deckState.hand.map((cardType: string) => {
-			return <CardOnDisplay type={cardType}/>
+	return <div key="deckDisplay" className="deckDisplay">
+		<div key="instructions1" className="instructions"><h3>1. Select a card</h3></div>
+		<div key="cardsInHand" className="collectionOfCardsToShow">{
+		deckState.hand.map((cardType: string, cardIndex: number) => {
+			return <CardOnDisplay key={`cardOnDisplay${cardIndex}`} type={cardType}/>
 		})}</div>
-		<div className="instructions"><h3>2. Pick a field to move to &#8594;</h3></div>
-		<div className="endTurnText"><h3>or</h3></div>
+		<div key="instructions2" className="instructions"><h3>2. Pick a field to move to &#8594;</h3></div>
+		<div key="endTurnText" className="endTurnText"><h3>or</h3></div>
 		<EndTurnButton/>
 		<DeckInformation/>
 	</div>
@@ -61,8 +61,20 @@ export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 			
 		async function tryEndTurn () {
 			try {
-		        const response = await fetch("eldorado/api/endturn")
-			
+				const requestDTO: EndTurnRequestDTO = new EndTurnRequestDTO (gameState.deckState.selectedCards);
+
+				const request = {
+					method: "POST",
+					headers: {
+						"Accept": "application/json",
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(requestDTO)
+				}
+				console.log(request)
+		
+				const response = await fetch("eldorado/api/endturn", request);
+				
 		        if (response.ok) {
 		            const gameStateDTO: GameStateDTO = await response.json();
 					setGameState(new GameState(gameStateDTO));
@@ -73,5 +85,13 @@ export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 		        console.error(error.toString())
 		    }
 		}
+	}
+}
+
+class EndTurnRequestDTO {
+	selectedCards: string[];
+	
+	constructor (selectedCards: string[]) {
+		this.selectedCards = selectedCards;
 	}
 }
