@@ -20,7 +20,7 @@ public class Game {
 	private void initialize (MapConfiguration mapConfiguration) {
 		this.map = mapConfiguration;
 		this.deck = new Deck();
-		deck.draw(4);		
+		deck.refillHand();		
 	}
 	
 	public MapConfiguration getMap () {
@@ -55,5 +55,9 @@ public class Game {
 	
 	public Deck getDeck () {
 		return this.deck;
+	}
+	
+	public void endTurn () {
+		this.deck.refillHand();
 	}
 }

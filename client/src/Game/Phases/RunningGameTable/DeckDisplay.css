@@ -4,6 +4,12 @@
 	--cardWidth: 80px;
 }
 
+.deckDisplay {
+	text-align: center;
+	height: 60vh;
+	overflow-y: auto;
+}
+
 .collectionOfCardsToShow {
 	text-align: center;
 }
@@ -46,4 +52,50 @@
 .selectedCard {
 	filter: drop-shadow(calc(2px * var(--deckSize)) calc(2px * var(--deckSize)) calc(1px * var(--deckSize)) rgb(0,0,0));
 	border: 2px solid rgb(255,255,255);	
+}
+
+.stackOfCards {
+	width: calc(var(--cardWidth) * var(--deckSize));
+	height: calc(var(--cardWidth) * var(--deckSize) * 1.62);
+	margin: calc(10px * var(--deckSize));
+	text-align: center;	
+	font-size: 12px;
+	font-family: 'Fredericka the Great', sans-serif;
+	color: rgb(255,255,255);
+	text-shadow: 2px 2px 0px rgb(0,0,0);
+	text-transform: capitalize;
+	border-radius: calc(10px * var(--deckSize));
+	border: 0px;
+	filter: drop-shadow(calc(2px * var(--deckSize)) calc(2px * var(--deckSize)) calc(1px * var(--deckSize)) rgb(0,0,0));
+	background: url(card_backside.jpg) no-repeat center center;
+	background-size: calc(100px * var(--deckSize));
+}
+
+.endTurnText {
+	display: inline-block;
+}
+
+.endTurnButton {
+	width: calc(120px * var(--deckSize));
+	height: calc(60px * var(--deckSize));
+	text-align: center;	
+	font-size: 16px;
+	font-family: 'Fredericka the Great', sans-serif;
+	color: rgb(255,255,255);
+	text-shadow: 2px 2px 0px rgb(0,0,0);
+	border-radius: calc(10px * var(--deckSize));
+	border: 0px;
+	filter: drop-shadow(calc(2px * var(--deckSize)) calc(2px * var(--deckSize)) calc(1px * var(--deckSize)) rgb(0,0,0));
+	background-color: rgba(255,255,255,0.2);
+	display: inline-block;
+	margin-left: 20px;
+}
+
+.endTurnButton:hover {
+	filter: brightness(150%) drop-shadow(calc(2px * var(--deckSize)) calc(2px * var(--deckSize)) calc(1px * var(--deckSize)) rgb(0,0,0));
+	border: 2px solid rgb(255,255,255);
+}
+
+.deckInformation {
+	margin-top: calc(60px * var(--deckSize));
 }

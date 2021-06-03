@@ -27,4 +27,37 @@ public class DeckTest {
 		assertEquals(4, deck.getHand().size());
 		assertEquals(0, deck.getDiscarded().size());
     }
+
+    @Test public void checkConfigurationAfterOneCardWasDiscarded() {
+    	Deck deck = new Deck();
+    	deck.draw(4);
+    	deck.discard(deck.getHand().get(0));
+		assertEquals(4, deck.getDeck().size());
+		assertEquals(3, deck.getHand().size());
+		assertEquals(1, deck.getDiscarded().size());
+    }
+    
+    @Test public void checkConfigurationAfterThreeCardsWereDiscarded() {
+    	Deck deck = new Deck();
+    	deck.draw(4);
+    	deck.discard(deck.getHand().get(0));
+    	deck.discard(deck.getHand().get(0));
+    	deck.discard(deck.getHand().get(0));
+		assertEquals(4, deck.getDeck().size());
+		assertEquals(1, deck.getHand().size());
+		assertEquals(3, deck.getDiscarded().size());
+    }
+    
+    @Test public void checkConfigurationAfterRefill() {
+    	Deck deck = new Deck();
+    	deck.draw(4);
+    	deck.discard(deck.getHand().get(0));
+    	deck.discard(deck.getHand().get(0));
+    	deck.discard(deck.getHand().get(0));
+    	deck.refillHand();
+		assertEquals(1, deck.getDeck().size());
+		assertEquals(4, deck.getHand().size());
+		assertEquals(3, deck.getDiscarded().size());
+    }
+
 }
