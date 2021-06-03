@@ -56,11 +56,11 @@ sequenceDiagram
     participant API
     participant Domain
     activate Client
-    Note over Client: Client views /ShowGame, clicks on a button<br>and fieldButtonClicked() is called
+    Note over Client: Client views /ShowGame, selects a card,<br>clicks on a field<br>and fieldButtonClicked() is called
     Note over Client: movePawnToField() is called
-    Client->>API: Request move by POST eldorado/api/movepawn<br>containing the coordinates of the field that was clicked
+    Client->>API: Request move by POST eldorado/api/movepawn<br>containing the selected card<br> and the coordinates of the field that was clicked
     activate API
-    API->>Domain: Asks if the requested move is a valid move
+    API->>Domain: Asks if the requested move is a valid move<br>in regard of the current position of the pawn<br>and the selected card
     activate Domain
     Domain->>API: Returns that the move is VALID
     deactivate Domain
@@ -80,11 +80,11 @@ sequenceDiagram
     participant API
     participant Domain
     activate Client
-    Note over Client: Client views /ShowGame, clicks on a button<br>and fieldButtonClicked() is called
+    Note over Client: Client views /ShowGame, selects a card,<br>clicks on a field<br>and fieldButtonClicked() is called
     Note over Client: movePawnToField() is called
-    Client->>API: Request move by POST eldorado/api/movepawn<br>containing the coordinates of the field that was clicked
+    Client->>API: Request move by POST eldorado/api/movepawn<br>containing the selected card<br> and the coordinates of the field that was clicked
     activate API
-    API->>Domain: Asks if the requested move is a valid move
+    API->>Domain: Asks if the requested move is a valid move<br>in regard of the current position of the pawn<br>and the selected card
     activate Domain
     Domain->>API: Returns that the move is INVALID
     deactivate Domain
