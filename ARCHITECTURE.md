@@ -252,8 +252,24 @@ classDiagram
 	Field : getPawnId()
 	Field : obtainPawn()
 	Field : receivePawn()
+	Deck *-- CardType
 	Deck : ArrayList<String> deck
 	Deck : ArrayList<String> hand
 	Deck : ArrayList<String> discarded
 	Deck : int maxCardsInHand
+	Deck : String[] defaultStarterDeck
+	Deck : Random random
+	Deck : createStarterDeck()
+	Deck : draw()
+	Deck : recreateDeckFromDiscardedCards()
+	Deck : discard()
+	Deck : discardMultipleCards()
+	Deck : refillHand()
+	Deck : getDeck()
+	Deck : getHand()
+	Deck : getDiscarded()
+	Deck : handContainsCard()
+	CardType : String explorer
+	CardType : String sailor
+	CardType : String traveler
 ```
