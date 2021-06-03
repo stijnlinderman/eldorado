@@ -34,11 +34,13 @@ public class Field {
 		this.occupiedByPawnId = originField.obtainPawn();
 	}
 	
-	public boolean isValidCardForMove (String selectedCard_type) {
-		if ((this.type.equals(Type.jungle) && selectedCard_type.equals(Deck.CardType.explorer))
-				|| (this.type.equals(Type.sea) && selectedCard_type.equals(Deck.CardType.sailor)) 
-				|| (this.type.equals(Type.village) && selectedCard_type.equals(Deck.CardType.traveler))
-				|| (this.type.equals(Type.eldorado))) {
+	public boolean doesSelectedCardsContainOnlyOneValidCard (String[] selectedCards) {
+		if ((selectedCards.length == 1)
+			&& ((this.type.equals(Type.jungle) && selectedCards[0].equals(Deck.CardType.explorer))
+					|| (this.type.equals(Type.sea) && selectedCards[0].equals(Deck.CardType.sailor)) 
+					|| (this.type.equals(Type.village) && selectedCards[0].equals(Deck.CardType.traveler))
+					|| (this.type.equals(Type.eldorado)))
+		) {
 			return true;
 		} else {
 			return false;

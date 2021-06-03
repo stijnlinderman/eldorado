@@ -8,20 +8,28 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 
 import eldorado.domain.*;
+
+import java.util.ArrayList;
+
 import eldorado.api.dto.*;
 
 
 @Path("/endturn")
 public class EndTurn {
-    @GET
+    @POST
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response initialize(
-			@Context HttpServletRequest request) {
-    	
+			@Context HttpServletRequest request,
+			EndTurnRequestDTO requestDTO) {
     	try {
     		HttpSession session = request.getSession(true);
     		Game game = (Game) session.getAttribute("game");
-    		game.endTurn();
+    		ArrayList<String> cardsToKeep = new ArrayList<String>();
+    		for (String card : requestDTO.selectedCards) {
+    			cardsToKeep.add(card);
+    		}
+    		game.endTurn(cardsToKeep);
     		
     		GameStateDTO gameStateDTO = new GameStateDTO (game);
 			return Response.status(200).entity(gameStateDTO).build();

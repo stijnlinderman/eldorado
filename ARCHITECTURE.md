@@ -56,11 +56,11 @@ sequenceDiagram
     participant API
     participant Domain
     activate Client
-    Note over Client: Client views /ShowGame, clicks on a button<br>and fieldButtonClicked() is called
+    Note over Client: Client views /ShowGame, selects a card,<br>clicks on a field<br>and fieldButtonClicked() is called
     Note over Client: movePawnToField() is called
-    Client->>API: Request move by POST eldorado/api/movepawn<br>containing the coordinates of the field that was clicked
+    Client->>API: Request move by POST eldorado/api/movepawn<br>containing the selected card<br> and the coordinates of the field that was clicked
     activate API
-    API->>Domain: Asks if the requested move is a valid move
+    API->>Domain: Asks if the requested move is a valid move<br>in regard of the current position of the pawn<br>and the selected card
     activate Domain
     Domain->>API: Returns that the move is VALID
     deactivate Domain
@@ -80,11 +80,11 @@ sequenceDiagram
     participant API
     participant Domain
     activate Client
-    Note over Client: Client views /ShowGame, clicks on a button<br>and fieldButtonClicked() is called
+    Note over Client: Client views /ShowGame, selects a card,<br>clicks on a field<br>and fieldButtonClicked() is called
     Note over Client: movePawnToField() is called
-    Client->>API: Request move by POST eldorado/api/movepawn<br>containing the coordinates of the field that was clicked
+    Client->>API: Request move by POST eldorado/api/movepawn<br>containing the selected card<br> and the coordinates of the field that was clicked
     activate API
-    API->>Domain: Asks if the requested move is a valid move
+    API->>Domain: Asks if the requested move is a valid move<br>in regard of the current position of the pawn<br>and the selected card
     activate Domain
     Domain->>API: Returns that the move is INVALID
     deactivate Domain
@@ -112,6 +112,7 @@ graph TD;
 ```mermaid
 classDiagram
 	GameStateDTO *-- MapStateDTO : One
+	GameStateDTO *-- DeckStateDTO : One
 	GameStateDTO : number winningPawnId
 	GameStateDTO : MapStateDTO mapStateDTO
 	MapStateDTO *-- FieldDTO : Many
@@ -123,7 +124,11 @@ classDiagram
 	FieldDTO : number z
 	FieldDTO : number occupiedByPawnId
 	FieldDTO : string type
+	DeckStateDTO : number deckAmountLeft
+	DeckStateDTO : string[] hand
+	DeckStateDTO : number discardedAmount
 	GameState *-- MapState : One
+	GameState *-- DeckState : One
 	GameState : MapState mapState
 	GameState : number winningPawnId
 	GameState : int winner
@@ -143,6 +148,14 @@ classDiagram
 	Coordinates : string xyzStringKey
 	Coordinates : number rowId
 	Coordinates : number columnId
+	DeckState : number deckAmountLeft
+	DeckState : string[] hand
+	DeckState : string[] selectedCards
+	DeckState : number discardedAmount
+	DeckState : isOneCardSelected()
+	DeckState : areMultipleCardsSelected()
+	DeckState : addCardToSelection()
+	DeckState : removeCardFromSelection()
 	class MapBoundaries
 	MapBoundaries : update()
 	MapBoundaries : number firstRowId
@@ -154,6 +167,7 @@ classDiagram
 	MovePawnRequestDTO : number x
 	MovePawnRequestDTO : number y
 	MovePawnRequestDTO : number z
+	MovePawnRequestDTO : string[] selectedCards
 	class DeniedRequestDTO
 	DeniedRequestDTO : string message
 ```
@@ -180,6 +194,7 @@ classDiagram
 ```mermaid
 classDiagram
 	GameStateDTO *-- MapStateDTO : One
+	GameStateDTO *-- DeckStateDTO : One
 	GameStateDTO : MapStateDTO mapStateDTO
 	GameStateDTO : int winningPawnId
 	MapStateDTO *-- FieldDTO : Many
@@ -191,6 +206,9 @@ classDiagram
 	FieldDTO : int y
 	FieldDTO : int z
 	FieldDTO <|-- Field : extends
+	DeckStateDTO : int deckAmountLeft
+	DeckStateDTO : String[] hand
+	DeckStateDTO : int discardedAmount
 	Field : int occupiedByPawnId
 	Field : String type
 	class DeniedRequestDTO
@@ -200,12 +218,14 @@ classDiagram
 	MovePawnRequestDTO : int x
 	MovePawnRequestDTO : int y
 	MovePawnRequestDTO : int z
+	MovePawnRequestDTO : String[] selectedCards
 ```
 ## Domain class diagrams
 ##### eldorado.domain
 ```mermaid
 classDiagram
 	Game *-- MapConfiguration : One
+	Game *-- Deck : One
 	Game : MapConfiguration map
 	Game : int winningPawnId
 	Game : getMap()
@@ -225,6 +245,7 @@ classDiagram
 	MapConfiguration : getNeighborCoordinatesOffsets()
 	MapConfiguration : findNeighboringFieldThatCurrentlyContainsPawn()
 	MapConfiguration : xyzToStringKey()
+	Field <-- Type
 	Field : int occupiedByPawnId
 	Field : String type
 	Field : setOccupiedByPawnId()
@@ -232,4 +253,30 @@ classDiagram
 	Field : getPawnId()
 	Field : obtainPawn()
 	Field : receivePawn()
+	Field : doesSelectedCardsContainOnlyOneValidCard()
+	Type : String jungle
+	Type : String sea
+	Type : String village
+	Type : String eldorado
+	Type : String mountain
+	Deck <-- CardType
+	Deck : ArrayList<String> deck
+	Deck : ArrayList<String> hand
+	Deck : ArrayList<String> discarded
+	Deck : int maxCardsInHand
+	Deck : String[] defaultStarterDeck
+	Deck : Random random
+	Deck : createStarterDeck()
+	Deck : draw()
+	Deck : recreateDeckFromDiscardedCards()
+	Deck : discard()
+	Deck : discardMultipleCards()
+	Deck : refillHand()
+	Deck : getDeck()
+	Deck : getHand()
+	Deck : getDiscarded()
+	Deck : handContainsCard()
+	CardType : String explorer
+	CardType : String sailor
+	CardType : String traveler
 ```

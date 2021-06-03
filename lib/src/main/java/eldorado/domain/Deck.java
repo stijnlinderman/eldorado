@@ -61,6 +61,26 @@ public class Deck {
 		this.getDiscarded().add(discardedCard);
 	}
 	
+	public void discardMultipleCards (String[] discardedCards) {
+		for (String card : discardedCards) {
+			this.discard(card);			
+		}
+	}
+	
+	public void discardCardsThatWereNotSelectedToKeep (ArrayList<String> cardsToKeep) {
+		ArrayList<String> cardsToRemove = new ArrayList<String>();
+		for (String card : this.getHand()) {
+			if (cardsToKeep.contains(card)) {
+				cardsToKeep.remove(card);
+			} else {
+				cardsToRemove.add(card);
+			}
+		}
+		for (String card : cardsToRemove) {
+			this.discard(card);
+		}
+	}
+	
 	public void refillHand () {
 		int cardsToDraw = maxCardsInHand - this.getHand().size();
 		this.draw(cardsToDraw);

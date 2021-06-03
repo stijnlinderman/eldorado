@@ -72,12 +72,12 @@
 }
 
 .endTurnText {
-	display: inline-block;
+	text-transform: uppercase;
 }
 
 .endTurnButton {
-	width: calc(120px * var(--deckSize));
-	height: calc(60px * var(--deckSize));
+	width: calc(160px * var(--deckSize));
+	height: calc(80px * var(--deckSize));
 	text-align: center;	
 	font-size: 16px;
 	font-family: 'Fredericka the Great', sans-serif;
@@ -87,13 +87,15 @@
 	border: 0px;
 	filter: drop-shadow(calc(2px * var(--deckSize)) calc(2px * var(--deckSize)) calc(1px * var(--deckSize)) rgb(0,0,0));
 	background-color: rgba(255,255,255,0.2);
-	display: inline-block;
-	margin-left: 20px;
 }
 
 .endTurnButton:hover {
 	filter: brightness(150%) drop-shadow(calc(2px * var(--deckSize)) calc(2px * var(--deckSize)) calc(1px * var(--deckSize)) rgb(0,0,0));
 	border: 2px solid rgb(255,255,255);
+}
+
+.instructions {
+	text-decoration: underline;
 }
 
 .deckInformation {

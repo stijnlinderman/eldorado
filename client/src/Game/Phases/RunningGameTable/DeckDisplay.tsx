@@ -12,14 +12,15 @@ type StackOfCardsProps = {title: string, amount: number};
 
 export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 	const deckState = gameState.deckState;
-	return <div className="deckDisplay">
-		<h3>1. Select a card</h3>
-		<div className="collectionOfCardsToShow">{
-		deckState.hand.map((cardType: string) => {
-			return <CardOnDisplay type={cardType}/>
+	return <div key="deckDisplay" className="deckDisplay">
+		<div key="instructions1" className="instructions"><h3>1. Select a card</h3></div>
+		<div key="cardsInHand" className="collectionOfCardsToShow">{
+		deckState.hand.map((cardType: string, cardIndex: number) => {
+			return <CardOnDisplay key={`cardOnDisplay${cardIndex}`} type={cardType}/>
 		})}</div>
-		<h3>2. Pick a field to move to &#8594;</h3>
-		<div className="endTurnText"><h3>or</h3></div><EndTurnButton/>
+		<div key="instructions2" className="instructions"><h3>2. Pick a field to move to &#8594;</h3></div>
+		<div key="endTurnText" className="endTurnText"><h3>or</h3></div>
+		<EndTurnButton/>
 		<DeckInformation/>
 	</div>
 
@@ -27,12 +28,8 @@ export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 		return <button className={`cardButton ${type}Card`} value={type} onClick={(event) => cardButtonClicked(event)}>{type}</button>
 	}
 	
-	function StackOfCards ({title, amount} : StackOfCardsProps) {
-		return <button className={"stackOfCards"} disabled>{title}:<br/><br/>{amount}</button>
-	}
-	
 	function EndTurnButton () {
-		return <button className="endTurnButton" onClick={() => endTurnButtonClicked()}>End turn</button>
+		return <button className="endTurnButton" onClick={() => endTurnButtonClicked()}>END TURN<br/>and keep selected cards</button>
 	}
 	
 	function DeckInformation () {
@@ -41,17 +38,20 @@ export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 			<StackOfCards title={"To draw"} amount={deckState.deckAmountLeft}/>
 			<StackOfCards title={"Discarded"} amount={deckState.discardedAmount}/>
 		</div>
+	
+		function StackOfCards ({title, amount} : StackOfCardsProps) {
+			return <button className={"stackOfCards"} disabled>{title}:<br/><br/>{amount}</button>
+		}
 	}
 
 	function cardButtonClicked (event: any) {
 		const cardButton = event.target;
+		const card = cardButton.value;
 		if (cardButton.classList.contains("selectedCard")) {
-			deckState.setSelectedCard("none");
+			deckState.removeCardFromSelection(card);
 			cardButton.classList.remove("selectedCard");
-		} else if (deckState.isACardSelected()) {
-			alert(`A card has already been selected. Pick a field to move or deselect the card to select another card.`);
 		} else {
-			deckState.setSelectedCard(event.target.value);
+			deckState.addCardToSelection(card);
 			cardButton.classList.add("selectedCard");
 		}
 	}
@@ -61,8 +61,20 @@ export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 			
 		async function tryEndTurn () {
 			try {
-		        const response = await fetch("eldorado/api/endturn")
-			
+				const requestDTO: EndTurnRequestDTO = new EndTurnRequestDTO (gameState.deckState.selectedCards);
+
+				const request = {
+					method: "POST",
+					headers: {
+						"Accept": "application/json",
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(requestDTO)
+				}
+				console.log(request)
+		
+				const response = await fetch("eldorado/api/endturn", request);
+				
 		        if (response.ok) {
 		            const gameStateDTO: GameStateDTO = await response.json();
 					setGameState(new GameState(gameStateDTO));
@@ -73,5 +85,13 @@ export function DeckDisplay({gameState, setGameState} : DeckDisplayProps) {
 		        console.error(error.toString())
 		    }
 		}
+	}
+}
+
+class EndTurnRequestDTO {
+	selectedCards: string[];
+	
+	constructor (selectedCards: string[]) {
+		this.selectedCards = selectedCards;
 	}
 }

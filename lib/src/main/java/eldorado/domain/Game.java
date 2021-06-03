@@ -3,6 +3,8 @@
  */
 package eldorado.domain;
 
+import java.util.ArrayList;
+
 public class Game {
 	
 	private MapConfiguration map;
@@ -20,19 +22,19 @@ public class Game {
 	private void initialize (MapConfiguration mapConfiguration) {
 		this.map = mapConfiguration;
 		this.deck = new Deck();
-		deck.refillHand();		
+		this.getDeck().refillHand();		
 	}
 	
 	public MapConfiguration getMap () {
 		return this.map;
 	}
 	
-	public boolean canPawnMoveFromFieldToFieldUsingCard_andIsThatCardPresentInHand (int pawnId, Field pawnCurrentField, Field pawnFieldToMoveTo, String selectedCard) {
+	public boolean canPawnMoveFromFieldToFieldUsingCard_andIsHandValid (int pawnId, Field pawnCurrentField, Field pawnFieldToMoveTo, String[] selectedCards) {
 		if (pawnCurrentField != null 
 				&& pawnFieldToMoveTo != null 
 				&& pawnFieldToMoveTo.type != Field.Type.mountain 
-				&& pawnFieldToMoveTo.isValidCardForMove(selectedCard)
-				&& this.deck.handContainsCard(selectedCard)) {
+				&& pawnFieldToMoveTo.doesSelectedCardsContainOnlyOneValidCard(selectedCards)
+				&& this.getDeck().getHand().contains(selectedCards[0])) {
 			return true;
 		} else {
 			return false;
@@ -57,7 +59,8 @@ public class Game {
 		return this.deck;
 	}
 	
-	public void endTurn () {
-		this.deck.refillHand();
+	public void endTurn (ArrayList<String> cardsToKeep) {
+		this.getDeck().discardCardsThatWereNotSelectedToKeep(cardsToKeep);
+		this.getDeck().refillHand();
 	}
 }

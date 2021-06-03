@@ -167,16 +167,16 @@ export function MapDisplay({ gameState, setGameState }: MapDisplayProps) {
 		const rowAndColumnIds = id_button.replace(`${prefix.field_button}${separator}`, "").split(separator);
 		const field = fields_as2dTable[rowAndColumnIds[0]][rowAndColumnIds[1]];	
 		
-		const selectedCard_type = gameState.deckState.selectedCard_type;
-
-		if (!gameState.deckState.isACardSelected()) {
-			alert("Pick a card first to use in your move.");
+		if (gameState.deckState.areMultipleCardsSelected()) {
+			alert("Select only one card to use in your move.");
+		} else if (!gameState.deckState.isOneCardSelected()) {
+			alert("Select a card first.");
 		} else {
 			tryMovePawnToField(field);
 		}
 		async function tryMovePawnToField (field: Field) {
 			const pawnId = 1;
-			const requestDTO: MovePawnRequestDTO = new MovePawnRequestDTO (pawnId, field.coordinates.x, field.coordinates.y, field.coordinates.z, selectedCard_type);
+			const requestDTO: MovePawnRequestDTO = new MovePawnRequestDTO (pawnId, field.coordinates.x, field.coordinates.y, field.coordinates.z, gameState.deckState.selectedCards);
 			try {
 				const request = {
 					method: "POST",
@@ -186,7 +186,6 @@ export function MapDisplay({ gameState, setGameState }: MapDisplayProps) {
 					},
 					body: JSON.stringify(requestDTO)
 				}
-				console.log(request);
 		
 				const response = await fetch("eldorado/api/movepawn", request);
 				
@@ -234,14 +233,14 @@ class MovePawnRequestDTO {
 	x: number;
 	y: number;
 	z: number;
-	selectedCard_type: string;
+	selectedCards: string[];
 	
-	constructor (pawnId: number, x: number, y: number, z: number, selectedCard_type: string) {
+	constructor (pawnId: number, x: number, y: number, z: number, selectedCards: string[]) {
 		this.pawnId = pawnId;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.selectedCard_type = selectedCard_type;
+		this.selectedCards = selectedCards;
 	}
 }
 
