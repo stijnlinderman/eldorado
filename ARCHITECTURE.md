@@ -194,6 +194,7 @@ classDiagram
 ```mermaid
 classDiagram
 	GameStateDTO *-- MapStateDTO : One
+	GameStateDTO *-- DeckStateDTO : One
 	GameStateDTO : MapStateDTO mapStateDTO
 	GameStateDTO : int winningPawnId
 	MapStateDTO *-- FieldDTO : Many
@@ -205,6 +206,9 @@ classDiagram
 	FieldDTO : int y
 	FieldDTO : int z
 	FieldDTO <|-- Field : extends
+	DeckStateDTO : int deckAmountLeft
+	DeckStateDTO : String[] hand
+	DeckStateDTO : int discardedAmount
 	Field : int occupiedByPawnId
 	Field : String type
 	class DeniedRequestDTO
