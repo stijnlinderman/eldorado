@@ -90,8 +90,8 @@ export class Coordinates {
 export class DeckState {
 	deckAmountLeft: number;
 	hand: string[];
-	discardedAmount: number;
 	selectedCards: string[];
+	discardedAmount: number;
 	
 	constructor (deckStateDTO: DeckStateDTO) {
 		this.deckAmountLeft = deckStateDTO.deckAmountLeft;

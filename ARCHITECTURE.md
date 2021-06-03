@@ -112,6 +112,7 @@ graph TD;
 ```mermaid
 classDiagram
 	GameStateDTO *-- MapStateDTO : One
+	GameStateDTO *-- DeckStateDTO : One
 	GameStateDTO : number winningPawnId
 	GameStateDTO : MapStateDTO mapStateDTO
 	MapStateDTO *-- FieldDTO : Many
@@ -123,7 +124,11 @@ classDiagram
 	FieldDTO : number z
 	FieldDTO : number occupiedByPawnId
 	FieldDTO : string type
+	DeckStateDTO : number deckAmountLeft
+	DeckStateDTO : string[] hand
+	DeckStateDTO : number discardedAmount
 	GameState *-- MapState : One
+	GameState *-- DeckState : One
 	GameState : MapState mapState
 	GameState : number winningPawnId
 	GameState : int winner
@@ -143,6 +148,14 @@ classDiagram
 	Coordinates : string xyzStringKey
 	Coordinates : number rowId
 	Coordinates : number columnId
+	DeckState : number deckAmountLeft
+	DeckState : string[] hand
+	DeckState : string[] selectedCards
+	DeckState : number discardedAmount
+	DeckState : isOneCardSelected()
+	DeckState : areMultipleCardsSelected()
+	DeckState : addCardToSelection()
+	DeckState : removeCardFromSelection()
 	class MapBoundaries
 	MapBoundaries : update()
 	MapBoundaries : number firstRowId
@@ -154,6 +167,7 @@ classDiagram
 	MovePawnRequestDTO : number x
 	MovePawnRequestDTO : number y
 	MovePawnRequestDTO : number z
+	MovePawnRequestDTO : string[] selectedCards
 	class DeniedRequestDTO
 	DeniedRequestDTO : string message
 ```
